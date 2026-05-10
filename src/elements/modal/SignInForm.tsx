@@ -1,50 +1,66 @@
+
+
 import React, { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux'; // Импортируем хук
+import { loginUser } from '../../slices/authSlice'; // Импортируем наш Thunk
+import { type AppDispatch } from '../../app/store';
 import LoginInput from '../input/LoginInput';
 import PasswordInput from '../input/PasswordInput';
 import SubmitButton from '../button/SubmitButton';
 
 interface SignInFormProps {
-    onSuccess: (data: any) => void;
     onRegisterClick: () => void;
     onForgotPassClick: () => void;
 }
 
 const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassClick }) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch<AppDispatch>();
 
-    // Состояния для полей
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    // Состояния для ошибок
+    // Ошибки полей
     const [loginError, setLoginError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    // Общая ошибка от сервера (например, 401)
+    const [serverError, setServerError] = useState('');
+    // Состояние загрузки
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
-        // Сбрасываем ошибки перед проверкой
         setLoginError('');
         setPasswordError('');
+        setServerError('');
 
         let isValid = true;
 
-        // Валидация логина
         if (login.length < 6) {
             setLoginError(t('auth.errorMinLength'));
             isValid = false;
         }
 
-        // Валидация пароля
         if (password.length < 6) {
             setPasswordError(t('auth.errorMinLength'));
             isValid = false;
         }
 
         if (isValid) {
-            console.log('Sending data to backend:', { login, password });
-            // Здесь на следующем этапе мы добавим вызов Redux Thunk или API
+            setIsLoading(true);
+
+            // Запускаем Thunk и ждем результат
+            const resultAction = await dispatch(loginUser({ login, password }));
+
+            if (loginUser.rejected.match(resultAction)) {
+                // Если Thunk вернул ошибку (rejectWithValue)
+                setServerError(resultAction.payload as string);
+            }
+
+            // Если успех — ModalManager сам закроет окно, так как в Slice
+            // прописано activeModal = null при успехе.
+            setIsLoading(false);
         }
     };
 
@@ -55,6 +71,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
                 value={login}
                 onChange={(e) => setLogin(e.target.value)}
                 error={loginError}
+                disabled={isLoading}
             />
 
             <PasswordInput
@@ -62,19 +79,27 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 error={passwordError}
+                disabled={isLoading}
             />
 
+            {/* Вывод ошибки от сервера */}
+            {serverError && (
+                <div style={{ color: 'red', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                    {serverError}
+                </div>
+            )}
+
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '1rem' }}>
-        <span
-            onClick={onForgotPassClick}
-            style={{ color: '#007bff', cursor: 'pointer' }}
-        >
-          {t('auth.forgotPass')}
-        </span>
+                <span
+                    onClick={onForgotPassClick}
+                    style={{ color: '#007bff', cursor: 'pointer' }}
+                >
+                    {t('auth.forgotPass')}
+                </span>
             </div>
 
-            <SubmitButton>
-                {t('auth.signInBtn')}
+            <SubmitButton disabled={isLoading}>
+                {isLoading ? '...' : t('auth.signInBtn')}
             </SubmitButton>
 
             <div style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
@@ -83,8 +108,8 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
                     onClick={onRegisterClick}
                     style={{ color: '#007bff', cursor: 'pointer', fontWeight: 'bold' }}
                 >
-          {t('header.signUp')}
-        </span>
+                    {t('header.signUp')}
+                </span>
             </div>
         </form>
     );

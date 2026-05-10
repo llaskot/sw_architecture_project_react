@@ -10,6 +10,15 @@ const resources = {
                 signUp: "Sign Up",
                 username: "Username"
             },
+            auth: {
+                loginLabel: "Login or Email",
+                passwordLabel: "Password",
+                errorMinLength: "Minimum 6 characters required",
+                signInBtn: "Login",
+                forgotPass: "Forgot password?",
+                noAccount: "Don't have an account?"
+            },
+            guest: "Guest"
         }
     },
     uk: {
@@ -20,6 +29,15 @@ const resources = {
                 signUp: "Реєстрація",
                 username: "Користувач"
             },
+            auth: {
+                loginLabel: "Логін або Email",
+                passwordLabel: "Пароль",
+                errorMinLength: "Не менше 6 символів",
+                signInBtn: "Увійти",
+                forgotPass: "Забули пароль?",
+                noAccount: "Немає акаунту?"
+            },
+            guest: "Гість"
         }
     }
 };
@@ -28,7 +46,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "uk", // язык по умолчанию
+        lng: "uk",
         interpolation: {
             escapeValue: false
         }

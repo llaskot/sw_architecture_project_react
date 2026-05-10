@@ -1,58 +1,5 @@
-// import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-//
-// // Описываем структуру данных пользователя на основе твоего примера
-// interface User {
-//     _id: string;
-//     email: string;
-//     login: string;
-//     first_name: string;
-//     last_name: string;
-//     active: boolean;
-//     is_admin: boolean;
-//     is_manager: boolean;
-// }
-//
-// interface AuthState {
-//     user: User | null;
-//     token: string | null;
-// }
-//
-// // Пытаемся достать данные из localStorage, если они там есть
-// const savedUser = localStorage.getItem('user');
-// const savedToken = localStorage.getItem('token');
-//
-// const initialState: AuthState = {
-//     user: savedUser ? JSON.parse(savedUser) : null,
-//     token: savedToken || null,
-// };
-//
-// const authSlice = createSlice({
-//     name: 'auth',
-//     initialState,
-//     reducers: {
-//         // Этот метод мы вызовем после успешного ответа от бекенда
-//         setCredentials: (state, action: PayloadAction<{ user: User; access_token: string }>) => {
-//             state.user = action.payload.user;
-//             state.token = action.payload.access_token;
-//
-//             // Сохраняем в браузер, чтобы данные не пропали после F5
-//             localStorage.setItem('user', JSON.stringify(action.payload.user));
-//             localStorage.setItem('token', action.payload.access_token);
-//         },
-//         // Метод для выхода из системы
-//         logout: (state) => {
-//             state.user = null;
-//             state.token = null;
-//             localStorage.removeItem('user');
-//             localStorage.removeItem('token');
-//         },
-//     },
-// });
-//
-// export const { setCredentials, logout } = authSlice.actions;
-// export default authSlice.reducer;
-
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import { apiClient } from '../api/apiClient';
 
 // Структура пользователя
 interface User {
@@ -72,34 +19,49 @@ type ModalType = 'signIn' | 'signUp' | 'forgotPassword' | null;
 interface AuthState {
     user: User | null;
     token: string | null;
-    activeModal: ModalType; // Добавили поле для отслеживания модалки
+    activeModal: ModalType;
 }
 
+// Пытаемся достать данные из localStorage при старте
 const savedUser = localStorage.getItem('user');
 const savedToken = localStorage.getItem('token');
 
 const initialState: AuthState = {
     user: savedUser ? JSON.parse(savedUser) : null,
     token: savedToken || null,
-    activeModal: null, // Изначально все окна закрыты
+    activeModal: null,
 };
+
+// 1. Создаем асинхронный экшен для логина
+export const loginUser = createAsyncThunk(
+    'auth/loginUser',
+    async (credentials: { login: string; password: any }, { rejectWithValue }) => {
+        try {
+            const data = await apiClient('/auth/login', {
+                method: 'POST',
+                body: JSON.stringify(credentials),
+            });
+            return data; // Возвращает { user, access_token }
+        } catch (error: any) {
+            return rejectWithValue(error.detail || 'Something went wrong');
+        }
+    }
+);
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        // Открыть конкретное окно
         openModal: (state, action: PayloadAction<'signIn' | 'signUp' | 'forgotPassword'>) => {
             state.activeModal = action.payload;
         },
-        // Закрыть текущее окно
         closeModal: (state) => {
             state.activeModal = null;
         },
         setCredentials: (state, action: PayloadAction<{ user: User; access_token: string }>) => {
             state.user = action.payload.user;
             state.token = action.payload.access_token;
-            state.activeModal = null; // Закрываем модалку при успешном входе
+            state.activeModal = null;
 
             localStorage.setItem('user', JSON.stringify(action.payload.user));
             localStorage.setItem('token', action.payload.access_token);
@@ -111,6 +73,21 @@ const authSlice = createSlice({
             localStorage.removeItem('user');
             localStorage.removeItem('token');
         },
+    },
+    // 2. Добавляем обработку асинхронного экшена
+    extraReducers: (builder) => {
+        builder.addCase(loginUser.fulfilled, (state, action: PayloadAction<{ user: User; access_token: string }>) => {
+            // Если запрос успешен (fulfilled):
+            state.user = action.payload.user;
+            state.token = action.payload.access_token;
+
+            // ЗАКРЫВАЕМ модалку
+            state.activeModal = null;
+
+            // Сохраняем данные в браузер
+            localStorage.setItem('user', JSON.stringify(action.payload.user));
+            localStorage.setItem('token', action.payload.access_token);
+        });
     },
 });
 
