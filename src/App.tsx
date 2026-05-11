@@ -1,23 +1,37 @@
-import Header from "./elements/header/Header";
-import { useTranslation } from 'react-i18next';
-import ModalManager from "./elements/modal/ModalManager.tsx";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { type RootState } from './app/store';
+import Header from './elements/header/Header';
+import ModalManager from './elements/modal/ModalManager';
+import ProfilePage from './pages/ProfilePage'; // Создадим следующим шагом
 
-function App() {
-    const { t } = useTranslation();
+const App: React.FC = () => {
+    const { user } = useSelector((state: RootState) => state.auth);
 
     return (
-        <>
-            {/* Ошибка исчезнет, так как Header больше не требует пропсов */}
+        <Router>
             <Header />
 
-            <main style={{ padding: '2rem', textAlign: 'center' }}>
-                <h2>{t('header.projectName')}</h2>
+            <main style={{ padding: '20px' }}>
+                <Routes>
+                    {/* Главная страница (пока пустая или твой контент) */}
+                    <Route path="/" element={<div>Welcome to Home Page</div>} />
+
+                    {/* Страница профиля с проверкой авторизации */}
+                    <Route
+                        path="/profile"
+                        element={user ? <ProfilePage /> : <Navigate to="/" replace />}
+                    />
+
+                    {/* Редирект со всех несуществующих страниц на главную */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
             </main>
 
             <ModalManager />
-        </>
+        </Router>
     );
-}
+};
 
 export default App;
-

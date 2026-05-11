@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux'; // Добавь useSelector
 import {openModal, logout} from '../../slices/authSlice'; // Добавь logout
 import {type RootState} from '../../app/store'; // Импорт типа состояния
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
     const {t, i18n} = useTranslation();
@@ -33,10 +34,21 @@ const Header: React.FC = () => {
                 </div>
                 {user ? (
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <span>{t('header.username')}: <strong>{user.login}</strong></span>
-                        <button onClick={() => dispatch(logout())}>
-                            {i18n.language === 'uk' ? 'Вийти' : 'Logout'}
+                        <span>
+                            {t('header.username')}:
+                                {/* Оборачиваем логин в Link */}
+                            <Link to="/profile" style={{ marginLeft: '5px', fontWeight: 'bold', color: '#007bff', textDecoration: 'none' }}>
+                                {user.login}
+                            </Link>
+                        </span>
+
+                        <button
+                            onClick={() => dispatch(logout())}
+                            style={{ cursor: 'pointer', color: '#d9534f' }}
+                        >
+                            {t('logout')}
                         </button>
+
                     </div>
                 ) : (
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>

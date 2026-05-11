@@ -5,18 +5,24 @@ const resources = {
     en: {
         translation: {
             header: {
-                projectName: "Project Name",
+                projectName: "My Project",
                 signIn: "Sign In",
                 signUp: "Sign Up",
-                username: "Username"
+                username: "User"
+            },
+            profile: {
+                title: "User Profile",
+                email: "Email",
+                login: "Login",
+                firstName: "First Name",
+                lastName: "Last Name",
+                role: "Role",
+                edit: "Edit",
+                save: "Save",
+                cancel: "Cancel"
             },
             auth: {
-                loginLabel: "Login or Email",
-                passwordLabel: "Password",
-                errorMinLength: "Minimum 6 characters required",
-                signInBtn: "Login",
-                forgotPass: "Forgot password?",
-                noAccount: "Don't have an account?"
+                logout: "Logout"
             },
             guest: "Guest"
         }
@@ -24,18 +30,24 @@ const resources = {
     uk: {
         translation: {
             header: {
-                projectName: "Назва Проекту",
+                projectName: "Мій Проєкт",
                 signIn: "Увійти",
                 signUp: "Реєстрація",
                 username: "Користувач"
             },
+            profile: {
+                title: "Профіль користувача",
+                email: "Електронна пошта",
+                login: "Логін",
+                first_name: "Ім'я",      // Было firstName
+                last_name: "Прізвище",   // Было lastName
+                role: "Роль",
+                edit: "Редагувати",
+                save: "Зберегти",
+                cancel: "Скасувати"
+            },
             auth: {
-                loginLabel: "Логін або Email",
-                passwordLabel: "Пароль",
-                errorMinLength: "Не менше 6 символів",
-                signInBtn: "Увійти",
-                forgotPass: "Забули пароль?",
-                noAccount: "Немає акаунту?"
+                logout: "Вийти"
             },
             guest: "Гість"
         }
