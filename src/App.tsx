@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { type RootState } from './app/store';
 import Header from './elements/header/Header';
 import ModalManager from './elements/modal/ModalManager';
-import ProfilePage from './pages/ProfilePage'; // Создадим следующим шагом
+import ProfilePage from './pages/ProfilePage';
+import HomePage from "./pages/HomePage.tsx"; // Создадим следующим шагом
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -15,10 +16,10 @@ const App: React.FC = () => {
 
             <main style={{ padding: '20px' }}>
                 <Routes>
-                    {/* Главная страница (пока пустая или твой контент) */}
-                    <Route path="/" element={<div>Welcome to Home Page</div>} />
+                    {/* Главная страница */}
+                    <Route path="/" element={<HomePage />} />
 
-                    {/* Страница профиля с проверкой авторизации */}
+                    {/* Страница профиля  */}
                     <Route
                         path="/profile"
                         element={user ? <ProfilePage /> : <Navigate to="/" replace />}

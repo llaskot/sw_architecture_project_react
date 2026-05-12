@@ -1,8 +1,9 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit'; // Исправлено: импорт типа
 import { apiClient } from '../api/apiClient';
 
-// Структура пользователя
-interface User {
+// 1. Описание типов (Snake_case как в твоем JSON)
+export interface UserProfile {
     _id: string;
     email: string;
     login: string;
@@ -13,83 +14,94 @@ interface User {
     is_manager: boolean;
 }
 
-// Типы доступных модальных окон
-type ModalType = 'signIn' | 'signUp' | 'forgotPassword' | null;
-
-interface AuthState {
-    user: User | null;
-    token: string | null;
-    activeModal: ModalType;
+// Тип ответа при логине (токен + данные юзера)
+interface LoginResponse {
+    access_token: string;
+    user: UserProfile;
 }
 
-// Пытаемся достать данные из localStorage при старте
-const savedUser = localStorage.getItem('user');
-const savedToken = localStorage.getItem('token');
+interface AuthState {
+    user: UserProfile | null;
+    token: string | null;
+    loading: boolean;
+    error: string | null;
+    activeModal: 'signIn' | 'signUp' | null;
+}
+
+// 2. Инициализация (подтягиваем из памяти браузера)
+const storedToken = localStorage.getItem('token');
+const storedUser = localStorage.getItem('user');
 
 const initialState: AuthState = {
-    user: savedUser ? JSON.parse(savedUser) : null,
-    token: savedToken || null,
+    user: storedUser ? JSON.parse(storedUser) : null,
+    token: storedToken || null,
+    loading: false,
+    error: null,
     activeModal: null,
 };
 
-// 1. Создаем асинхронный экшен для логина
+// 3. Упрощенный Thunk (только один запрос)
 export const loginUser = createAsyncThunk(
     'auth/loginUser',
-    async (credentials: { login: string; password: any }, { rejectWithValue }) => {
+    async (credentials: any, { rejectWithValue }) => {
         try {
-            const data = await apiClient('/auth/login', {
+            // Если при логине летит всё сразу — просто возвращаем результат
+            const data: LoginResponse = await apiClient('/auth/login', {
                 method: 'POST',
                 body: JSON.stringify(credentials),
             });
-            return data; // Возвращает { user, access_token }
+            return data;
         } catch (error: any) {
-            return rejectWithValue(error.detail || 'Something went wrong');
+            return rejectWithValue(error.detail || 'Login failed');
         }
     }
 );
 
+// 4. Слайс
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        openModal: (state, action: PayloadAction<'signIn' | 'signUp' | 'forgotPassword'>) => {
+        openModal: (state, action: PayloadAction<'signIn' | 'signUp'>) => {
             state.activeModal = action.payload;
+            state.error = null;
         },
         closeModal: (state) => {
             state.activeModal = null;
-        },
-        setCredentials: (state, action: PayloadAction<{ user: User; access_token: string }>) => {
-            state.user = action.payload.user;
-            state.token = action.payload.access_token;
-            state.activeModal = null;
-
-            localStorage.setItem('user', JSON.stringify(action.payload.user));
-            localStorage.setItem('token', action.payload.access_token);
+            state.error = null;
         },
         logout: (state) => {
             state.user = null;
             state.token = null;
-            state.activeModal = null;
-            localStorage.removeItem('user');
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
         },
+        setAccessToken: (state, action: PayloadAction<string>) => {
+            state.token = action.payload;
+            localStorage.setItem('token', action.payload);
+        }
     },
-    // 2. Добавляем обработку асинхронного экшена
     extraReducers: (builder) => {
-        builder.addCase(loginUser.fulfilled, (state, action: PayloadAction<{ user: User; access_token: string }>) => {
-            // Если запрос успешен (fulfilled):
-            state.user = action.payload.user;
-            state.token = action.payload.access_token;
+        builder
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.token = action.payload.access_token;
+                state.user = action.payload.user; // Берем юзера из ответа логина
+                state.activeModal = null;
 
-            // ЗАКРЫВАЕМ модалку
-            state.activeModal = null;
-
-            // Сохраняем данные в браузер
-            localStorage.setItem('user', JSON.stringify(action.payload.user));
-            localStorage.setItem('token', action.payload.access_token);
-        });
+                localStorage.setItem('token', action.payload.access_token);
+                localStorage.setItem('user', JSON.stringify(action.payload.user));
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            });
     },
 });
 
-export const { openModal, closeModal, setCredentials, logout } = authSlice.actions;
+export const { openModal, closeModal, logout, setAccessToken } = authSlice.actions;
 export default authSlice.reducer;

@@ -24,6 +24,15 @@ const resources = {
             auth: {
                 logout: "Logout"
             },
+            home: {
+                searchPlaceholder: "Search cars...",
+                loading: "Loading cars...",
+                noCars: "No cars found",
+                pricePerDay: "price per day",
+                prev: "Prev",
+                next: "Next",
+                pageOf: "Page {{page}} of {{total}}"
+            },
             guest: "Guest"
         }
     },
@@ -48,6 +57,15 @@ const resources = {
             },
             auth: {
                 logout: "Вийти"
+            },
+            home: {
+                searchPlaceholder: "Пошук авто...",
+                loading: "Завантаження машин...",
+                noCars: "Машин не знайдено",
+                pricePerDay: "ціна за добу",
+                prev: "Назад",
+                next: "Вперед",
+                pageOf: "Сторінка {{page}} з {{total}}"
             },
             guest: "Гість"
         }
