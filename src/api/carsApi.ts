@@ -14,7 +14,8 @@ export interface AutoModelRead {
 }
 
 export interface Car {
-    _id: string | null;
+    mileage: number;
+    _id?: string | null;
     year: number;
     color: string;
     price_per_day: number;
@@ -44,4 +45,20 @@ export const getCategories = async (): Promise<string[]> => {
  */
 export const getCars = async (params: URLSearchParams): Promise<AllCarsResponse> => {
     return await apiClient(`/cars/?${params.toString()}`);
+};
+
+export interface Brand {
+    _id?: string | null;
+    name: string;
+    country: string;
+    description: string;
+    active: boolean;
+}
+
+/**
+ * Получение списка брендов
+ * GET /brand/
+ */
+export const getBrands = async (): Promise<Brand[]> => {
+    return await apiClient('/brand/');
 };

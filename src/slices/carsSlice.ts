@@ -1,19 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCategories } from '../api/carsApi';
+import { getCategories, getBrands, type Brand } from '../api/carsApi';
 
 interface CarsState {
     categories: string[];
+    brands: Brand[]; // Список брендов
     loadingCategories: boolean;
+    loadingBrands: boolean; // Отдельный лоадер для брендов
     error: string | null;
 }
 
 const initialState: CarsState = {
     categories: [],
+    brands: [],
     loadingCategories: false,
+    loadingBrands: false,
     error: null,
 };
 
-// Thunk для загрузки категорий
+// Thunk для категорий (уже был)
 export const fetchCategoriesThunk = createAsyncThunk(
     'cars/fetchCategories',
     async (_, { rejectWithValue }) => {
@@ -25,12 +29,25 @@ export const fetchCategoriesThunk = createAsyncThunk(
     }
 );
 
+// НОВОЕ: Thunk для загрузки брендов
+export const fetchBrandsThunk = createAsyncThunk(
+    'cars/fetchBrands',
+    async (_, { rejectWithValue }) => {
+        try {
+            return await getBrands();
+        } catch (error: any) {
+            return rejectWithValue(error.detail || 'Failed to load brands');
+        }
+    }
+);
+
 const carsSlice = createSlice({
     name: 'cars',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
+            // Категории
             .addCase(fetchCategoriesThunk.pending, (state) => {
                 state.loadingCategories = true;
             })
@@ -38,8 +55,16 @@ const carsSlice = createSlice({
                 state.loadingCategories = false;
                 state.categories = action.payload;
             })
-            .addCase(fetchCategoriesThunk.rejected, (state, action) => {
-                state.loadingCategories = false;
+            // Бренды
+            .addCase(fetchBrandsThunk.pending, (state) => {
+                state.loadingBrands = true;
+            })
+            .addCase(fetchBrandsThunk.fulfilled, (state, action) => {
+                state.loadingBrands = false;
+                state.brands = action.payload;
+            })
+            .addCase(fetchBrandsThunk.rejected, (state, action) => {
+                state.loadingBrands = false;
                 state.error = action.payload as string;
             });
     },
