@@ -1,24 +1,44 @@
 import { apiClient } from './apiClient';
 
-// --- ИНТЕРФЕЙСЫ (на основе openapi.json) ---
-
+/**
+ * Basic brand information from the server
+ */
 export interface Brand {
-    _id?: string | null;
+    _id: string;
     name: string;
+    country: string;
+    description: string;
+    active: boolean;
 }
 
+/**
+ * Model details linked to a brand
+ */
 export interface AutoModelRead {
-    _id?: string | null;
+    _id: string;
+    brand_id: string;
     name: string;
+    description: string;
+    category: string;
+    active: boolean;
     brand?: Brand | null;
 }
 
+/**
+ * Main car object
+ */
 export interface Car {
-    mileage: number;
-    _id?: string | null;
+    _id: string;
+    model_id: string;
+    vin: string;
+    plate_number: string;
     year: number;
     color: string;
+    mileage: number;
     price_per_day: number;
+    available: boolean;
+    in_use: boolean;
+    active: boolean;
     model?: AutoModelRead | null;
 }
 
@@ -29,36 +49,16 @@ export interface AllCarsResponse {
     items: Car[];
 }
 
-// --- ФУНКЦИИ ЗАПРОСОВ ---
-
-/**
- * Получение списка категорий
- * GET /models/categories
- */
+// Fetching reference data
 export const getCategories = async (): Promise<string[]> => {
     return await apiClient('/models/categories');
 };
 
-/**
- * Получение списка машин с фильтрацией и пагинацией
- * GET /cars/
- */
-export const getCars = async (params: URLSearchParams): Promise<AllCarsResponse> => {
-    return await apiClient(`/cars/?${params.toString()}`);
-};
-
-export interface Brand {
-    _id?: string | null;
-    name: string;
-    country: string;
-    description: string;
-    active: boolean;
-}
-
-/**
- * Получение списка брендов
- * GET /brand/
- */
 export const getBrands = async (): Promise<Brand[]> => {
     return await apiClient('/brand/');
+};
+
+// Main listing fetch
+export const getCars = async (params: URLSearchParams): Promise<AllCarsResponse> => {
+    return await apiClient(`/cars/?${params.toString()}`);
 };

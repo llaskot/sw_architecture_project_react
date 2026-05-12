@@ -5,7 +5,7 @@ const resources = {
     en: {
         translation: {
             header: {
-                projectName: "My Project",
+                projectName: "Highway to Hell",
                 signIn: "Sign In",
                 signUp: "Sign Up",
                 username: "User"
@@ -14,12 +14,12 @@ const resources = {
                 title: "User Profile",
                 email: "Email",
                 login: "Login",
-                firstName: "First Name",
-                lastName: "Last Name",
+                first_name: "First Name",
+                last_name: "Last Name",
                 role: "Role",
                 edit: "Edit",
                 save: "Save",
-                cancel: "Cancel"
+                cancel: "Cancel",
             },
             auth: {
                 logout: "Logout"
@@ -31,7 +31,11 @@ const resources = {
                 pricePerDay: "price per day",
                 prev: "Prev",
                 next: "Next",
-                pageOf: "Page {{page}} of {{total}}"
+                pageOf: "Page {{page}} of {{total}}",
+                clearAll: "Clear All",
+                brands: "Brands",
+                categories: "Comfort category"
+
             },
             guest: "Guest"
         }
@@ -39,7 +43,7 @@ const resources = {
     uk: {
         translation: {
             header: {
-                projectName: "Мій Проєкт",
+                projectName: "Highway to Hell",
                 signIn: "Увійти",
                 signUp: "Реєстрація",
                 username: "Користувач"
@@ -65,7 +69,11 @@ const resources = {
                 pricePerDay: "ціна за добу",
                 prev: "Назад",
                 next: "Вперед",
-                pageOf: "Сторінка {{page}} з {{total}}"
+                pageOf: "Сторінка {{page}} з {{total}}",
+                clearAll: "Очистити все",
+                brands: "Бренд",
+                categories: "Клас комфорту"
+
             },
             guest: "Гість"
         }

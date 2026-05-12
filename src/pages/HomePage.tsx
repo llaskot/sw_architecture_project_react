@@ -10,7 +10,15 @@ const HomePage: React.FC = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { categories, brands, loadingCategories, loadingBrands } = useSelector((state: RootState) => state.cars);
+    const {
+        categories,
+        brands,
+        loadingCategories,
+        loadingBrands,
+        categoriesLoaded, // Get new flags from store
+        brandsLoaded
+    } = useSelector((state: RootState) => state.cars);
+
 
     const [cars, setCars] = useState<Car[]>([]);
     const [total, setTotal] = useState(0);
@@ -22,10 +30,16 @@ const HomePage: React.FC = () => {
     const [page, setPage] = useState(1);
     const limit = 10;
 
+// Initial reference data fetch
     useEffect(() => {
-        if (categories.length === 0 && !loadingCategories) dispatch(fetchCategoriesThunk());
-        if (brands.length === 0 && !loadingBrands) dispatch(fetchBrandsThunk());
-    }, [dispatch, categories.length, brands.length, loadingCategories, loadingBrands]);
+        // Only fetch if not loaded yet and not currently loading
+        if (!categoriesLoaded && !loadingCategories) {
+            dispatch(fetchCategoriesThunk());
+        }
+        if (!brandsLoaded && !loadingBrands) {
+            dispatch(fetchBrandsThunk());
+        }
+    }, [dispatch, categoriesLoaded, brandsLoaded, loadingCategories, loadingBrands]);
 
     const fetchCars = useCallback(async () => {
         setLoadingCars(true);
@@ -41,15 +55,20 @@ const HomePage: React.FC = () => {
             selectedCategories.forEach(cat => params.append('categories', cat));
             selectedBrandIds.forEach(id => params.append('brand_ids', id));
 
+            // Re-fetch triggered on every keystroke
+            if (searchQuery) {
+                params.append('search', searchQuery);
+            }
+
             const data = await getCars(params);
             setCars(data.items || []);
             setTotal(data.total || 0);
         } catch (error) {
-            console.error('Cars load error:', error);
+            console.error('API Error:', error);
         } finally {
             setLoadingCars(false);
         }
-    }, [page, selectedCategories, selectedBrandIds]);
+    }, [page, selectedCategories, selectedBrandIds, searchQuery]);
 
     useEffect(() => {
         fetchCars();
@@ -69,6 +88,14 @@ const HomePage: React.FC = () => {
         setPage(1);
     };
 
+    // Full reset handler
+    const handleClearAll = () => {
+        setSelectedCategories([]);
+        setSelectedBrandIds([]);
+        setSearchQuery('');
+        setPage(1);
+    };
+
     const totalPages = Math.ceil(total / limit) || 1;
 
     return (
@@ -82,6 +109,7 @@ const HomePage: React.FC = () => {
                 onBrandToggle={handleBrandToggle}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
+                onClearAll={handleClearAll}
             />
 
             {loadingCars ? (
@@ -89,35 +117,20 @@ const HomePage: React.FC = () => {
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     {cars.map((car) => (
-                        <div key={car._id} style={{
-                            border: '1px solid #eee', padding: '20px', borderRadius: '12px',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.05)', backgroundColor: '#fff'
-                        }}>
+                        <div key={car._id!} style={{ border: '1px solid #eee', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', backgroundColor: '#fff' }}>
                             <h3 style={{ margin: '0 0 10px 0' }}>{car.model?.brand?.name} {car.model?.name}</h3>
                             <div style={{ fontSize: '1.2em', color: '#28a745', fontWeight: 'bold' }}>
                                 ${car.price_per_day} / {t('home.pricePerDay')}
                             </div>
-                            <div style={{ marginTop: '10px', fontSize: '0.9em', color: '#666' }}>
-                                {car.year} | {car.color} | {car.mileage} km
-                            </div>
                         </div>
                     ))}
-                    {cars.length === 0 && (
-                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: '#999' }}>
-                            {t('home.noCars')}
-                        </div>
-                    )}
                 </div>
             )}
 
             <footer style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', gap: '15px', alignItems: 'center' }}>
-                <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} style={{ padding: '8px 16px', cursor: 'pointer' }}>
-                    {t('home.prev')}
-                </button>
-                <span style={{ fontWeight: 'bold' }}>{t('home.pageOf', { page, total: totalPages })}</span>
-                <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)} style={{ padding: '8px 16px', cursor: 'pointer' }}>
-                    {t('home.next')}
-                </button>
+                <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} style={{ padding: '8px 16px' }}>{t('home.prev')}</button>
+                <span>{t('home.pageOf', { page, total: totalPages })}</span>
+                <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)} style={{ padding: '8px 16px' }}>{t('home.next')}</button>
             </footer>
         </div>
     );
