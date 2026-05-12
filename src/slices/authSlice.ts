@@ -48,6 +48,7 @@ export const loginUser = createAsyncThunk(
             // Если при логине летит всё сразу — просто возвращаем результат
             const data: LoginResponse = await apiClient('/auth/login', {
                 method: 'POST',
+                credentials: "include",
                 body: JSON.stringify(credentials),
             });
             return data;
