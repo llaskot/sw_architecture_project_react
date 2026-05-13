@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit'; // Исправлено: импорт типа
-import { apiClient } from '../api/apiClient';
+import type {PayloadAction} from '@reduxjs/toolkit'; // Исправлено: импорт типа
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {authApi} from "../api/apiAuth.ts";
 
 // 1. Описание типов (Snake_case как в твоем JSON)
 export interface UserProfile {
@@ -45,12 +45,7 @@ export const loginUser = createAsyncThunk(
     'auth/loginUser',
     async (credentials: any, { rejectWithValue }) => {
         try {
-            // Если при логине летит всё сразу — просто возвращаем результат
-            const data: LoginResponse = await apiClient('/auth/login', {
-                method: 'POST',
-                credentials: "include",
-                body: JSON.stringify(credentials),
-            });
+            const data: LoginResponse = await authApi.login(credentials)
             return data;
         } catch (error: any) {
             return rejectWithValue(error.detail || 'Login failed');
@@ -63,12 +58,7 @@ export const registerUser = createAsyncThunk(
     'auth/registerUser',
     async (userData: any, { rejectWithValue }) => {
         try {
-            const data = await apiClient('/auth/register', {
-                method: 'POST',
-                credentials: "include",
-                body: JSON.stringify(userData),
-            });
-            return data; // Returns { success: boolean, email: string }
+            return await authApi.register(userData); // Returns { success: boolean, email: string }
         } catch (error: any) {
             return rejectWithValue(error.detail || 'Registration failed');
         }
@@ -80,11 +70,7 @@ export const confirmRegistration = createAsyncThunk(
     'auth/confirmRegistration',
     async (code: string, { rejectWithValue }) => {
         try {
-            const data = await apiClient('/auth/register/confirm', {
-                method: 'POST',
-                credentials: "include",
-                body: JSON.stringify({ conf_code: code }),
-            });
+            const data = await authApi.confirmRegistration(code);
             return data; // Возвращает LoginResponse { access_token, user }
         } catch (error: any) {
             return rejectWithValue(error.detail || 'Confirmation failed');
@@ -97,10 +83,7 @@ export const logoutUser = createAsyncThunk(
     'auth/logoutUser',
     async (_, { dispatch, rejectWithValue }) => {
         try {
-            await apiClient('/auth/logout', {
-                method: 'POST',
-                credentials: "include"
-            });
+            await authApi.logout()
             dispatch(logout());
         } catch (error: any) {
             // Clear local state even if server session is already gone
