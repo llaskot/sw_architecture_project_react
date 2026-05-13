@@ -25,7 +25,8 @@ interface AuthState {
     token: string | null;
     loading: boolean;
     error: string | null;
-    activeModal: 'signIn' | 'signUp' | 'confirmRegistration' | null;
+    activeModal: 'signIn' | 'signUp' | 'confirmRegistration' | 'forgotPassword'
+        | 'confirmForgotPassword' | null;
 }
 
 // 2. Инициализация (подтягиваем из памяти браузера)
@@ -43,7 +44,7 @@ const initialState: AuthState = {
 // 3. Упрощенный Thunk (только один запрос)
 export const loginUser = createAsyncThunk(
     'auth/loginUser',
-    async (credentials: any, { rejectWithValue }) => {
+    async (credentials: any, {rejectWithValue}) => {
         try {
             const data: LoginResponse = await authApi.login(credentials)
             return data;
@@ -56,7 +57,7 @@ export const loginUser = createAsyncThunk(
 // 3.2. Register Thunk
 export const registerUser = createAsyncThunk(
     'auth/registerUser',
-    async (userData: any, { rejectWithValue }) => {
+    async (userData: any, {rejectWithValue}) => {
         try {
             return await authApi.register(userData); // Returns { success: boolean, email: string }
         } catch (error: any) {
@@ -68,7 +69,7 @@ export const registerUser = createAsyncThunk(
 // 3.3. Confirm Registration Thunk
 export const confirmRegistration = createAsyncThunk(
     'auth/confirmRegistration',
-    async (code: string, { rejectWithValue }) => {
+    async (code: string, {rejectWithValue}) => {
         try {
             const data = await authApi.confirmRegistration(code);
             return data; // Возвращает LoginResponse { access_token, user }
@@ -78,10 +79,32 @@ export const confirmRegistration = createAsyncThunk(
     }
 );
 
+export const forgotPassword = createAsyncThunk(
+    'auth/forgotPassword',
+    async (email: string, {rejectWithValue}) => {
+        try {
+            return await authApi.forgotPassword(email);
+        } catch (error: any) {
+            return rejectWithValue(error.detail || 'Failed to send reset code');
+        }
+    }
+);
+
+export const confirmForgotPassword = createAsyncThunk(
+    'auth/confirmForgotPassword',
+    async (data: any, {rejectWithValue}) => {
+        try {
+            return await authApi.confirmForgotPassword(data);
+        } catch (error: any) {
+            return rejectWithValue(error.detail || 'Failed to reset password');
+        }
+    }
+);
+
 // 3.1. Logout Thunk
 export const logoutUser = createAsyncThunk(
     'auth/logoutUser',
-    async (_, { dispatch, rejectWithValue }) => {
+    async (_, {dispatch, rejectWithValue}) => {
         try {
             await authApi.logout()
             dispatch(logout());
@@ -99,11 +122,13 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        openModal: (state, action: PayloadAction<'signIn' | 'signUp' | 'confirmRegistration'>) => {
+        openModal: (state,
+                    action: PayloadAction<'signIn' | 'signUp' | 'confirmRegistration'
+                        | 'forgotPassword' | 'confirmForgotPassword'>) => {
             if (action.payload === 'signUp') {
                 const pending = localStorage.getItem('registration_pending');
                 if (pending) {
-                    const { expiry } = JSON.parse(pending);
+                    const {expiry} = JSON.parse(pending);
                     if (Date.now() < expiry) {
                         state.activeModal = 'confirmRegistration';
                         state.error = null;
@@ -169,7 +194,7 @@ const authSlice = createSlice({
                 state.activeModal = 'confirmRegistration';
                 // Устанавливаем маркер на 10 минут
                 const expiry = Date.now() + 10 * 60 * 1000;
-                localStorage.setItem('registration_pending', JSON.stringify({ expiry }));
+                localStorage.setItem('registration_pending', JSON.stringify({expiry}));
             })
             .addCase(confirmRegistration.pending, (state) => {
                 state.loading = true;
@@ -189,10 +214,37 @@ const authSlice = createSlice({
             .addCase(confirmRegistration.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
-            });
+            })
+            // Forgot Password
+            .addCase(forgotPassword.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(forgotPassword.fulfilled, (state) => {
+                state.loading = false;
+                state.activeModal = 'confirmForgotPassword'; // Переключаем на ввод кода и нового пароля
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+
+            // Confirm Forgot Password
+            .addCase(confirmForgotPassword.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(confirmForgotPassword.fulfilled, (state) => {
+                state.loading = false;
+                state.activeModal = 'signIn'; // После успеха отправляем логиниться с новым паролем
+            })
+            .addCase(confirmForgotPassword.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
 
     },
 });
 
-export const { openModal, closeModal, logout, setAccessToken, clearRegistrationPending } = authSlice.actions;
+export const {openModal, closeModal, logout, setAccessToken, clearRegistrationPending} = authSlice.actions;
 export default authSlice.reducer;

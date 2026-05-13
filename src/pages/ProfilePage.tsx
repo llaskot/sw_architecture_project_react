@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { apiClient } from '../api/apiClient';
 import { useTranslation } from 'react-i18next';
+import {userApi} from "../api/userApi.ts";
 
 interface UserProfile {
     _id: string;
@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const data = await apiClient('/users/profile');
+                const data = await userApi.getProfile();
                 setProfile(data);
                 setFormData(data);
             } catch (err: any) {

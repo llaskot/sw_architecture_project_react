@@ -1,11 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { type RootState } from '../../app/store';
-import { closeModal, openModal } from '../../slices/authSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {type RootState} from '../../app/store';
+import {closeModal, openModal} from '../../slices/authSlice';
 import Modal from './Modal';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 import ConfirmRegistrationForm from "./ConfirmRegistrationForm.tsx";
+import ForgotPasswordForm from "./ForgotPasswordForm.tsx";
+import ConfirmForgotPasswordForm from "./ConfirmForgotPasswordForm.tsx";
 
 const ModalManager: React.FC = () => {
     const dispatch = useDispatch();
@@ -16,17 +18,23 @@ const ModalManager: React.FC = () => {
     return (
         <Modal
             onClose={() => dispatch(closeModal())}
-            closeOnBackdropClick={activeModal !== 'signUp' && activeModal !== 'confirmRegistration'}        >
+            closeOnBackdropClick={
+                activeModal !== 'signUp' &&
+                activeModal !== 'confirmRegistration' &&
+                activeModal !== 'forgotPassword' &&
+                activeModal !== 'confirmForgotPassword'}
+        >
             {activeModal === 'signIn' && (
                 <SignInForm
                     onRegisterClick={() => dispatch(openModal('signUp'))}
                     onForgotPassClick={() => dispatch(openModal('forgotPassword'))}
-                    onSuccess={(data) => console.log('Logged in:', data)}
+                    // onSuccess={(data) => console.log('Logged in:', data)}
                 />
             )}
-            {activeModal === 'confirmRegistration' && <ConfirmRegistrationForm />}
-            {activeModal === 'signUp' && <SignUpForm />}
-            {activeModal === 'forgotPassword' && <div>Восстановление пароля (в разработке)</div>}
+            {activeModal === 'confirmRegistration' && <ConfirmRegistrationForm/>}
+            {activeModal === 'signUp' && <SignUpForm/>}
+            {activeModal === 'forgotPassword' && <ForgotPasswordForm/>}
+            {activeModal === 'confirmForgotPassword' && <ConfirmForgotPasswordForm/>}
         </Modal>
     );
 };

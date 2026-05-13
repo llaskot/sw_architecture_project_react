@@ -29,7 +29,18 @@ const resources = {
                 signInBtn: "Sign In",
                 noAccount: "Don't have an account?",
                 errorMinLength: "Minimum 6 characters required",
-                serverError: "Invalid login or password"
+                serverError: "Invalid login or password",
+                forgotRecovery: "Password Recovery",
+                resetInstructions: "Enter your login or email to receive a recovery code",
+                confirmResetTitle: "Set New Password",
+                codeLabel: "Confirmation Code",
+                newPasswordLabel: "New Password",
+                confirmNewPasswordLabel: "Confirm New Password",
+                resetPasswordBtn: "Reset Password",
+                backToCode: "Go back",
+                // Validation errors
+                errorPasswordMismatch: "Passwords do not match",
+                errorCodeRequired: "Enter the code from email",
             },
             signUp: {
                 title: "Create Account",
@@ -101,7 +112,18 @@ const resources = {
                 signInBtn: "Увійти",
                 noAccount: "Немає акаунту?",
                 errorMinLength: "Мінімум 6 символів",
-                serverError: "Невірний логін або пароль"
+                serverError: "Невірний логін або пароль",
+                forgotRecovery: "Відновлення пароля",
+                resetInstructions: "Введіть ваш логін або email для отримання коду відновлення",
+                confirmResetTitle: "Встановлення нового пароля",
+                codeLabel: "Код підтвердження",
+                newPasswordLabel: "Новий пароль",
+                confirmNewPasswordLabel: "Підтвердіть новий пароль",
+                resetPasswordBtn: "Змінити пароль",
+                backToCode: "Повернутися назад",
+                // Ошибки валидации
+                errorPasswordMismatch: "Паролі не співпадають",
+                errorCodeRequired: "Введіть код з листа",
             },
             signUp: {
                 title: "Реєстрація",
