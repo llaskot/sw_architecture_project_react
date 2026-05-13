@@ -3,15 +3,18 @@ import Button from './Button';
 import { type ButtonHTMLAttributes } from 'react';
 
 // Мы наследуем всё от базовой кнопки
-interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
-
-const SubmitButton: React.FC<SubmitButtonProps> = (props) => {
+interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    loading?: boolean;
+}
+const SubmitButton: React.FC<SubmitButtonProps> = ({ loading, ...props }) => {
     return (
         <Button
             {...props}
-            type="submit" // Всегда submit для отправки форм
+            disabled={props.disabled || loading}
+            type="submit"     // Всегда submit для отправки форм
             style={{
-                backgroundColor: props.disabled ? '#ccc' : '#28a745', // Зеленая кнопка для входа
+                backgroundColor: (props.disabled || loading) ? '#ccc' : '#28a745',
+                cursor: (props.disabled || loading) ? 'not-allowed' : 'pointer',
                 fontWeight: 'bold',
                 marginTop: '1rem',
                 ...props.style

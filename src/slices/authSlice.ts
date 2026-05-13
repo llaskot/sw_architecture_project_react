@@ -58,6 +58,24 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+// 3.2. Register Thunk
+export const registerUser = createAsyncThunk(
+    'auth/registerUser',
+    async (userData: any, { rejectWithValue }) => {
+        try {
+            const data = await apiClient('/auth/register', {
+                method: 'POST',
+                body: JSON.stringify(userData),
+            });
+            return data; // Returns { success: boolean, email: string }
+        } catch (error: any) {
+            return rejectWithValue(error.detail || 'Registration failed');
+        }
+    }
+);
+
+
+
 // 3.1. Logout Thunk
 export const logoutUser = createAsyncThunk(
     'auth/logoutUser',
@@ -119,7 +137,20 @@ const authSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
+            })
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state) => {
+                state.loading = false;
+                // Success is handled in the UI (e.g., showing a message to check email)
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
             });
+
     },
 });
 

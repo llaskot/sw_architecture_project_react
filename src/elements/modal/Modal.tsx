@@ -3,9 +3,10 @@ import React, { type ReactNode } from 'react';
 interface ModalProps {
     children: ReactNode;
     onClose: () => void;
+    closeOnBackdropClick?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdropClick = true }) => {
     return (
         <div
             style={{
@@ -17,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
                 alignItems: 'center',
                 zIndex: 1000
             }}
-            onClick={onClose}
+            onClick={() => closeOnBackdropClick && onClose()}
         >
             <div
                 style={{
@@ -30,6 +31,25 @@ const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
                 }}
                 onClick={(e) => e.stopPropagation()} // Чтобы не закрывалось при клике на саму форму
             >
+                <button
+                    onClick={onClose}
+                    style={{
+                        position: 'absolute',
+                        top: '8px',
+                        right: '12px',
+                        background: 'none',
+                        border: 'none',
+                        fontSize: '1.5rem',
+                        cursor: 'pointer',
+                        color: '#999',
+                        lineHeight: '1',
+                        padding: '5px',
+                        zIndex: 10
+                    }}
+                    aria-label="Close"
+                >
+                    &times;
+                </button>
                 {children}
             </div>
         </div>

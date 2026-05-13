@@ -4,6 +4,7 @@ import { type RootState } from '../../app/store';
 import { closeModal, openModal } from '../../slices/authSlice';
 import Modal from './Modal';
 import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 
 const ModalManager: React.FC = () => {
     const dispatch = useDispatch();
@@ -12,7 +13,10 @@ const ModalManager: React.FC = () => {
     if (!activeModal) return null;
 
     return (
-        <Modal onClose={() => dispatch(closeModal())}>
+        <Modal
+            onClose={() => dispatch(closeModal())}
+            closeOnBackdropClick={activeModal !== 'signUp'}
+        >
             {activeModal === 'signIn' && (
                 <SignInForm
                     onRegisterClick={() => dispatch(openModal('signUp'))}
@@ -20,7 +24,7 @@ const ModalManager: React.FC = () => {
                     onSuccess={(data) => console.log('Logged in:', data)}
                 />
             )}
-            {activeModal === 'signUp' && <div>Форма регистрации (в разработке)</div>}
+            {activeModal === 'signUp' && <SignUpForm />}
             {activeModal === 'forgotPassword' && <div>Восстановление пароля (в разработке)</div>}
         </Modal>
     );

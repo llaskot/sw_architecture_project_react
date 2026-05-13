@@ -3,11 +3,17 @@ import React, { type InputHTMLAttributes } from 'react';
 // Наследуем все стандартные свойства инпута (value, onChange, type, name и т.д.)
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     error?: string;
+    label?: string;
 }
 
-const Input: React.FC<InputProps> = ({ error, style, ...rest }) => {
+const Input: React.FC<InputProps> = ({ label, error, style, ...rest }) => {
     return (
         <div style={{ marginBottom: '1.2rem', textAlign: 'left', width: '100%' }}>
+            {label && (
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '0.9rem' }}>
+                    {label}
+                </label>
+            )}
             <input
                 {...rest} // Пробрасываем все стандартные атрибуты
                 style={{
