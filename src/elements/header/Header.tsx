@@ -1,13 +1,14 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux'; // Добавь useSelector
-import {openModal, logout} from '../../slices/authSlice'; // Добавь logout
+import {openModal, logoutUser} from '../../slices/authSlice'; // Добавь logout
 import {type RootState} from '../../app/store'; // Импорт типа состояния
 import { Link } from 'react-router-dom';
+import { type AppDispatch } from '../../app/store';
 
 const Header: React.FC = () => {
     const {t, i18n} = useTranslation();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     // Достаем данные пользователя из Redux
     const {user} = useSelector((state: RootState) => state.auth);
@@ -43,7 +44,7 @@ const Header: React.FC = () => {
                         </span>
 
                         <button
-                            onClick={() => dispatch(logout())}
+                            onClick={() => dispatch(logoutUser())}
                             style={{ cursor: 'pointer', color: '#d9534f' }}
                         >
                             {t('logout')}

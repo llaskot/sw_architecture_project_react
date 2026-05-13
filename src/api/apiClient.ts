@@ -1,5 +1,5 @@
 import { store } from '../app/store';
-import { logout, setAccessToken } from '../slices/authSlice';
+import { logoutUser, openModal, setAccessToken} from '../slices/authSlice';
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
@@ -74,7 +74,8 @@ export const apiClient = async (endpoint: string, options: RequestInit = {}): Pr
             } catch (refreshError) {
                 isRefreshing = false;
                 refreshSubscribers = [];
-                store.dispatch(logout());
+                store.dispatch(logoutUser());
+                store.dispatch(openModal('signIn'));
                 return Promise.reject(refreshError);
             }
         }

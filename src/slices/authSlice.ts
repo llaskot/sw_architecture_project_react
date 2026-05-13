@@ -58,6 +58,25 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+// 3.1. Logout Thunk
+export const logoutUser = createAsyncThunk(
+    'auth/logoutUser',
+    async (_, { dispatch, rejectWithValue }) => {
+        try {
+            await apiClient('/auth/logout', {
+                method: 'POST',
+                credentials: "include"
+            });
+            dispatch(logout());
+        } catch (error: any) {
+            // Clear local state even if server session is already gone
+            dispatch(logout());
+            return rejectWithValue(error.detail || 'Logout failed');
+        }
+    }
+);
+
+
 // 4. Слайс
 const authSlice = createSlice({
     name: 'auth',
