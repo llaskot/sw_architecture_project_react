@@ -5,6 +5,7 @@ import { closeModal, openModal } from '../../slices/authSlice';
 import Modal from './Modal';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
+import ConfirmRegistrationForm from "./ConfirmRegistrationForm.tsx";
 
 const ModalManager: React.FC = () => {
     const dispatch = useDispatch();
@@ -15,8 +16,7 @@ const ModalManager: React.FC = () => {
     return (
         <Modal
             onClose={() => dispatch(closeModal())}
-            closeOnBackdropClick={activeModal !== 'signUp'}
-        >
+            closeOnBackdropClick={activeModal !== 'signUp' && activeModal !== 'confirmRegistration'}        >
             {activeModal === 'signIn' && (
                 <SignInForm
                     onRegisterClick={() => dispatch(openModal('signUp'))}
@@ -24,6 +24,7 @@ const ModalManager: React.FC = () => {
                     onSuccess={(data) => console.log('Logged in:', data)}
                 />
             )}
+            {activeModal === 'confirmRegistration' && <ConfirmRegistrationForm />}
             {activeModal === 'signUp' && <SignUpForm />}
             {activeModal === 'forgotPassword' && <div>Восстановление пароля (в разработке)</div>}
         </Modal>
