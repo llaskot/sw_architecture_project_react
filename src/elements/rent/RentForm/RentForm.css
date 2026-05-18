@@ -1,0 +1,63 @@
+.rent-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Блок чекбокса (Выбор водителя) */
+.rent-form__checkbox-wrapper {
+    margin-bottom: 24px;
+    display: flex;
+}
+
+.rent-form__checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.rent-form__checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #2563eb; /* Фирменный синий цвет для чекбокса */
+}
+
+.rent-form__checkbox-text {
+    font-size: 0.95rem;
+    color: #334155;
+    font-weight: 500;
+}
+
+/* Интерактивный блок отображения итоговой стоимости */
+.rent-form__price-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.rent-form__price-label {
+    font-size: 1rem;
+    color: #475569;
+    font-weight: 600;
+}
+
+.rent-form__price-value {
+    font-size: 1.5rem;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+/* Обеспечиваем, чтобы базовая кнопка внутри формы занимала всю ширину */
+.rent-form button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+}

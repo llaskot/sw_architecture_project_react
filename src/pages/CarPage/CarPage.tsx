@@ -36,6 +36,11 @@ const CarPage: React.FC = () => {
         return <div className="car-page-loading">{t('home.loading', 'Завантаження машин...')}</div>;
     }
 
+    const handleBook = () => {
+        if (!car) return;
+        window.open(`/rent/${car._id}`, '_blank');
+    };
+
     if (error || !car) {
         return (
             <div className="car-page-error">
@@ -139,7 +144,7 @@ const CarPage: React.FC = () => {
                         </div>
 
                         <div className="car-page__buttons-group">
-                            <button className="car-page__btn-book" disabled={!car.available}>
+                            <button className="car-page__btn-book" disabled={!car.available} onClick={handleBook}>
                                 {t('carDetail.bookBtn', 'Забронювати на майбутнє')}
                             </button>
                             <button className="car-page__btn-back" onClick={() => navigate('/')}>

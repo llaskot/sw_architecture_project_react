@@ -1,0 +1,53 @@
+.rent-datetime-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.rent-datetime-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.rent-datetime-fields {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.rent-datetime-fields__date {
+    flex: 2;
+}
+
+/* Убираем лишний маргин у вложенного инпута, так как у нас свой общий контейнер */
+.rent-datetime-fields__date .input-wrapper {
+    margin-bottom: 0 !important;
+}
+
+.rent-datetime-fields__hour {
+    flex: 1;
+}
+
+.rent-datetime-select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #0f172a;
+    outline: none;
+    cursor: pointer;
+    height: 40px; /* Выравниваем высоту под наш стандартный Input */
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+}
+
+.rent-datetime-select:focus {
+    border-color: #2563eb;
+}

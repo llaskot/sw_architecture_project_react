@@ -7,6 +7,7 @@ import ModalManager from './elements/modal/ModalManager';
 import ProfilePage from './pages/ProfilePage';
 import HomePage from "./pages/HomePage.tsx";
 import CarPage from "./pages/CarPage/CarPage.tsx";
+import RentPage from "./pages/RentPage/RentPage.tsx";
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -22,6 +23,9 @@ const App: React.FC = () => {
 
                     {/*Car page*/}
                     <Route path="/cars/:car_id" element={<CarPage />} />
+
+                    {/*rent page*/}
+                    <Route path="/rent/:car_id" element={<RentPage />} />
 
                     {/* Страница профиля  */}
                     <Route

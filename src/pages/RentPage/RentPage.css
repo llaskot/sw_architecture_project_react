@@ -1,0 +1,131 @@
+.rent-page {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    background-color: #f8fafc;
+}
+
+.rent-page__container {
+    width: 100%;
+    max-width: 580px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e2e8f0;
+}
+
+.rent-page__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 24px 0;
+    text-align: center;
+}
+
+/* Карточка превью автомобиля сверху */
+.rent-page__car-preview {
+    background-color: #f1f5f9;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    border-left: 4px solid #2563eb;
+}
+
+.rent-page__car-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 8px 0;
+}
+
+.rent-page__car-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.rent-page__car-meta strong {
+    color: #334155;
+}
+
+/* Экран успешного создания заказа */
+.rent-page-success {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8fafc;
+}
+
+.rent-page-success__box {
+    width: 100%;
+    max-width: 480px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.rent-page-success__box h2 {
+    color: #15803d;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 14px 0;
+}
+
+.rent-page-success__box p {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 28px 0;
+}
+
+.rent-page-success__box button {
+    width: 100%;
+}
+
+/* Состояния загрузки и ошибок страницы */
+.rent-page-status {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 1.1rem;
+    color: #475569;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.rent-page-status--error p {
+    color: #ef4444;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Адаптивность под мобильные устройства */
+@media (max-width: 640px) {
+    .rent-page {
+        padding: 16px;
+    }
+
+    .rent-page__container {
+        padding: 20px;
+    }
+
+    .rent-page__title {
+        font-size: 1.5rem;
+    }
+
+    .rent-page__car-meta {
+        flex-direction: column;
+        gap: 6px;
+    }
+}

@@ -89,7 +89,9 @@ const resources = {
                 pricePerDay: "day",
                 available: "Available",
                 unavailable: "Unavailable",
-                moreDetails: "More details"
+                moreDetails: "More details",
+                plate_number: "license plate",
+
             },
             carDetail: {
                 errorLoad: "Error loading data",
@@ -99,6 +101,26 @@ const resources = {
                 categoryLabel: "Comfort class",
                 mileageLabel: "Mileage",
                 bookBtn: "Book for the future"
+            },
+            rent: {
+                pageTitle: "Car Rental Form",
+                closeTab: "Close tab",
+                successTitle: "Rental successfully booked!",
+                successText: "Your order has been accepted for processing. A manager will contact you shortly.",
+                startDateLabel: "Rental start date and time",
+                daysQtyLabel: "Number of rental days",
+                userDockLabel: "Passport data / Driver's license",
+                userDockPlaceholder: "Series, number or ID card",
+                driverLabel: "Driver required",
+                totalPriceLabel: "Total price",
+                submittingBtn: "Processing...",
+                submitBtn: "Confirm order",
+                error: {
+                    startDateRequired: "Please select a start date and time",
+                    userDockRequired: "Please provide document details",
+                    daysMin: "Minimum rental period is 1 day",
+                    serverDefault: "Failed to book the rental. The vehicle might already be reserved for these dates."
+                }
             },
             guest: "Guest"
         }
@@ -190,7 +212,9 @@ const resources = {
                 pricePerDay: "доба",
                 available: "Доступно",
                 unavailable: "Недоступно",
-                moreDetails: "Детальніше"
+                moreDetails: "Детальніше",
+                plate_number: "Держномер",
+
             },
             carDetail: {
                 errorLoad: "Помилка завантаження даних",
@@ -200,6 +224,26 @@ const resources = {
                 categoryLabel: "Клас комфорту",
                 mileageLabel: "Пробіг",
                 bookBtn: "Забронювати на майбутнє"
+            },
+            rent: {
+                pageTitle: "Оформлення оренди",
+                closeTab: "Закрити вкладку",
+                successTitle: "Оренду успішно оформлено!",
+                successText: "Ваше замовлення прийнято в обробку. Менеджер зв'яжеться з вами найближчим часом.",
+                startDateLabel: "Дата та час початку оренди",
+                daysQtyLabel: "Кількість діб оренди",
+                userDockLabel: "Паспортні дані / Посвідчення водія",
+                userDockPlaceholder: "Серія, номер або ID-картка",
+                driverLabel: "Потрібен водій",
+                totalPriceLabel: "Загальна вартість",
+                submittingBtn: "Обробка...",
+                submitBtn: "Підтвердити замовлення",
+                error: {
+                    startDateRequired: "Оберіть дату та час початку",
+                    userDockRequired: "Вкажіть дані документа",
+                    daysMin: "Мінімальний термін — 1 доба",
+                    serverDefault: "Не вдалося оформити оренду. Можливо, авто вже заброньовано на ці дати."
+                }
             },
             guest: "Гість"
         }
