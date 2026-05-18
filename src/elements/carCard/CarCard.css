@@ -1,0 +1,163 @@
+.car-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: row; /* Выстраиваем левую и правую сторону в ряд */
+    justify-content: space-between;
+    min-height: 220px; /* Минимальная высота: карточки будут синхронно расти в ряду, если текст перенесётся */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.car-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ЛЕВАЯ СТОРОНА: Информационная панель в столбик */
+.car-card__info-side {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Прижимает блок цены к самому низу */
+    flex-grow: 1;
+    gap: 12px;
+}
+
+.car-card__meta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.car-card__field {
+    display: flex;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #334155;
+}
+
+.car-card__label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.car-card__value {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* 1. Модель идёт первой (крупный заголовок без лишних слов) */
+.car-card__field--model {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+}
+.car-card__field--model .car-card__value {
+    color: #1e293b;
+    font-weight: 700;
+}
+
+/* 2. Производитель под ней (шрифт поменьше) */
+.car-card__field--brand {
+    font-size: 0.85rem;
+}
+.car-card__field--brand .car-card__label,
+.car-card__field--brand .car-card__value {
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Группа характеристик (Год, Цвет) */
+.car-card__specs-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Блок цены и доступности внизу слева */
+.car-card__price-section {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Прайс (уменьшили размер цифр) */
+.car-card__price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.car-card__price-period {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #64748b;
+}
+
+/* Статус доступности (теперь под прайсом) */
+.car-card__status {
+    align-self: flex-start; /* Чтобы не растягивался на всю ширину */
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.car-card__status--available {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.car-card__status--unavailable {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ПРАВАЯ СТОРОНА: Картинка и кнопка */
+.car-card__image-side {
+    width: 200px; /* Фиксированная ширина правой панели */
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+    background-color: #f8fafc;
+    border-left: 1px solid #f1f5f9;
+    justify-content: space-between;
+}
+
+.car-card__image-wrapper {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f1f5f9;
+    flex-shrink: 0; /* Запрещаем картинке сжиматься */
+}
+
+.car-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-card__button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.car-card__button:hover {
+    background-color: #1d4ed8;
+}

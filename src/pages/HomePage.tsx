@@ -5,6 +5,7 @@ import { type RootState, type AppDispatch } from '../app/store';
 import { fetchCategoriesThunk, fetchBrandsThunk } from '../slices/carsSlice';
 import { getCars, type Car } from '../api/carsApi';
 import CarFilters from '../elements/filters/CarFilters';
+import CarCard from "../elements/carCard/CarCard.tsx";
 
 const HomePage: React.FC = () => {
     const { t } = useTranslation();
@@ -117,12 +118,7 @@ const HomePage: React.FC = () => {
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     {cars.map((car) => (
-                        <div key={car._id!} style={{ border: '1px solid #eee', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', backgroundColor: '#fff' }}>
-                            <h3 style={{ margin: '0 0 10px 0' }}>{car.model?.brand?.name} {car.model?.name}</h3>
-                            <div style={{ fontSize: '1.2em', color: '#28a745', fontWeight: 'bold' }}>
-                                ${car.price_per_day} / {t('home.pricePerDay')}
-                            </div>
-                        </div>
+                        <CarCard key={car._id} car={car} />
                     ))}
                 </div>
             )}

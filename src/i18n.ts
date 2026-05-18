@@ -82,6 +82,15 @@ const resources = {
                 categories: "Comfort category"
 
             },
+            carCard: {
+                brandLabel: "Brand",
+                year: "Year",
+                color: "Color",
+                pricePerDay: "day",
+                available: "Available",
+                unavailable: "Unavailable",
+                moreDetails: "More details"
+            },
             guest: "Guest"
         }
     },
@@ -164,6 +173,15 @@ const resources = {
                 brands: "Бренд",
                 categories: "Клас комфорту"
 
+            },
+            carCard: {
+                brandLabel: "Бренд",
+                year: "Рік",
+                color: "Колір",
+                pricePerDay: "доба",
+                available: "Доступно",
+                unavailable: "Недоступно",
+                moreDetails: "Детальніше"
             },
             guest: "Гість"
         }
