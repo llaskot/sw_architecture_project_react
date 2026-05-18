@@ -47,8 +47,15 @@ const ProfilePage: React.FC = () => {
     const handleSave = async () => {
         try {
             setLoading(true);
-            // Здесь будет запрос PUT, когда подготовим
-            setProfile({ ...profile, ...formData } as UserProfile);
+            setError(''); // Сбрасываем старую ошибку перед запросом
+
+            const cleanData = Object.fromEntries(
+                Object.entries(formData).filter(([_, value]) => value !== '')
+            );
+
+            const updatedProfile = await userApi.updateProfile(cleanData);
+            setProfile(updatedProfile);
+            setFormData(updatedProfile);
             setIsEditing(false);
         } catch (err: any) {
             setError(err.detail || 'Update failed');

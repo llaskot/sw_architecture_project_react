@@ -39,7 +39,7 @@ const Header: React.FC = () => {
                             {t('header.username')}:
                                 {/* Оборачиваем логин в Link */}
                             <Link to="/profile" style={{ marginLeft: '5px', fontWeight: 'bold', color: '#007bff', textDecoration: 'none' }}>
-                                {user.login}
+                                {user.first_name}
                             </Link>
                         </span>
 

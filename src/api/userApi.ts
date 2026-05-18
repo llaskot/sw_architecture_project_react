@@ -4,9 +4,8 @@ export const userApi = {
     getProfile: () => apiClient('/users/profile'),
 
 
-    // updateProfile: (userData: any) => apiClient('/users/profile', {
-    //     method: 'PUT',
-    //     credentials: "include",
-    //     body: JSON.stringify(userData),
-    // }),
+    updateProfile: (userData: any) => apiClient('/users/profile', {
+        method: 'PATCH',
+        body: JSON.stringify(userData),
+    }),
 }
