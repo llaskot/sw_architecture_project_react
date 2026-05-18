@@ -5,7 +5,8 @@ import { type RootState } from './app/store';
 import Header from './elements/header/Header';
 import ModalManager from './elements/modal/ModalManager';
 import ProfilePage from './pages/ProfilePage';
-import HomePage from "./pages/HomePage.tsx"; // Создадим следующим шагом
+import HomePage from "./pages/HomePage.tsx";
+import CarPage from "./pages/CarPage/CarPage.tsx";
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -18,6 +19,9 @@ const App: React.FC = () => {
                 <Routes>
                     {/* Главная страница */}
                     <Route path="/" element={<HomePage />} />
+
+                    {/*Car page*/}
+                    <Route path="/cars/:car_id" element={<CarPage />} />
 
                     {/* Страница профиля  */}
                     <Route

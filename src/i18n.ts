@@ -91,6 +91,15 @@ const resources = {
                 unavailable: "Unavailable",
                 moreDetails: "More details"
             },
+            carDetail: {
+                errorLoad: "Error loading data",
+                notFound: "Vehicle not found",
+                backToList: "Back to list",
+                countryLabel: "Brand origin",
+                categoryLabel: "Comfort class",
+                mileageLabel: "Mileage",
+                bookBtn: "Book for the future"
+            },
             guest: "Guest"
         }
     },
@@ -182,6 +191,15 @@ const resources = {
                 available: "Доступно",
                 unavailable: "Недоступно",
                 moreDetails: "Детальніше"
+            },
+            carDetail: {
+                errorLoad: "Помилка завантаження даних",
+                notFound: "Автомобіль не знайдено",
+                backToList: "Назад до списку",
+                countryLabel: "Країна походження",
+                categoryLabel: "Клас комфорту",
+                mileageLabel: "Пробіг",
+                bookBtn: "Забронювати на майбутнє"
             },
             guest: "Гість"
         }

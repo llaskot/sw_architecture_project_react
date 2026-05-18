@@ -1,0 +1,247 @@
+.car-page {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* ШАПКА: Заголовки */
+.car-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 16px;
+}
+
+.car-page__model-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+}
+
+.car-page__brand-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #64748b;
+    margin: 1rem auto auto;
+}
+
+/* ДВУХПАНЕЛЬНЫЙ КОНТЕНТ */
+.car-page__content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Левая часть чуть шире */
+    gap: 40px;
+}
+
+/* ЛЕВАЯ СТОРОНА: Медиа */
+.car-page__media-side {
+    display: flex;
+    flex-direction: column;
+}
+
+.car-page__image-wrapper {
+    width: 100%;
+    height: 340px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.car-page__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ПРАВАЯ СТОРОНА: Информация и параметры */
+.car-page__info-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.car-page__specs {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.car-page__spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.95rem;
+}
+
+.car-page__spec-label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.car-page__spec-value {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* НИЖНИЙ БЛОК: Цена, Статус и Кнопки */
+.car-page__action-section {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+}
+
+.car-page__price-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.car-page__price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.car-page__price-period {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.car-page__status {
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.car-page__status--available {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.car-page__status--unavailable {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Кнопки действий */
+.car-page__buttons-group {
+    display: flex;
+    gap: 12px;
+}
+
+.car-page__btn-book {
+    flex-grow: 2;
+    padding: 12px 20px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.car-page__btn-book:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.car-page__btn-book:disabled {
+    background-color: #cbd5e1;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.car-page__btn-back {
+    flex-grow: 1;
+    padding: 12px 20px;
+    background-color: transparent;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.car-page__btn-back:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* СИСТЕМА КАСТОМНЫХ ТУЛТИПОВ (ПОДСКАЗОК) */
+.car-page__tooltip-trigger {
+    position: relative;
+    width: max-content;
+    cursor: help;
+}
+
+.car-page__tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 8px;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.4;
+    width: 280px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+
+    /* Изначально скрыт */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none; /* Чтобы не мешал мышке */
+}
+
+/* Плавное появление при наведении на триггер */
+.car-page__tooltip-trigger:hover .car-page__tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Маленький стрелочка-уголок внизу тултипа */
+.car-page__tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #1e293b transparent transparent transparent;
+}
+
+/* Состояния загрузки и ошибок */
+.car-page-loading,
+.car-page-error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+.car-page-error p {
+    margin-bottom: 20px;
+    color: #ef4444;
+}

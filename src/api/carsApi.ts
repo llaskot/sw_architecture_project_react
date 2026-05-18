@@ -39,6 +39,10 @@ export interface Car {
     available: boolean;
     in_use: boolean;
     active: boolean;
+    img?: {
+        small: string;
+        large: string;
+    } | null;
     model?: AutoModelRead | null;
 }
 
@@ -61,4 +65,8 @@ export const getBrands = async (): Promise<Brand[]> => {
 // Main listing fetch
 export const getCars = async (params: URLSearchParams): Promise<AllCarsResponse> => {
     return await apiClient(`/cars/?${params.toString()}`);
+};
+
+export const getCarById = async (carId: string): Promise<Car> => {
+    return await apiClient(`/cars/${carId}`);
 };
