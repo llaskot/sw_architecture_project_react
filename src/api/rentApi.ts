@@ -48,6 +48,23 @@ export interface RentRead {
     client?: RentClient | null;
 }
 
+
+export type SortOrder = 'asc' | 'desc' | 'none';
+
+export interface AllRentsResponse {
+    total: number;
+    page: number;
+    limit: number;
+    items: RentRead[];
+}
+
+export interface GetRentsParams {
+    stage?: string[] | null;
+    sort_date?: SortOrder;
+    page?: number;
+    limit?: number;
+}
+
 // 1. Создание новой аренды (POST /rent/)
 export const createRent = async (data: RentRequest): Promise<RentRead> => {
     return await apiClient('/rent/', {
@@ -67,4 +84,34 @@ export const updateRent = async (rentId: string, data: RentUpdateRequest): Promi
         method: 'PATCH',
         body: JSON.stringify(data),
     });
+};
+
+// 4. Fetch all available rental stages dynamically from backend
+export const getRentStages = async (): Promise<string[]> => {
+    return await apiClient('/rent/stages');
+};
+
+// 5. Fetch paginated list of rentals with dynamic filters and sorting options
+export const getAllRents = async (params: GetRentsParams): Promise<AllRentsResponse> => {
+    const queryParts: string[] = [];
+
+    if (params.page) {
+        queryParts.push(`page=${params.page}`);
+    }
+    if (params.limit) {
+        queryParts.push(`limit=${params.limit}`);
+    }
+    if (params.sort_date && params.sort_date !== 'none') {
+        queryParts.push(`sort_date=${params.sort_date}`);
+    }
+
+    // Map array values to multiple query parameters for FastAPI compatibility (e.g. ?stage=ordered&stage=booked)
+    if (params.stage && params.stage.length > 0) {
+        params.stage.forEach((s) => {
+            queryParts.push(`stage=${encodeURIComponent(s)}`);
+        });
+    }
+
+    const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
+    return await apiClient(`/rent/${queryString}`);
 };
