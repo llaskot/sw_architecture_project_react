@@ -10,6 +10,7 @@ import CarPage from "./pages/CarPage/CarPage.tsx";
 import RentPage from "./pages/RentPage/RentPage.tsx";
 import MyRentsPage from "./pages/MyRentsPage/MyRentsPage.tsx";
 import EditRentPage from "./pages/EditRentPage/EditRentPage.tsx";
+import './App.css'; // Ensure App.css is imported
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -18,16 +19,19 @@ const App: React.FC = () => {
         <Router>
             <Header />
 
-            <main style={{ padding: '20px' }}>
+            <main className="app-main">
                 <Routes>
-                    {/* Главная страница */}
+                    {/* Main page */}
                     <Route path="/" element={<HomePage />} />
 
-                    {/*Car page*/}
+                    {/* Car page */}
                     <Route path="/cars/:car_id" element={<CarPage />} />
 
-                    {/*rent page*/}
+                    {/* Rent page */}
                     <Route path="/rent/:car_id" element={<RentPage />} />
+
+                    {/* Edit rent page */}
+                    <Route path="/edit-rent/:rent_id" element={<EditRentPage />} />
 
                     {/* Route for user rental history list */}
                     <Route
@@ -35,15 +39,13 @@ const App: React.FC = () => {
                         element={user ? <MyRentsPage /> : <Navigate to="/" replace />}
                     />
 
-                    <Route path="/edit-rent/:rent_id" element={<EditRentPage />} />
-
-                    {/* Страница профиля  */}
+                    {/* Profile page */}
                     <Route
                         path="/profile"
                         element={user ? <ProfilePage /> : <Navigate to="/" replace />}
                     />
 
-                    {/* Редирект со всех несуществующих страниц на главную */}
+                    {/* Redirect from all non-existent pages to the main page */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </main>

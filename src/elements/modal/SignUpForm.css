@@ -1,0 +1,39 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-form__server-error {
+    color: red;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.signup-form__success-message {
+    color: green;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.signup-form__footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.signup-form__link {
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Красим все поля ввода формы в один цвет */
+.signup-form input {
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #334155 !important;
+}
+
+.signup-form input:focus {
+    border-color: #2563eb !important;
+    outline: none;
+}

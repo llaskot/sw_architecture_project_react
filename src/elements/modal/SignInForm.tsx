@@ -1,13 +1,12 @@
-
-
 import React, { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux'; // Импортируем хук
-import { loginUser } from '../../slices/authSlice'; // Импортируем наш Thunk
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../slices/authSlice';
 import { type AppDispatch } from '../../app/store';
 import LoginInput from '../input/LoginInput';
 import PasswordInput from '../input/PasswordInput';
 import SubmitButton from '../button/SubmitButton';
+import './ModalForm.css';
 
 interface SignInFormProps {
     onRegisterClick: () => void;
@@ -21,12 +20,12 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    // Ошибки полей
+    // Field errors
     const [loginError, setLoginError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    // Общая ошибка от сервера (например, 401)
+    // General server error (e.g., 401)
     const [serverError, setServerError] = useState('');
-    // Состояние загрузки
+    // Loading state
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: FormEvent) => {
@@ -50,22 +49,22 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
         if (isValid) {
             setIsLoading(true);
 
-            // Запускаем Thunk и ждем результат
+            // Trigger Thunk and await result
             const resultAction = await dispatch(loginUser({ login, password }));
 
             if (loginUser.rejected.match(resultAction)) {
-                // Если Thunk вернул ошибку (rejectWithValue)
+                // If Thunk returned an error (rejectWithValue)
                 setServerError(resultAction.payload as string);
             }
 
-            // Если успех — ModalManager сам закроет окно, так как в Slice
-            // прописано activeModal = null при успехе.
+            // On success - ModalManager will close the window automatically
+            // because activeModal = null is set in the Slice upon success.
             setIsLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+        <form onSubmit={handleSubmit} className="signin-form">
             <LoginInput
                 placeholder={t('auth.loginLabel')}
                 value={login}
@@ -82,17 +81,17 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
                 disabled={isLoading}
             />
 
-            {/* Вывод ошибки от сервера */}
+            {/* Displaying server error */}
             {serverError && (
-                <div style={{ color: 'red', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                <div className="signin-form__server-error">
                     {serverError}
                 </div>
             )}
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '1rem' }}>
+            <div className="signin-form__links-container">
                 <span
                     onClick={onForgotPassClick}
-                    style={{ color: '#007bff', cursor: 'pointer' }}
+                    className="signin-form__clickable-link"
                 >
                     {t('auth.forgotPass')}
                 </span>
@@ -102,11 +101,11 @@ const SignInForm: React.FC<SignInFormProps> = ({ onRegisterClick, onForgotPassCl
                 {isLoading ? '...' : t('auth.signInBtn')}
             </SubmitButton>
 
-            <div style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
+            <div className="signin-form__footer">
                 {t('auth.noAccount')}{' '}
                 <span
                     onClick={onRegisterClick}
-                    style={{ color: '#007bff', cursor: 'pointer', fontWeight: 'bold' }}
+                    className="signin-form__clickable-link signin-form__clickable-link--bold"
                 >
                     {t('header.signUp')}
                 </span>

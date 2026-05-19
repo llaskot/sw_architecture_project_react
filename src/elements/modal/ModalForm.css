@@ -1,0 +1,31 @@
+.signin-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signin-form__server-error {
+    color: red;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.signin-form__links-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.signin-form__clickable-link {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.signin-form__clickable-link--bold {
+    font-weight: bold;
+}
+
+.signin-form__footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
