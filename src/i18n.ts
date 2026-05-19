@@ -8,7 +8,8 @@ const resources = {
                 projectName: "Highway to Hell",
                 signIn: "Sign In",
                 signUp: "Sign Up",
-                username: "User"
+                username: "User",
+                myRents: "My Rentals"
             },
             profile: {
                 title: "User Profile",
@@ -120,9 +121,45 @@ const resources = {
                     userDockRequired: "Please provide document details",
                     daysMin: "Minimum rental period is 1 day",
                     serverDefault: "Failed to book the rental. The vehicle might already be reserved for these dates."
+                },
+                page: {
+                    title: "My Rentals"
+                },
+                filters: {
+                    stageLabel: "Filter by Stage",
+                    stagePlaceholder: "All Stages",
+                    sortLabel: "Sort by Date",
+                    sortDesc: "Newest First",
+                    sortAsc: "Oldest First",
+                    sortNone: "No Sorting"
+                },
+                table: {
+                    model: "Model",
+                    plateNumber: "Plate Number",
+                    startDate: "Start Date",
+                    endDate: "End Date",
+                    totalPrice: "Total Price",
+                    stage: "Stage",
+                    actions: "Actions",
+                    empty: "No rental bookings found matching your criteria."
+                },
+                actions: {
+                    update: "Update",
+                    delete: "Delete",
+                    pay: "Pay"
+                },
+                edit: {
+                    pageTitle: "Modify Rental Agreement",
+                    selectCarPlaceholder: "Select a vehicle...",
+                    searchCarPlaceholder: "Type to filter cars...",
+                    carLabel: "Assigned Vehicle",
+                    successUpdate: "Rental agreement updated successfully!",
+                    submitUpdateBtn: "Save Changes",
+                    errorUpdate: "Failed to update the rental agreement. Please check selected parameters."
                 }
             },
-            guest: "Guest"
+            guest: "Guest",
+
         }
     },
     uk: {
@@ -131,7 +168,8 @@ const resources = {
                 projectName: "Highway to Hell",
                 signIn: "Увійти",
                 signUp: "Реєстрація",
-                username: "Користувач"
+                username: "Користувач",
+                myRents: "Мої оренди"
             },
             profile: {
                 title: "Профіль користувача",
@@ -243,6 +281,41 @@ const resources = {
                     userDockRequired: "Вкажіть дані документа",
                     daysMin: "Мінімальний термін — 1 доба",
                     serverDefault: "Не вдалося оформити оренду. Можливо, авто вже заброньовано на ці дати."
+                },
+                page: {
+                    title: "Мої оренди"
+                },
+                filters: {
+                    stageLabel: "Фільтр за статусом",
+                    stagePlaceholder: "Всі статуси",
+                    sortLabel: "Сортувати за датою",
+                    sortDesc: "Спочатку нові",
+                    sortAsc: "Спочатку старі",
+                    sortNone: "Без сортування"
+                },
+                table: {
+                    model: "Модель",
+                    plateNumber: "Держ. номер",
+                    startDate: "Дата початку",
+                    endDate: "Дата завершення",
+                    totalPrice: "Загальна вартість",
+                    stage: "Статус",
+                    actions: "Дії",
+                    empty: "Не знайдено жодного бронювання оренди, що відповідає вашим критеріям."
+                },
+                actions: {
+                    update: "Редагувати",
+                    delete: "Видалити",
+                    pay: "Оплатити"
+                },
+                edit: {
+                    pageTitle: "Редагування договору оренди",
+                    selectCarPlaceholder: "Оберіть автомобіль...",
+                    searchCarPlaceholder: "Введіть назву для фільтрації...",
+                    carLabel: "Призначений автомобіль",
+                    successUpdate: "Договір оренди успішно оновлено!",
+                    submitUpdateBtn: "Зберегти зміни",
+                    errorUpdate: "Не вдалося оновити договір оренди. Перевірте вказані параметри."
                 }
             },
             guest: "Гість"

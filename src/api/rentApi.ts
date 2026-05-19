@@ -115,3 +115,9 @@ export const getAllRents = async (params: GetRentsParams): Promise<AllRentsRespo
     const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
     return await apiClient(`/rent/${queryString}`);
 };
+
+export const deleteRent = async (rentId: string): Promise<void> => {
+    return await apiClient(`/rent/${rentId}`, {
+        method: 'DELETE',
+    });
+};

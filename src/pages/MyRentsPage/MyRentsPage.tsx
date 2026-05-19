@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAllRents, getRentStages, type RentRead } from '../../api/rentApi';
+import {deleteRent, getAllRents, getRentStages, type RentRead} from '../../api/rentApi';
 import DataTable, { type Column } from '../../elements/DataTable/DataTable';
 import Pagination from '../../elements/Pagination/Pagination';
 import RentFilters from '../../elements/rent/RentFilters/RentFilters';
 import RentRowActions from '../../elements/rent/RentRowActions/RentRowActions';
 import './MyRentsPage.css';
+import {useNavigate} from "react-router-dom";
+import Modal from "../../elements/modal/Modal.tsx";
+import Button from "../../elements/button/Button.tsx";
+
 
 const MyRentsPage: React.FC = () => {
     const { t } = useTranslation();
-
+    const navigate = useNavigate();
     // Filter and sorting states
     const [availableStages, setAvailableStages] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
@@ -18,11 +22,16 @@ const MyRentsPage: React.FC = () => {
     // Pagination states
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalItems, setTotalItems] = useState<number>(0);
-    const limit = 10;
+    const limit = 3;
 
-    // Data and loading states
+// Data and loading states
     const [rents, setRents] = useState<RentRead[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+
+    // Modal and delete states
+    const [rentToDelete, setRentToDelete] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
+    const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
     // Fetch available rental stages dynamically on mount
     useEffect(() => {
@@ -57,7 +66,21 @@ const MyRentsPage: React.FC = () => {
             }
         };
         fetchRents();
-    }, [selectedStages, sortDate, currentPage]);
+    }, [selectedStages, sortDate, currentPage, refreshTrigger]);
+
+    const handleDeleteConfirm = async () => {
+        if (!rentToDelete) return;
+        setIsDeleting(true);
+        try {
+            await deleteRent(rentToDelete);
+            setRentToDelete(null);
+            setRefreshTrigger(prev => prev + 1);
+        } catch (error) {
+            console.error('Failed to delete rental:', error);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     // Reset page to 1 when filters or sorting change
     const handleStagesChange = (stages: string[]) => {
@@ -107,7 +130,7 @@ const MyRentsPage: React.FC = () => {
         },
         {
             key: 'driver',
-            header: t('rent.table.totalPrice', 'driver'),
+            header: t('rent.table.driver', 'driver'),
             render: (rent) => (<span className={"my-rents-page__cell"}> {rent.driver ? '✓' : '×'} </span> )
         },
         {
@@ -116,12 +139,13 @@ const MyRentsPage: React.FC = () => {
             render: (rent) => (
                 <RentRowActions
                     stage={rent.stage}
-                    onUpdate={() => alert(`Update flow placeholder for rent ID: ${rent._id}`)}
-                    onDelete={() => alert(`Delete flow placeholder for rent ID: ${rent._id}`)}
+                    onUpdate={() => navigate(`/edit-rent/${rent._id}`)}
+                    onDelete={() => rent._id && setRentToDelete(rent._id)}
                     onPay={() => alert(`Payment flow placeholder for rent ID: ${rent._id}`)}
                 />
             )
         }
+
     ], [t]);
 
     return (
@@ -152,6 +176,22 @@ const MyRentsPage: React.FC = () => {
                 onPageChange={setCurrentPage}
                 disabled={loading}
             />
+            {rentToDelete && (
+                <Modal onClose={() => !isDeleting && setRentToDelete(null)}>
+                    <div className="my-rents-page__modal">
+                        <h2>{t('rent.delete.title', 'Підтвердження видалення')}</h2>
+                        <p>{t('rent.delete.text', 'Ви впевнені, що хочете видалити це замовлення? Цю дію неможливо скасувати.')}</p>
+                        <div className="my-rents-page__modal-actions">
+                            <Button onClick={() => setRentToDelete(null)} disabled={isDeleting}>
+                                {t('profile.cancel', 'Скасувати')}
+                            </Button>
+                            <Button onClick={handleDeleteConfirm} disabled={isDeleting}>
+                                {isDeleting ? t('rent.deleting', 'Видалення...') : t('rent.delete.confirmBtn', 'Так, видалити')}
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
+            )}
         </div>
     );
 };

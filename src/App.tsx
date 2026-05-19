@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage.tsx";
 import CarPage from "./pages/CarPage/CarPage.tsx";
 import RentPage from "./pages/RentPage/RentPage.tsx";
 import MyRentsPage from "./pages/MyRentsPage/MyRentsPage.tsx";
+import EditRentPage from "./pages/EditRentPage/EditRentPage.tsx";
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -33,6 +34,8 @@ const App: React.FC = () => {
                         path="/my-rents"
                         element={user ? <MyRentsPage /> : <Navigate to="/" replace />}
                     />
+
+                    <Route path="/edit-rent/:rent_id" element={<EditRentPage />} />
 
                     {/* Страница профиля  */}
                     <Route

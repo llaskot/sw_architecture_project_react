@@ -1,0 +1,122 @@
+.edit-rent-page {
+    padding: 40px 20px;
+    background-color: #f8fafc;
+    min-height: calc(100vh - 64px);
+    box-sizing: border-box;
+}
+
+.edit-rent-page__container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.edit-rent-page__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.edit-rent-page__dropdown-wrapper {
+    margin-bottom: 24px;
+}
+
+/* Блок краткой сводки по выбранному авто (как на RentPage) */
+.edit-rent-page__car-preview {
+    background-color: #f1f5f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+    border: 1px solid #e2e8f0;
+}
+
+.edit-rent-page__car-name {
+    margin: 0 0 12px 0;
+    font-size: 1.25rem;
+    color: #1e293b;
+}
+
+.edit-rent-page__car-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.edit-rent-page__car-meta span strong {
+    color: #0f172a;
+    margin-left: 4px;
+}
+
+/* Системные состояния (загрузка, ошибка) */
+.edit-rent-page__loading,
+.edit-rent-page__error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.1rem;
+    color: #64748b;
+}
+
+.edit-rent-page__error {
+    color: #ef4444;
+}
+
+
+/* Экран успеха */
+.edit-rent-page-success {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+}
+
+.edit-rent-page-success__box {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.edit-rent-page-success__box h2 {
+    font-size: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+.edit-rent-page-success__box p {
+    color: #475569;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+/* Кнопка отмены редактирования */
+.edit-rent-page__cancel-action {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-rent-page__cancel-action button,
+.edit-rent-page__btn-cancel {
+    background-color: #f1f5f9;
+    color: #475569;
+    width: 100%;
+    border: 1px solid transparent; /* чтобы размер не прыгал */
+}
+
+.edit-rent-page__cancel-action button:hover:not(:disabled),
+.edit-rent-page__btn-cancel:hover:not(:disabled) {
+    background-color: #e2e8f0;
+}

@@ -1,0 +1,130 @@
+.car-select-dropdown {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.car-select-dropdown__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.car-select-dropdown__trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    user-select: none;
+}
+
+.car-select-dropdown__trigger:hover {
+    border-color: #94a3b8;
+}
+
+.car-select-dropdown__trigger--open {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.car-select-dropdown__display {
+    font-size: 0.95rem;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.car-select-dropdown__arrow {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-left: 8px;
+}
+
+/* Выпадающее меню */
+.car-select-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    padding: 6px;
+}
+
+/* Строка внутреннего поиска */
+.car-select-dropdown__search {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 6px;
+}
+
+.car-select-dropdown__search:focus {
+    border-color: #3b82f6;
+}
+
+/* Список опций с фиксированной высотой и скроллом */
+.car-select-dropdown__options {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+/* Элемент списка (опция) */
+.car-select-dropdown__option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.car-select-dropdown__option:hover {
+    background-color: #f1f5f9;
+}
+
+.car-select-dropdown__option--selected {
+    background-color: #eff6ff;
+}
+
+.car-select-dropdown__option-name {
+    font-size: 0.9rem;
+    color: #0f172a;
+}
+
+.car-select-dropdown__option-plate {
+    font-size: 0.8rem;
+    font-family: monospace;
+    color: #64748b;
+    background-color: #f8fafc;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Системные состояния внутри списка */
+.car-select-dropdown__loading,
+.car-select-dropdown__empty {
+    padding: 12px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #64748b;
+}

@@ -20,3 +20,8 @@
     margin: 0 0.5rem;
     font-size: 0.7rem;
 }
+
+.my-rents-page__modal { text-align: center; padding: 10px 20px; }
+.my-rents-page__modal h2 { margin-top: 0; margin-bottom: 16px; color: #0f172a; }
+.my-rents-page__modal p { margin-bottom: 24px; color: #475569; }
+.my-rents-page__modal-actions { display: flex; justify-content: center; gap: 12px; }
