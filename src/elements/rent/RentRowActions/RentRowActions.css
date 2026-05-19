@@ -1,0 +1,45 @@
+.rent-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.rent-row-actions__btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #334155;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.rent-row-actions__btn:disabled {
+    background-color: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.rent-row-actions__btn--update:hover:not(:disabled) {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.rent-row-actions__btn--delete:hover:not(:disabled) {
+    border-color: #dc2626;
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.rent-row-actions__btn--pay:hover:not(:disabled) {
+    border-color: #16a34a;
+    background-color: #f0fdf4;
+    color: #16a34a;
+}

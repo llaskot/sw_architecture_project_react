@@ -3,8 +3,8 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux'; // Добавь useSelector
 import {openModal, logoutUser} from '../../slices/authSlice'; // Добавь logout
 import {type RootState} from '../../app/store'; // Импорт типа состояния
-import { Link } from 'react-router-dom';
-import { type AppDispatch } from '../../app/store';
+import {Link} from 'react-router-dom';
+import {type AppDispatch} from '../../app/store';
 
 const Header: React.FC = () => {
     const {t, i18n} = useTranslation();
@@ -34,25 +34,37 @@ const Header: React.FC = () => {
                     <button onClick={() => changeLanguage('uk')}>UK</button>
                 </div>
                 {user ? (
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
                         <span>
                             {t('header.username')}:
-                                {/* Оборачиваем логин в Link */}
-                            <Link to="/profile" style={{ marginLeft: '5px', fontWeight: 'bold', color: '#007bff', textDecoration: 'none' }}>
+                            {/* Оборачиваем логин в Link */}
+                            <Link to="/profile" style={{
+                                marginLeft: '5px',
+                                fontWeight: 'bold',
+                                color: '#007bff',
+                                textDecoration: 'none'
+                            }}>
                                 {user.first_name}
                             </Link>
                         </span>
 
+
+                        {/* Link to the user rental history page */}
+                        <Link to="/my-rents" style={{color: '#007bff', textDecoration: 'none'}}>
+                            {t('header.myRents', 'My Rentals')}
+                        </Link>
+
+
                         <button
                             onClick={() => dispatch(logoutUser())}
-                            style={{ cursor: 'pointer', color: '#d9534f' }}
+                            style={{cursor: 'pointer', color: '#d9534f'}}
                         >
                             {t('logout')}
                         </button>
 
                     </div>
                 ) : (
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
                         <button onClick={() => dispatch(openModal('signIn'))}>
                             {t('header.signIn')}
                         </button>

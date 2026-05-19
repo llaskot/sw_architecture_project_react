@@ -1,0 +1,22 @@
+.my-rents-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.my-rents-page__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.02em;
+}
+
+.my-rents-page__cell{
+    margin: 0 0.5rem;
+    font-size: 0.7rem;
+}
