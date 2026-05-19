@@ -22,7 +22,7 @@ const MyRentsPage: React.FC = () => {
     // Pagination states
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalItems, setTotalItems] = useState<number>(0);
-    const limit = 3;
+    const limit = 10;
 
 // Data and loading states
     const [rents, setRents] = useState<RentRead[]>([]);

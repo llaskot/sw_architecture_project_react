@@ -15,6 +15,7 @@ const Header: React.FC = () => {
 
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
+        localStorage.setItem('appLanguage', lng);
     };
 
     return (
@@ -30,8 +31,34 @@ const Header: React.FC = () => {
             </div>
             <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
                 <div style={{display: 'flex', gap: '5px'}}>
-                    <button onClick={() => changeLanguage('en')}>EN</button>
-                    <button onClick={() => changeLanguage('uk')}>UK</button>
+                    <button
+                        onClick={() => changeLanguage('en')}
+                        style={{
+                            fontWeight: i18n.language === 'en' ? 'bold' : 'normal',
+                            backgroundColor: i18n.language === 'en' ? '#007bff' : '#f8f9fa',
+                            color: i18n.language === 'en' ? '#fff' : '#000',
+                            border: '1px solid #ccc',
+                            padding: '4px 8px',
+                            cursor: 'pointer',
+                            borderRadius: '4px'
+                        }}
+                    >
+                        EN
+                    </button>
+                    <button
+                        onClick={() => changeLanguage('uk')}
+                        style={{
+                            fontWeight: i18n.language === 'uk' ? 'bold' : 'normal',
+                            backgroundColor: i18n.language === 'uk' ? '#007bff' : '#f8f9fa',
+                            color: i18n.language === 'uk' ? '#fff' : '#000',
+                            border: '1px solid #ccc',
+                            padding: '4px 8px',
+                            cursor: 'pointer',
+                            borderRadius: '4px'
+                        }}
+                    >
+                        UK
+                    </button>
                 </div>
                 {user ? (
                     <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>

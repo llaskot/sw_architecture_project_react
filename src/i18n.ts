@@ -155,8 +155,22 @@ const resources = {
                     carLabel: "Assigned Vehicle",
                     successUpdate: "Rental agreement updated successfully!",
                     submitUpdateBtn: "Save Changes",
-                    errorUpdate: "Failed to update the rental agreement. Please check selected parameters."
+                    errorUpdate: "Failed to update the rental agreement. Please check selected parameters.",
+                    errorLoad: "Failed to load rental details",
+                    errorValidation: "Please verify all required fields",
+                    success: "Rental updated successfully!",
+                    successTitle: "Rental updated!",
+                    successText: "Changes have been saved. You can return to your bookings.",
+                    backToList: "Back to rentals list",
+                    notFound: "Rental ID not found"
+                },
+                delete: {
+                    title: "Confirm Deletion",
+                    text: "Are you sure you want to delete this order? This action cannot be undone.",
+                    confirmBtn: "Yes, delete",
+                    error: "Failed to delete the order"
                 }
+
             },
             guest: "Guest",
 
@@ -315,7 +329,20 @@ const resources = {
                     carLabel: "Призначений автомобіль",
                     successUpdate: "Договір оренди успішно оновлено!",
                     submitUpdateBtn: "Зберегти зміни",
-                    errorUpdate: "Не вдалося оновити договір оренди. Перевірте вказані параметри."
+                    errorUpdate: "Не вдалося оновити договір оренди. Перевірте вказані параметри.",
+                    errorLoad: "Помилка завантаження даних оренди",
+                    errorValidation: "Будь ласка, перевірте всі обов'язкові поля",
+                    success: "Оренду успішно оновлено!",
+                    successTitle: "Оренду успішно оновлено!",
+                    successText: "Зміни збережено. Ви можете повернутися до списку своїх бронювань.",
+                    backToList: "До списку оренд",
+                    notFound: "Ідентифікатор оренди не знайдено"
+                },
+                delete: {
+                    title: "Підтвердження видалення",
+                    text: "Ви впевнені, що хочете видалити це замовлення? Цю дію неможливо скасувати.",
+                    confirmBtn: "Так, видалити",
+                    error: "Помилка видалення замовлення"
                 }
             },
             guest: "Гість"
@@ -323,11 +350,14 @@ const resources = {
     }
 };
 
+const savedLanguage = localStorage.getItem('appLanguage') || 'en';
+
 i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "uk",
+        lng: savedLanguage, // <-- Вставляем сюда
+        fallbackLng: "en",
         interpolation: {
             escapeValue: false
         }
