@@ -16,6 +16,8 @@
 .lang-switcher {
     display: flex;
     gap: 5px;
+    margin-right: 3rem;
+    align-items: end;
 }
 
 .lang-btn {
@@ -36,10 +38,28 @@
     border-color: #007bff;
 }
 
-.user-menu,
+.user-menu {
+    display: grid;
+    gap: 10px;
+    inline-size: fit-content;
+    align-items: center;
+}
 .guest-menu {
     display: flex;
     gap: 10px;
+    align-items: center;
+}
+
+.right-side{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.additional  {
+    display: grid;
+    gap: 10px;
+    inline-size: fit-content;
     align-items: center;
 }
 
@@ -54,4 +74,16 @@
 .logout-btn {
     cursor: pointer;
     color: #d9534f;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dashboard-link {
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #007bff;
 }

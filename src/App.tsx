@@ -10,7 +10,8 @@ import CarPage from "./pages/CarPage/CarPage.tsx";
 import RentPage from "./pages/RentPage/RentPage.tsx";
 import MyRentsPage from "./pages/MyRentsPage/MyRentsPage.tsx";
 import EditRentPage from "./pages/EditRentPage/EditRentPage.tsx";
-import './App.css'; // Ensure App.css is imported
+import './App.css';
+import AdminPage from "./pages/AdminPage/AdminPage.tsx"; // Ensure App.css is imported
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -38,6 +39,8 @@ const App: React.FC = () => {
                         path="/my-rents"
                         element={user ? <MyRentsPage /> : <Navigate to="/" replace />}
                     />
+
+                    <Route path="/admin" element={<AdminPage />} />
 
                     {/* Profile page */}
                     <Route
