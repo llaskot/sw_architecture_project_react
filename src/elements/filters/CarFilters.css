@@ -1,0 +1,206 @@
+.car-filters-container {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.car-filters-search-row {
+    display: flex;
+    gap: 12px;
+}
+
+.car-filters-search-input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.car-filters-search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.car-filters-clear-btn {
+    padding: 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ff4d4f;
+    background-color: #fff;
+    color: #ff4d4f;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.car-filters-clear-btn:hover {
+    background-color: #ff4d4f;
+    color: #fff;
+}
+
+.car-filters-columns {
+    display: flex;
+    gap: 20px;
+    /* Ключевое изменение: растягиваем дочерние элементы, чтобы они были одной высоты */
+    align-items: stretch;
+}
+
+.car-filters-categories-box {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.car-filters-categories-title {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.car-filters-categories-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.car-filters-category-chip {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #007bff;
+    cursor: pointer;
+    background-color: #fff;
+    color: #007bff;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.car-filters-category-chip--active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.car-filters-category-chip:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.car-filters-category-chip--active:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.car-filters-brands-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.car-filters-brands-trigger {
+    width: 100%;
+    /* Добавлена высота 100%, чтобы заполнять весь растянутый флекс-контейнер */
+    height: 100%;
+    min-height: 52px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+    gap: 8px;
+    /* Убираем стандартный box-sizing, чтобы padding не ломал ширину */
+    box-sizing: border-box;
+}
+
+.car-filters-brands-placeholder {
+    color: #aaa;
+    font-weight: bold;
+}
+
+.car-filters-brand-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f0f2f5;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid #dcdfe6;
+}
+
+.car-filters-brand-chip-remove {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #909399;
+    padding: 0;
+}
+
+.car-filters-brand-chip-remove:hover {
+    color: #ff4d4f;
+}
+
+.car-filters-brands-arrow {
+    margin-left: auto;
+    color: #666;
+}
+
+.car-filters-brands-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    width: max-content;
+    max-width: 66vw;
+    min-width: 100%;
+    margin-top: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.car-filters-brands-search-wrapper {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.car-filters-brands-search-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box; /* Предотвращает вылезание инпута за пределы */
+}
+
+.car-filters-brands-search-input:focus {
+    border-color: #007bff;
+}
+
+.car-filters-brands-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.car-filters-brand-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    border-radius: 4px;
+}
+
+.car-filters-brand-label:hover {
+    background-color: #f8f9fa;
+}

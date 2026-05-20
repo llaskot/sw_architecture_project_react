@@ -1,0 +1,34 @@
+.home-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.home-page-loading {
+    text-align: center;
+    padding: 50px;
+}
+
+.home-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.home-page-footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+
+.home-page-pagination-btn {
+    padding: 8px 16px;
+}
+
+@media (max-width: 768px) {
+    .home-page-grid {
+        grid-template-columns: 1fr;
+    }
+}

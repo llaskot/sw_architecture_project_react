@@ -6,6 +6,7 @@ import type { AppDispatch, RootState } from '../../app/store';
 import Input from '../input/Input';
 import PasswordInput from '../input/PasswordInput';
 import SubmitButton from '../button/SubmitButton';
+import './ConfirmForgotPasswordForm.css';
 
 const ConfirmForgotPasswordForm: React.FC = () => {
     const { t } = useTranslation();
@@ -20,19 +21,19 @@ const ConfirmForgotPasswordForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Валидация
+        // Validation
         if (password.length < 6) {
-            setLocalError(t('auth.errorMinLength')); // Минимум 6 символов
+            setLocalError(t('auth.errorMinLength')); // Minimum 6 characters
             return;
         }
 
         if (password !== confirmPass) {
-            setLocalError(t('auth.errorPasswordMismatch')); // Пароли не совпадают
+            setLocalError(t('auth.errorPasswordMismatch')); // Passwords do not match
             return;
         }
 
         if (!code) {
-            setLocalError(t('auth.errorCodeRequired')); // Код обязателен
+            setLocalError(t('auth.errorCodeRequired')); // Code is required
             return;
         }
 
@@ -40,8 +41,8 @@ const ConfirmForgotPasswordForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px', minWidth: '320px' }}>
-            <h2 style={{ textAlign: 'center' }}>{t('auth.confirmResetTitle')}</h2>
+        <form onSubmit={handleSubmit} className="confirm-forgot-form">
+            <h2 className="confirm-forgot-title">{t('auth.confirmResetTitle')}</h2>
 
             <Input
                 label={t('auth.codeLabel')}
@@ -79,7 +80,7 @@ const ConfirmForgotPasswordForm: React.FC = () => {
 
             <span
                 onClick={() => dispatch(openModal('forgotPassword'))}
-                style={{ textAlign: 'center', color: '#007bff', cursor: 'pointer', fontSize: '0.9rem' }}
+                className="confirm-forgot-link"
             >
                 {t('auth.backToCode')}
             </span>

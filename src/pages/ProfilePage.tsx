@@ -1,6 +1,10 @@
+
+
+
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {userApi} from "../api/userApi.ts";
+import './ProfilePage.css';
 
 interface UserProfile {
     _id: string;
@@ -47,7 +51,7 @@ const ProfilePage: React.FC = () => {
     const handleSave = async () => {
         try {
             setLoading(true);
-            setError(''); // Сбрасываем старую ошибку перед запросом
+            setError(''); // Reset old error before request
 
             const cleanData = Object.fromEntries(
                 Object.entries(formData).filter(([_, value]) => value !== '')
@@ -65,71 +69,71 @@ const ProfilePage: React.FC = () => {
     };
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div style={{ color: 'red' }}>{error}</div>;
+    if (error) return <div className="profile-error">{error}</div>;
     if (!profile) return null;
 
     return (
-        <div style={{ maxWidth: '500px', margin: '20px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', fontFamily: 'sans-serif' }}>
-            <h2 style={{ borderBottom: '2px solid #eee', paddingBottom: '10px' }}>{t('profile.title')}</h2>
+        <div className="profile-card">
+            <h2 className="profile-title">{t('profile.title')}</h2>
 
             <p><strong>ID:</strong> {profile._id}</p>
             <p><strong>{t('profile.role')}:</strong> {getRoles(profile)}</p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div className="profile-fields-container">
                 {/* Email */}
-                <label style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 'bold', marginBottom: '5px' }}>{t('profile.email')}</span>
+                <label className="profile-label">
+                    <span className="profile-label-text">{t('profile.email')}</span>
                     <input
                         type="email"
                         disabled={!isEditing}
                         value={formData.email || ''}
                         onChange={e => setFormData({...formData, email: e.target.value})}
-                        style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        className="profile-input"
                     />
                 </label>
 
                 {/* Login */}
-                <label style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 'bold', marginBottom: '5px' }}>{t('profile.login')}</span>
+                <label className="profile-label">
+                    <span className="profile-label-text">{t('profile.login')}</span>
                     <input
                         type="text"
                         disabled={!isEditing}
                         value={formData.login || ''}
                         onChange={e => setFormData({...formData, login: e.target.value})}
-                        style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        className="profile-input"
                     />
                 </label>
 
                 {/* First Name */}
-                <label style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 'bold', marginBottom: '5px' }}>{t('profile.first_name')}</span>
+                <label className="profile-label">
+                    <span className="profile-label-text">{t('profile.first_name')}</span>
                     <input
                         type="text"
                         disabled={!isEditing}
                         value={formData.first_name || ''}
                         onChange={e => setFormData({...formData, first_name: e.target.value})}
-                        style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        className="profile-input"
                     />
                 </label>
 
                 {/* Last Name */}
-                <label style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 'bold', marginBottom: '5px' }}>{t('profile.last_name')}</span>
+                <label className="profile-label">
+                    <span className="profile-label-text">{t('profile.last_name')}</span>
                     <input
                         type="text"
                         disabled={!isEditing}
                         value={formData.last_name || ''}
                         onChange={e => setFormData({...formData, last_name: e.target.value})}
-                        style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        className="profile-input"
                     />
                 </label>
             </div>
 
-            <div style={{ marginTop: '25px', display: 'flex', gap: '10px' }}>
+            <div className="profile-actions">
                 {!isEditing ? (
                     <button
                         onClick={() => setIsEditing(true)}
-                        style={{ padding: '10px 20px', cursor: 'pointer' }}
+                        className="profile-btn-edit"
                     >
                         {t('profile.edit')}
                     </button>
@@ -137,13 +141,13 @@ const ProfilePage: React.FC = () => {
                     <>
                         <button
                             onClick={handleSave}
-                            style={{ padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            className="profile-btn-save"
                         >
                             {t('profile.save')}
                         </button>
                         <button
                             onClick={() => { setIsEditing(false); setFormData(profile); }}
-                            style={{ padding: '10px 20px', backgroundColor: '#f44336', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            className="profile-btn-cancel"
                         >
                             {t('profile.cancel')}
                         </button>

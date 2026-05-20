@@ -5,6 +5,7 @@ import { confirmRegistration, clearRegistrationPending } from '../../slices/auth
 import type { AppDispatch, RootState } from '../../app/store';
 import Input from '../input/Input';
 import SubmitButton from '../button/SubmitButton';
+import './ConfirmRegistrationForm.css';
 
 const ConfirmRegistrationForm: React.FC = () => {
     const { t } = useTranslation();
@@ -18,7 +19,7 @@ const ConfirmRegistrationForm: React.FC = () => {
         e.preventDefault();
         setValidationError('');
 
-        // Валидация: код должен быть ровно 6 символов (обычно цифры)
+        // Validation: code must be exactly 6 characters (usually digits)
         if (code.length !== 6) {
             setValidationError(t('confirm.errorInvalidCode'));
             return;
@@ -28,19 +29,19 @@ const ConfirmRegistrationForm: React.FC = () => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', minWidth: '320px' }}>
-            <h2 style={{ textAlign: 'center', marginBottom: '5px' }}>{t('confirm.title')}</h2>
-            <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#555', marginBottom: '10px' }}>
+        <div className="confirm-registration-container">
+            <h2 className="confirm-registration-title">{t('confirm.title')}</h2>
+            <p className="confirm-registration-text">
                 {t('signUp.checkEmail')}
             </p>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <form onSubmit={handleSubmit} className="confirm-registration-form">
                 <Input
                     label={t('confirm.codeLabel')}
                     type="text"
                     maxLength={6}
                     value={code}
-                    onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))} // Только цифры
+                    onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))} // Only digits
                     error={validationError || error || ''}
                     placeholder="123456"
                 />
@@ -50,10 +51,10 @@ const ConfirmRegistrationForm: React.FC = () => {
                 </SubmitButton>
             </form>
 
-            <div style={{ marginTop: '10px', textAlign: 'center' }}>
+            <div className="confirm-registration-footer">
                 <span
                     onClick={() => dispatch(clearRegistrationPending())}
-                    style={{ color: '#007bff', cursor: 'pointer', fontSize: '0.85rem', textDecoration: 'underline' }}
+                    className="confirm-registration-link"
                 >
                     {t('profile.cancel')} / {t('signUp.title')}
                 </span>

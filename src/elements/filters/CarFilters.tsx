@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type Brand } from '../../api/carsApi';
+import './CarFilters.css'; // Импортируем вынесенные стили
 
 interface CarFiltersProps {
     categories: string[];
@@ -56,42 +57,35 @@ const CarFilters: React.FC<CarFiltersProps> = ({
     }, [brands, selectedBrands]);
 
     return (
-        <section style={{ marginBottom: '30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <section className="car-filters-container">
 
             {/* Search + Clear All logic */}
-            <div style={{ display: 'flex', gap: '12px' }}>
+            <div className="car-filters-search-row">
                 <input
                     type="text"
                     placeholder={t('home.searchPlaceholder', 'Search...')}
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd', outline: 'none' }}
+                    className="car-filters-search-input"
                 />
                 <button
                     onClick={onClearAll}
-                    style={{
-                        padding: '0 20px', borderRadius: '8px', border: '1px solid #ff4d4f',
-                        backgroundColor: '#fff', color: '#ff4d4f', cursor: 'pointer', fontWeight: 'bold'
-                    }}
+                    className="car-filters-clear-btn"
                 >
                     {t('home.clearAll', 'Clear All')}
                 </button>
             </div>
 
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+            <div className="car-filters-columns">
                 {/* Category chips */}
-                <div style={{ flex: 1, padding: '15px', border: '1px solid #eee', borderRadius: '8px', backgroundColor: '#fff' }}>
-                    <strong style={{ display: 'block', marginBottom: '10px' }}>{t('home.categories', 'Categories')}</strong>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                <div className="car-filters-categories-box">
+                    <strong className="car-filters-categories-title">{t('home.categories', 'Categories')}</strong>
+                    <div className="car-filters-categories-chips">
                         {categories.map(cat => (
                             <button
                                 key={cat}
                                 onClick={() => onCategoryToggle(cat)}
-                                style={{
-                                    padding: '6px 12px', borderRadius: '20px', border: '1px solid #007bff', cursor: 'pointer',
-                                    backgroundColor: selectedCategories.includes(cat) ? '#007bff' : '#fff',
-                                    color: selectedCategories.includes(cat) ? '#fff' : '#007bff', fontSize: '13px'
-                                }}
+                                className={`car-filters-category-chip ${selectedCategories.includes(cat) ? 'car-filters-category-chip--active' : ''}`}
                             >
                                 {cat}
                             </button>
@@ -100,64 +94,55 @@ const CarFilters: React.FC<CarFiltersProps> = ({
                 </div>
 
                 {/* Brands dropdown with internal chips */}
-                <div style={{ flex: 1, position: 'relative' }} ref={dropdownRef}>
+                <div className="car-filters-brands-wrapper" ref={dropdownRef}>
                     <div
                         onClick={() => setIsBrandOpen(!isBrandOpen)}
-                        style={{
-                            width: '100%', minHeight: '52px', padding: '10px 15px', borderRadius: '8px', border: '1px solid #eee',
-                            backgroundColor: '#fff', cursor: 'pointer', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px'
-                        }}
+                        className="car-filters-brands-trigger"
                     >
                         {selectedBrandObjects.length === 0 && (
-                            <span style={{ color: '#aaa', fontWeight: 'bold' }}>{t('home.brands', 'Select Brands')}</span>
+                            <span className="car-filters-brands-placeholder">{t('home.brands', 'Select Brands')}</span>
                         )}
 
                         {selectedBrandObjects.map(brand => (
                             <div
                                 key={brand._id!}
                                 onClick={(e) => e.stopPropagation()}
-                                style={{
-                                    display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#f0f2f5',
-                                    padding: '4px 10px', borderRadius: '6px', fontSize: '13px', border: '1px solid #dcdfe6'
-                                }}
+                                className="car-filters-brand-chip"
                             >
                                 <span>{brand.name}</span>
                                 <button
                                     onClick={() => onBrandToggle(brand._id!)}
-                                    style={{ border: 'none', background: 'none', cursor: 'pointer', fontWeight: 'bold', color: '#909399' }}
+                                    className="car-filters-brand-chip-remove"
                                 >
                                     ×
                                 </button>
                             </div>
                         ))}
-                        <span style={{ marginLeft: 'auto', color: '#666' }}>{isBrandOpen ? '▲' : '▼'}</span>
+                        <span className="car-filters-brands-arrow">{isBrandOpen ? '▲' : '▼'}</span>
                     </div>
 
                     {isBrandOpen && (
-                        <div style={{
-                            position: 'absolute', top: '100%', left: 0, zIndex: 100, width: 'max-content', maxWidth: '66vw', minWidth: '100%',
-                            marginTop: '5px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
-                        }}>
-                            <div style={{ padding: '10px', borderBottom: '1px solid #eee' }}>
+                        <div className="car-filters-brands-menu">
+                            <div className="car-filters-brands-search-wrapper">
                                 <input
                                     type="text"
                                     placeholder={t('home.filterBrandSearch', 'Quick search...')}
                                     value={brandSearch}
                                     onChange={(e) => setBrandSearch(e.target.value)}
-                                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', outline: 'none' }}
+                                    className="car-filters-brands-search-input"
                                     onClick={(e) => e.stopPropagation()}
                                 />
                             </div>
 
-                            <div style={{ maxHeight: '300px', overflowY: 'auto', padding: '5px' }}>
+                            <div className="car-filters-brands-list">
                                 {filteredBrands.map(brand => (
-                                    <label key={brand._id!} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 12px', cursor: 'pointer' }}>
+                                    <label key={brand._id!} className="car-filters-brand-label">
                                         <input
                                             type="checkbox"
                                             checked={selectedBrands.includes(brand._id!)}
                                             onChange={() => onBrandToggle(brand._id!)}
                                         />
-                                        <span style={{ fontSize: '14px' }}>{brand.name}</span>
+                                        <span>{brand.name}</span>
                                     </label>
                                 ))}
                             </div>

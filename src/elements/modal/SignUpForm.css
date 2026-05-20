@@ -1,39 +1,62 @@
 .signup-form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    min-width: 320px;
+    max-height: 75vh;      /* 3/4 of display height */
+    overflow-y: auto;      /* enable vertical scroll */
+    padding-right: 12px;   /* space for scrollbar */
+    padding-left: 4px;
+    scrollbar-width: thin; /* optional: makes scrollbar less bulky in Firefox */
 }
 
-.signup-form__server-error {
+.signup-form-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.signup-form-error {
     color: red;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin: 0;
 }
 
-.signup-form__success-message {
-    color: green;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
+.signup-form-password-wrapper {
+    position: relative;
 }
 
-.signup-form__footer {
-    margin-top: 1rem;
-    font-size: 0.9rem;
+.signup-form-password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
 }
 
-.signup-form__link {
+.signup-form-footer {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.signup-form-link {
     color: #007bff;
     cursor: pointer;
-    font-weight: bold;
+    text-decoration: underline;
 }
 
 /* Красим все поля ввода формы в один цвет */
 .signup-form input {
-    background-color: #f8fafc !important;
-    border: 1px solid #cbd5e1 !important;
-    color: #334155 !important;
+    background-color: #f8f9fa !important;
+    border: 1px solid #ced4da !important;
+    color: #495057 !important;
 }
 
 .signup-form input:focus {
-    border-color: #2563eb !important;
-    outline: none;
+    background-color: #fff !important;
+    border-color: #80bdff !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
 }

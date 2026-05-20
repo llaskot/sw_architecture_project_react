@@ -5,6 +5,7 @@ import { registerUser, openModal } from '../../slices/authSlice';
 import type {AppDispatch, RootState} from '../../app/store';
 import Input from '../input/Input';
 import SubmitButton from '../button/SubmitButton';
+import './SignUpForm.css';
 
 const SignUpForm: React.FC = () => {
     const { t } = useTranslation();
@@ -70,20 +71,10 @@ const SignUpForm: React.FC = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '15px',
-                minWidth: '320px',
-                maxHeight: '75vh',      // 3/4 of display height
-                overflowY: 'auto',     // enable vertical scroll
-                paddingRight: '12px',  // space for scrollbar
-                paddingLeft: '4px',
-                scrollbarWidth: 'thin' // optional: makes scrollbar less bulky in Firefox
-            }}
-        >            <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>{t('signUp.title')}</h2>
+            className="signup-form"
+        >            <h2 className="signup-form-title">{t('signUp.title')}</h2>
 
-            {error && <p style={{ color: 'red', fontSize: '0.85rem', margin: 0 }}>{error}</p>}
+            {error && <p className="signup-form-error">{error}</p>}
 
             <Input
                 label={t('signUp.emailLabel')}
@@ -121,7 +112,7 @@ const SignUpForm: React.FC = () => {
                 required
             />
 
-            <div style={{ position: 'relative' }}>
+            <div className="signup-form-password-wrapper">
                 <Input
                     label={t('signUp.passwordLabel')}
                     type={showPassword ? 'text' : 'password'}
@@ -133,15 +124,7 @@ const SignUpForm: React.FC = () => {
                 <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    style={{
-                        position: 'absolute',
-                        right: '10px',
-                        top: '35px',
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '1.2rem'
-                    }}
+                    className="signup-form-password-toggle"
                 >
                     {showPassword ? '🔒' : '👁️'}
                 </button>
@@ -160,11 +143,11 @@ const SignUpForm: React.FC = () => {
                 {t('signUp.submitButton')}
             </SubmitButton>
 
-            <p style={{ textAlign: 'center', fontSize: '0.9rem', marginTop: '10px' }}>
+            <p className="signup-form-footer">
                 {t('signUp.alreadyHaveAccount')}{' '}
                 <span
                     onClick={() => dispatch(openModal('signIn'))}
-                    style={{ color: '#007bff', cursor: 'pointer', textDecoration: 'underline' }}
+                    className="signup-form-link"
                 >
                     {t('signUp.signInLink')}
                 </span>

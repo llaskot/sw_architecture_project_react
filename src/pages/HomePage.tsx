@@ -6,6 +6,7 @@ import { fetchCategoriesThunk, fetchBrandsThunk } from '../slices/carsSlice';
 import { getCars, type Car } from '../api/carsApi';
 import CarFilters from '../elements/filters/CarFilters';
 import CarCard from "../elements/carCard/CarCard.tsx";
+import './HomePage.css';
 
 const HomePage: React.FC = () => {
     const { t } = useTranslation();
@@ -31,7 +32,7 @@ const HomePage: React.FC = () => {
     const [page, setPage] = useState(1);
     const limit = 10;
 
-// Initial reference data fetch
+    // Initial reference data fetch
     useEffect(() => {
         // Only fetch if not loaded yet and not currently loading
         if (!categoriesLoaded && !loadingCategories) {
@@ -100,7 +101,7 @@ const HomePage: React.FC = () => {
     const totalPages = Math.ceil(total / limit) || 1;
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
+        <div className="home-page-container">
             <CarFilters
                 categories={categories}
                 selectedCategories={selectedCategories}
@@ -114,19 +115,31 @@ const HomePage: React.FC = () => {
             />
 
             {loadingCars ? (
-                <div style={{ textAlign: 'center', padding: '50px' }}>{t('home.loading')}</div>
+                <div className="home-page-loading">{t('home.loading')}</div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="home-page-grid">
                     {cars.map((car) => (
                         <CarCard key={car._id} car={car} />
                     ))}
                 </div>
             )}
 
-            <footer style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', gap: '15px', alignItems: 'center' }}>
-                <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} style={{ padding: '8px 16px' }}>{t('home.prev')}</button>
+            <footer className="home-page-footer">
+                <button
+                    disabled={page <= 1}
+                    onClick={() => setPage(p => p - 1)}
+                    className="home-page-pagination-btn"
+                >
+                    {t('home.prev')}
+                </button>
                 <span>{t('home.pageOf', { page, total: totalPages })}</span>
-                <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)} style={{ padding: '8px 16px' }}>{t('home.next')}</button>
+                <button
+                    disabled={page >= totalPages}
+                    onClick={() => setPage(p => p + 1)}
+                    className="home-page-pagination-btn"
+                >
+                    {t('home.next')}
+                </button>
             </footer>
         </div>
     );

@@ -1,26 +1,26 @@
 import React from 'react';
-import Button from './Button';
 import { type ButtonHTMLAttributes } from 'react';
+import Button from './Button';
+import './SubmitButton.css';
 
-// Мы наследуем всё от базовой кнопки
+// We inherit everything from the base button, adding only the loading state flag
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     loading?: boolean;
 }
-const SubmitButton: React.FC<SubmitButtonProps> = ({ loading, ...props }) => {
+
+const SubmitButton: React.FC<SubmitButtonProps> = ({ children, loading, ...props }) => {
     return (
         <Button
             {...props}
-            disabled={props.disabled || loading}
-            type="submit"     // Всегда submit для отправки форм
+            type="submit" // Always submit for form submission
+            className="submit-button"
             style={{
-                backgroundColor: (props.disabled || loading) ? '#ccc' : '#28a745',
+                backgroundColor: (props.disabled || loading) ? '#aaa' : '#28a745',
                 cursor: (props.disabled || loading) ? 'not-allowed' : 'pointer',
-                fontWeight: 'bold',
-                marginTop: '1rem',
                 ...props.style
             }}
         >
-            {props.children}
+            {loading ? '...' : children}
         </Button>
     );
 };
