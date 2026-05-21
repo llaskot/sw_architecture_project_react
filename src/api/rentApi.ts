@@ -19,6 +19,16 @@ export interface RentUpdateRequest {
     days_qty?: number | null;
 }
 
+export interface GetAdminRentsParams {
+    stage?: string[] | null;
+    car_id?: string | null;
+    client_id?: string | null;
+    hide_inactive?: boolean | null;
+    sort_date?: SortOrder;
+    page?: number;
+    limit?: number;
+}
+
 export interface RentClient {
     _id: string;
     email: string;
@@ -120,4 +130,36 @@ export const deleteRent = async (rentId: string): Promise<void> => {
     return await apiClient(`/rent/${rentId}`, {
         method: 'DELETE',
     });
+};
+
+export const getAllAdminRents = async (params: GetAdminRentsParams): Promise<AllRentsResponse> => {
+    const queryParts: string[] = [];
+
+    if (params.page) {
+        queryParts.push(`page=${params.page}`);
+    }
+    if (params.limit) {
+        queryParts.push(`limit=${params.limit}`);
+    }
+    if (params.sort_date && params.sort_date !== 'none') {
+        queryParts.push(`sort_date=${params.sort_date}`);
+    }
+    if (params.car_id) {
+        queryParts.push(`car_id=${encodeURIComponent(params.car_id)}`);
+    }
+    if (params.client_id) {
+        queryParts.push(`client_id=${encodeURIComponent(params.client_id)}`);
+    }
+    if (params.hide_inactive !== undefined && params.hide_inactive !== null) {
+        queryParts.push(`hide_inactive=${params.hide_inactive}`);
+    }
+
+    if (params.stage && params.stage.length > 0) {
+        params.stage.forEach((s) => {
+            queryParts.push(`stage=${encodeURIComponent(s)}`);
+        });
+    }
+
+    const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
+    return await apiClient(`/rent/admin${queryString}`);
 };
