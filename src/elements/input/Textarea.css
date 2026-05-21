@@ -1,0 +1,37 @@
+/* Wrapper container for the textarea and its layout elements */
+.textarea-wrapper {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Label styling matching the default Input field design system */
+.textarea-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Base custom textarea formatting with default border and state variations */
+.custom-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    min-height: 80px;
+    resize: vertical;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Error state modifier to visually alert validation failure */
+.custom-textarea--error {
+    border-color: red;
+}
+
+/* Error text layout positioned cleanly beneath the textarea block */
+.textarea-error-msg {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+}

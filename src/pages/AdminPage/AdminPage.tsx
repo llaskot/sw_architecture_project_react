@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {getAllAdminRents, type GetAdminRentsParams, getRentStages} from '../../api/rentApi';
+import {getAllAdminRents, type GetAdminRentsParams, getRentStages, deleteRent} from '../../api/rentApi';
 import DataTable from '../../elements/DataTable/DataTable';
 import Pagination from '../../elements/Pagination/Pagination';
 import RentFilters from '../../elements/rent/RentFilters/RentFilters';
 import CarSelectDropdown from '../../elements/rent/CarSelectDropdown/CarSelectDropdown';
+import {useTranslation} from 'react-i18next';
 import './AdminPage.css';
 import UserSelectDropdown from "../../elements/UserSelectDropdown/UserSelectDropdown.tsx";
+import ChangeStageModal from "../../elements/rent/ChangeStageModal/ChangeStageModal.tsx";
+import DeleteModal from "../../elements/modal/DeleteModal.tsx";
 
 const AdminPage: React.FC = () => {
+    const {t} = useTranslation();
     const [rents, setRents] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -23,7 +27,10 @@ const AdminPage: React.FC = () => {
     const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
 
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-
+    const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
+    const [isStageModalOpen, setIsStageModalOpen] = useState<boolean>(false);
+    const [selectedRentIdForStage, setSelectedRentIdForStage] = useState<string | number | null>(null);
+    const [rentToDelete, setRentToDelete] = useState<string | number | null>(null);
 
     useEffect(() => {
         const fetchStages = async () => {
@@ -62,11 +69,8 @@ const AdminPage: React.FC = () => {
         };
 
         fetchRents();
-    }, [page, limit, selectedStages, sortDate, hideInactive, selectedCarId, selectedUserId]);
+    }, [page, limit, selectedStages, sortDate, hideInactive, selectedCarId, selectedUserId, refreshTrigger]);
 
-    const handleAction = (action: string, id: number) => {
-        alert(`Action: ${action} for rent ID: ${id}`);
-    };
 
     const columns = [
         {
@@ -142,9 +146,18 @@ const AdminPage: React.FC = () => {
             header: 'Actions',
             render: (item: any) => (
                 <div className="admin-actions-group">
-                    <button className="admin-btn stage" onClick={() => handleAction('Change Stage', item.id)}>Stage
+                    <button className="admin-btn stage" onClick={() => {
+                        setSelectedRentIdForStage(item._id || item.id);
+                        setIsStageModalOpen(true);
+                    }}>
+                        {t('admin.table.stageBtn', 'Stage')}
                     </button>
-                    <button className="admin-btn delete" onClick={() => handleAction('Delete', item.id)}>Delete</button>
+                    <button
+                        className="admin-btn delete"
+                        onClick={() => setRentToDelete(item._id || item.id)}
+                    >
+                        {t('rent.actions.delete', 'Delete')}
+                    </button>
                 </div>
             )
         }
@@ -153,8 +166,7 @@ const AdminPage: React.FC = () => {
     return (
         <div className="admin-page-container">
             <div className="admin-page-content">
-                <h2>Admin Dashboard - All Rents</h2>
-
+                <h2>{t('admin.pageTitle')}</h2>
                 <div className="admin-filters-panel">
                     {/* Render inputs directly, they already contain internal labels */}
                     <RentFilters
@@ -166,7 +178,9 @@ const AdminPage: React.FC = () => {
                     />
 
                     <div className="admin-filter-item admin-filter-item--fluid">
-                        <label className="admin-filter-label">Vehicle</label>
+                        <label className="admin-filter-label">
+                            {t('admin.filters.vehicle')}
+                        </label>
                         <CarSelectDropdown
                             selectedCarId={selectedCarId}
                             onCarChange={(id) => {
@@ -177,7 +191,7 @@ const AdminPage: React.FC = () => {
                     </div>
 
                     <div className="admin-filter-item admin-filter-item--fluid">
-                        <label className="admin-filter-label">Client</label>
+                        <label className="admin-filter-label">{t('admin.filters.client')}</label>
                         <UserSelectDropdown
                             selectedUserId={selectedUserId}
                             onUserChange={(id) => {
@@ -214,7 +228,7 @@ const AdminPage: React.FC = () => {
                                     setPage(1);
                                 }}
                             />
-                            Hide Inactive
+                            {t('admin.filters.hideInactive')}
                         </label>
                     </div>
                 </div>
@@ -232,6 +246,28 @@ const AdminPage: React.FC = () => {
                     </>
                 )}
             </div>
+            {isStageModalOpen && selectedRentIdForStage !== null && (
+                <ChangeStageModal
+                    rentId={selectedRentIdForStage}
+                    isOpen={isStageModalOpen}
+                    onClose={() => {
+                        setIsStageModalOpen(false);
+                        setSelectedRentIdForStage(null);
+                    }}
+                    onSuccess={() => setRefreshTrigger(prev => prev + 1)}
+                />
+            )}
+            <DeleteModal
+                id={rentToDelete || ''}
+                isOpen={rentToDelete !== null}
+                title={t('rent.delete.title')}
+                message={t('rent.delete.text')}
+                confirmBtnText={t('rent.delete.confirmBtn')}
+                errorText={t('rent.delete.error')}
+                onDeleteApi={deleteRent}
+                onClose={() => setRentToDelete(null)}
+                onSuccess={() => setRefreshTrigger(prev => prev + 1)}
+            />
         </div>
     );
 };

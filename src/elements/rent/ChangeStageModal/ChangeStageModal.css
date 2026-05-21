@@ -1,0 +1,19 @@
+/* Container for the entire change stage form */
+.change-stage-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modal title spacing */
+.change-stage-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+/* Actions group for buttons (Cancel, Save) */
+.change-stage-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}

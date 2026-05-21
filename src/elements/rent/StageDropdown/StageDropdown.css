@@ -1,0 +1,110 @@
+/* Main wrapper for the custom dropdown */
+.stage-dropdown-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Label styling */
+.stage-dropdown-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* The clickable area that shows the selected value */
+.stage-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+/* Focus and open state for the trigger */
+.stage-dropdown-trigger--open {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Error state for the trigger */
+.stage-dropdown-trigger--error {
+    border-color: red;
+}
+
+/* Disabled state for the trigger */
+.stage-dropdown-trigger--disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+    color: #9ca3af;
+}
+
+/* Text inside the trigger */
+.stage-dropdown-display {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Dropdown arrow icon */
+.stage-dropdown-arrow {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* The pop-over menu containing options */
+.stage-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 1000; /* High z-index to stay above modal overlay */
+}
+
+/* Individual selectable option */
+.stage-dropdown-option {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+/* Hover effect on options */
+.stage-dropdown-option:hover {
+    background-color: #f3f4f6;
+}
+
+/* Currently selected option styling */
+.stage-dropdown-option--selected {
+    background-color: #ebf5ff;
+    font-weight: bold;
+    color: #1d4ed8;
+}
+
+/* Empty state styling */
+.stage-dropdown-empty {
+    padding: 0.5rem;
+    color: #6b7280;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Validation error message beneath the dropdown */
+.stage-dropdown-error-msg {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+}

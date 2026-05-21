@@ -169,8 +169,19 @@ const resources = {
                     text: "Are you sure you want to delete this order? This action cannot be undone.",
                     confirmBtn: "Yes, delete",
                     error: "Failed to delete the order"
+                },
+                stageModal:{
+                    title: "Change Rental Stage",
                 }
 
+            },
+            admin: {
+                pageTitle: "Admin Dashboard - All Rents",
+                filters: {
+                    vehicle: "Vehicle",
+                    client: "Client",
+                    hideInactive: "Hide Inactive"
+                }
             },
             guest: "Guest",
 
@@ -343,8 +354,20 @@ const resources = {
                     text: "Ви впевнені, що хочете видалити це замовлення? Цю дію неможливо скасувати.",
                     confirmBtn: "Так, видалити",
                     error: "Помилка видалення замовлення"
+                },
+                stageModal:{
+                    title: "Змінити стан замовлення",
                 }
             },
+            admin: {
+                pageTitle: "Панель адміністратора - Всі оренди",
+                filters: {
+                    vehicle: "Автомобіль",
+                    client: "Клієнт",
+                    hideInactive: "Приховати неактивні"
+                }
+            },
+
             guest: "Гість"
         }
     }

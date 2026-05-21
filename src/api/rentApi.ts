@@ -164,3 +164,15 @@ export const getAllAdminRents = async (params: GetAdminRentsParams): Promise<All
     const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
     return await apiClient(`/rent/admin${queryString}`);
 };
+
+
+export const changeRentStage = async (
+    rentId: string,
+    stage: string,
+    comment: string | null
+): Promise<RentRead> => {
+    return await apiClient(`/rent/${rentId}/${stage}`, {
+        method: 'PUT',
+        body: JSON.stringify({ comment: comment || null }),
+    });
+};

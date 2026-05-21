@@ -1,0 +1,19 @@
+.delete-modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-modal-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.delete-modal-message {
+    margin-bottom: 1.5rem;
+}
+
+.delete-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
