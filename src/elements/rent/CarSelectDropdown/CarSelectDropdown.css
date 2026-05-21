@@ -128,3 +128,12 @@
     font-size: 0.9rem;
     color: #64748b;
 }
+
+.admin-id-cell {
+    max-width: 60px; /* Makes the column strictly narrow */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: middle;
+}

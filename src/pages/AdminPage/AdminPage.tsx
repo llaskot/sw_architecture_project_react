@@ -18,7 +18,7 @@ const AdminPage: React.FC = () => {
     const [availableStages, setAvailableStages] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
     const [sortDate, setSortDate] = useState<'asc' | 'desc' | 'none'>('none');
-    const [hideInactive, setHideInactive] = useState<boolean>(false);
+    const [hideInactive, setHideInactive] = useState<boolean>(true);
 
     const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
 
@@ -70,6 +70,29 @@ const AdminPage: React.FC = () => {
 
     const columns = [
         {
+            key: 'id',
+            header: 'ID',
+            render: (item: any) => (
+                <div
+                    className="admin-id-cell"
+                    title={String(item._id)} // Native tooltip showing the full ID content on hover
+                >
+                    <span className="admin-clickable-stub" onClick={() => alert(`Rent ID: ${item._id}`)}>
+                        #{item._id}
+                    </span>
+                </div>
+            )
+        },
+        {
+            key: 'stage',
+            header: 'Stage',
+            render: (item: any) => (
+                <span>
+                    {item.stage || '-'}
+                </span>
+            )
+        },
+        {
             key: 'client',
             header: 'Client',
             render: (item: any) => (
@@ -119,7 +142,6 @@ const AdminPage: React.FC = () => {
             header: 'Actions',
             render: (item: any) => (
                 <div className="admin-actions-group">
-                    <button className="admin-btn update" onClick={() => handleAction('Update', item.id)}>Update</button>
                     <button className="admin-btn stage" onClick={() => handleAction('Change Stage', item.id)}>Stage
                     </button>
                     <button className="admin-btn delete" onClick={() => handleAction('Delete', item.id)}>Delete</button>
@@ -134,16 +156,14 @@ const AdminPage: React.FC = () => {
                 <h2>Admin Dashboard - All Rents</h2>
 
                 <div className="admin-filters-panel">
-                    <div className="admin-filter-item admin-filter-item--stages">
-                        <label className="admin-filter-label">Stages & Sort</label>
-                        <RentFilters
-                            availableStages={availableStages}
-                            selectedStages={selectedStages}
-                            onStagesChange={setSelectedStages}
-                            sortDate={sortDate}
-                            onSortDateChange={setSortDate}
-                        />
-                    </div>
+                    {/* Render inputs directly, they already contain internal labels */}
+                    <RentFilters
+                        availableStages={availableStages}
+                        selectedStages={selectedStages}
+                        onStagesChange={setSelectedStages}
+                        sortDate={sortDate}
+                        onSortDateChange={setSortDate}
+                    />
 
                     <div className="admin-filter-item admin-filter-item--fluid">
                         <label className="admin-filter-label">Vehicle</label>
@@ -165,6 +185,23 @@ const AdminPage: React.FC = () => {
                                 setPage(1);
                             }}
                         />
+                    </div>
+
+                    <div className="admin-filter-item admin-filter-item--clear">
+                        <button
+                            type="button"
+                            className="admin-clear-filters"
+                            title="Clear all filters"
+                            onClick={() => {
+                                setSelectedStages([]);
+                                setSortDate('none');
+                                setSelectedCarId('');
+                                setSelectedUserId('');
+                                setPage(1);
+                            }}
+                        >
+                            &times;
+                        </button>
                     </div>
 
                     <div className="admin-filter-item admin-filter-item--checkbox">

@@ -1,4 +1,4 @@
-/* Вырываемся из 1126px родителя на всю ширину экрана */
+/* Container for page alignment */
 .admin-page-container {
     width: 100vw;
     position: relative;
@@ -25,11 +25,11 @@
     text-align: left;
 }
 
-/* Панель фильтров */
+/* Flexbox panel with clean bottom alignment */
 .admin-filters-panel {
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch; /* Растягиваем элементы по высоте, чтобы они были одной линии */
+    align-items: flex-end;
     gap: 16px;
     margin-bottom: 24px;
     padding-bottom: 20px;
@@ -38,32 +38,77 @@
     box-sizing: border-box;
 }
 
-.admin-checkbox-filter label {
+/* Individual filter wrappers for Vehicle and Client */
+.admin-filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.admin-filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444444;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+/* Fluid wide filters stretching across space */
+.admin-filter-item--fluid {
+    flex: 1 1 280px;
+    min-width: 280px;
+}
+
+.admin-filter-item--fluid .car-select-dropdown__trigger,
+.admin-filter-item--fluid .user-select-dropdown__trigger {
+    width: 100% !important;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+.admin-filter-item--fluid .car-select-dropdown,
+.admin-filter-item--fluid .user-select-dropdown {
+    width: 100% !important;
+}
+
+/* Clean checkbox alignment matching input height */
+.admin-filter-item--checkbox {
+    flex: 0 0 auto;
+}
+
+.admin-checkbox-filter {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     user-select: none;
-    color: var(--text-h);
+    color: #333333;
+    height: 38px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .admin-checkbox-filter input[type="checkbox"] {
     cursor: pointer;
     width: 16px;
     height: 16px;
+    margin: 0;
 }
 
-/* Обрезка длинного комментария */
+/* Truncate cells */
 .admin-truncate-text {
     max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: help; /* Курсор-подсказка для hover-эффекта */
+    cursor: help;
 }
 
-/* Кликабельные заглушки для клиента и номера машины */
+/* Clickable content links */
 .admin-clickable-stub {
     color: var(--accent);
     text-decoration: underline;
@@ -76,7 +121,7 @@
     color: var(--accent-border);
 }
 
-/* Группа кнопок действий */
+/* Action controls styling */
 .admin-actions-group {
     display: flex;
     gap: 8px;
@@ -102,17 +147,16 @@
     transform: scale(0.95);
 }
 
-/* Специфичные цвета кнопок */
 .admin-btn.update {
-    background-color: #3b82f6; /* Синий */
+    background-color: #3b82f6;
 }
 
 .admin-btn.stage {
-    background-color: #f59e0b; /* Оранжевый */
+    background-color: #f59e0b;
 }
 
 .admin-btn.delete {
-    background-color: #ef4444; /* Красный */
+    background-color: #ef4444;
 }
 
 .admin-loading {
@@ -122,26 +166,21 @@
     color: var(--text);
 }
 
-/* --- Targeted admin table styling --- */
-
-/* 1. Set a minimum width to trigger the horizontal scroll of the container */
+/* Data table customization overrides */
 .admin-page-content .data-table {
-    min-width: 1400px; /* A scrollbar will appear if the screen is smaller than 1400px */
+    min-width: 1400px;
 }
 
-/* 2. Reduce font size and expand cells horizontally (increase padding) */
 .admin-page-content .data-table__th,
 .admin-page-content .data-table__td {
-    font-size: 0.8rem; /* Font size similar to MyRentsPage (0.8rem is more readable than 0.7rem) */
-    padding: 12px 24px; /* Expand cells (was 16px) */
+    font-size: 0.8rem;
+    padding: 12px 24px;
 }
 
-/* 3. Prevent text in regular cells from wrapping to keep table structure intact */
 .admin-page-content .data-table__td {
     white-space: nowrap;
 }
 
-/* 4. Allow the comment text to truncate with ellipsis so it doesn't stretch the table infinitely */
 .admin-page-content .admin-truncate-text {
     max-width: 200px;
     white-space: nowrap;
@@ -152,96 +191,41 @@
 }
 
 
-/* Панель фильтров как единая строка с переносом элементов */
-.admin-filters-panel {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end; /* Выравниваем по нижней линии, учитывая подписи */
-    gap: 16px;
-    margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Общий контейнер для каждого элемента фильтра */
-.admin-filter-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Выталкивает инпуты вниз, выравнивая их верхнюю границу */
-    gap: 6px;
-}
-
-/* Заметные подписи над фильтрами */
-.admin-filter-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #444444;
-    text-align: left;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-}
-
-
-.admin-filter-item--stages {
+/* Container for clear button to align perfectly with 38px inputs */
+.admin-filter-item--clear {
     flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.admin-filter-item--stages > div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 38px; /* Жестко приравниваем высоту к стандартным дропдаунам */
-    box-sizing: border-box;
-}
-
-.admin-filter-item--fluid {
-    flex: 1 1 280px;
-    min-width: 280px;
-}
-
-.admin-filter-item--fluid .car-select-dropdown__trigger,
-.admin-filter-item--fluid .user-select-dropdown__trigger {
-    width: 100% !important;
-    height: 38px; /* Одинаковая высота для всех полей в строке */
-    box-sizing: border-box;
-}
-
-/* Заставляем внутренние дропдауны занимать 100% ширины своего адаптивного контейнера */
-.admin-filter-item--fluid .car-select-dropdown,
-.admin-filter-item--fluid .user-select-dropdown {
-    width: 100% !important;
-}
-
-.admin-filter-item--checkbox {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    padding-top: 19px; /* Сдвиг вниз, компенсирующий отсутствие label над чекбоксом */
-    box-sizing: border-box;
-}
-
-.admin-checkbox-filter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    user-select: none;
-    color: #333333;
     height: 38px;
-    margin: 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-.admin-checkbox-filter input[type="checkbox"] {
+/* Small, permanent clear filters button */
+.admin-clear-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background-color: #f3f4f6;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 22px;
+    line-height: 1;
+    color: #666666;
     cursor: pointer;
-    width: 16px;
-    height: 16px;
+    padding: 0;
     margin: 0;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+}
+
+.admin-clear-filters:hover {
+    background-color: #e5e7eb;
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.admin-clear-filters:active {
+    transform: scale(0.95);
 }

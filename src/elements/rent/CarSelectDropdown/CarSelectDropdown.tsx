@@ -55,6 +55,9 @@ const CarSelectDropdown: React.FC<CarSelectDropdownProps> = ({
                     if (currentCar) {
                         setSelectedCarName(`${currentCar.model?.name} (${currentCar.plate_number})`);
                     }
+                }else if (!selectedCarId) {
+                    // Reset local display text if external filter was cleared
+                    setSelectedCarName('');
                 }
             } catch (error) {
                 console.error('Failed to fetch cars for dropdown:', error);

@@ -1,7 +1,7 @@
 .rent-filters {
     display: flex;
     gap: 16px;
-    align-items: flex-end;
+    align-items: flex-end; /* Align both inputs strictly by their bottom edge */
 }
 
 .rent-filters__item {
@@ -11,6 +11,7 @@
     box-sizing: border-box;
 }
 
+/* Base style for the native select sorting label */
 .rent-filters__sort-label {
     display: block;
     margin-bottom: 5px;
@@ -21,6 +22,17 @@
     text-align: left;
 }
 
+/* Force MultiSelect's internal label to match the sort label exactly */
+.rent-filters__item .multi-select__label {
+    display: block !important;
+    margin-bottom: 5px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #333333 !important;
+    text-align: left !important;
+}
+
+/* Standardized input height for the sorting select */
 .rent-filters__select {
     height: 38px;
     padding: 8px 12px;
@@ -39,6 +51,7 @@
     border-color: #007bff;
 }
 
+/* Force MultiSelect wrappers and its interactive trigger to be exactly 38px high */
 .rent-filters__item .multi-select,
 .rent-filters__item .multi-select__trigger {
     height: 38px !important;
