@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { getAllAdminRents, type GetAdminRentsParams, getRentStages } from '../../api/rentApi';
+import React, {useEffect, useState} from 'react';
+import {getAllAdminRents, type GetAdminRentsParams, getRentStages} from '../../api/rentApi';
 import DataTable from '../../elements/DataTable/DataTable';
 import Pagination from '../../elements/Pagination/Pagination';
 import RentFilters from '../../elements/rent/RentFilters/RentFilters';
+import CarSelectDropdown from '../../elements/rent/CarSelectDropdown/CarSelectDropdown';
 import './AdminPage.css';
+import UserSelectDropdown from "../../elements/UserSelectDropdown/UserSelectDropdown.tsx";
 
 const AdminPage: React.FC = () => {
     const [rents, setRents] = useState<any[]>([]);
@@ -17,6 +19,11 @@ const AdminPage: React.FC = () => {
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
     const [sortDate, setSortDate] = useState<'asc' | 'desc' | 'none'>('none');
     const [hideInactive, setHideInactive] = useState<boolean>(false);
+
+    const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
+
+    const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+
 
     useEffect(() => {
         const fetchStages = async () => {
@@ -39,12 +46,14 @@ const AdminPage: React.FC = () => {
                     limit,
                     stage: selectedStages.length > 0 ? selectedStages : null,
                     sort_date: sortDate,
-                    hide_inactive: hideInactive || null,
+                    hide_inactive: hideInactive,
+                    car_id: selectedCarId,
+                    client_id: selectedUserId,
                 };
 
                 const data = await getAllAdminRents(params);
                 setRents(data.items);
-                setTotalPages(data.total);
+                setTotalPages(Math.ceil(data.total / limit));
             } catch (error) {
                 console.error('Failed to fetch admin rents', error);
             } finally {
@@ -53,7 +62,7 @@ const AdminPage: React.FC = () => {
         };
 
         fetchRents();
-    }, [page, limit, selectedStages, sortDate, hideInactive]);
+    }, [page, limit, selectedStages, sortDate, hideInactive, selectedCarId, selectedUserId]);
 
     const handleAction = (action: string, id: number) => {
         alert(`Action: ${action} for rent ID: ${id}`);
@@ -69,7 +78,7 @@ const AdminPage: React.FC = () => {
                 </span>
             )
         },
-        { key: 'user_dock', header: 'User Dock' },
+        {key: 'user_dock', header: 'User Dock'},
         {
             key: 'car_model',
             header: 'Model',
@@ -94,8 +103,8 @@ const AdminPage: React.FC = () => {
             header: 'Total',
             render: (item: any) => `$${item.total_price}`
         },
-        { key: 'start_date', header: 'Start Date' },
-        { key: 'end_date', header: 'End Date' },
+        {key: 'start_date', header: 'Start Date'},
+        {key: 'end_date', header: 'End Date'},
         {
             key: 'comment',
             header: 'Comment',
@@ -111,7 +120,8 @@ const AdminPage: React.FC = () => {
             render: (item: any) => (
                 <div className="admin-actions-group">
                     <button className="admin-btn update" onClick={() => handleAction('Update', item.id)}>Update</button>
-                    <button className="admin-btn stage" onClick={() => handleAction('Change Stage', item.id)}>Stage</button>
+                    <button className="admin-btn stage" onClick={() => handleAction('Change Stage', item.id)}>Stage
+                    </button>
                     <button className="admin-btn delete" onClick={() => handleAction('Delete', item.id)}>Delete</button>
                 </div>
             )
@@ -124,16 +134,41 @@ const AdminPage: React.FC = () => {
                 <h2>Admin Dashboard - All Rents</h2>
 
                 <div className="admin-filters-panel">
-                    <RentFilters
-                        availableStages={availableStages}
-                        selectedStages={selectedStages}
-                        onStagesChange={setSelectedStages}
-                        sortDate={sortDate}
-                        onSortDateChange={setSortDate}
-                    />
+                    <div className="admin-filter-item admin-filter-item--stages">
+                        <label className="admin-filter-label">Stages & Sort</label>
+                        <RentFilters
+                            availableStages={availableStages}
+                            selectedStages={selectedStages}
+                            onStagesChange={setSelectedStages}
+                            sortDate={sortDate}
+                            onSortDateChange={setSortDate}
+                        />
+                    </div>
 
-                    <div className="admin-checkbox-filter">
-                        <label>
+                    <div className="admin-filter-item admin-filter-item--fluid">
+                        <label className="admin-filter-label">Vehicle</label>
+                        <CarSelectDropdown
+                            selectedCarId={selectedCarId}
+                            onCarChange={(id) => {
+                                setSelectedCarId(id || null);
+                                setPage(1);
+                            }}
+                        />
+                    </div>
+
+                    <div className="admin-filter-item admin-filter-item--fluid">
+                        <label className="admin-filter-label">Client</label>
+                        <UserSelectDropdown
+                            selectedUserId={selectedUserId}
+                            onUserChange={(id) => {
+                                setSelectedUserId(id);
+                                setPage(1);
+                            }}
+                        />
+                    </div>
+
+                    <div className="admin-filter-item admin-filter-item--checkbox">
+                        <label className="admin-checkbox-filter">
                             <input
                                 type="checkbox"
                                 checked={hideInactive}
@@ -151,7 +186,7 @@ const AdminPage: React.FC = () => {
                     <div className="admin-loading">Loading rents...</div>
                 ) : (
                     <>
-                        <DataTable columns={columns} data={rents} />
+                        <DataTable columns={columns} data={rents}/>
                         <Pagination
                             currentPage={page}
                             totalPages={totalPages}

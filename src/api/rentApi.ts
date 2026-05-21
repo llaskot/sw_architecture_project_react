@@ -27,6 +27,7 @@ export interface GetAdminRentsParams {
     sort_date?: SortOrder;
     page?: number;
     limit?: number;
+
 }
 
 export interface RentClient {

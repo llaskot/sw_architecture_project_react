@@ -101,6 +101,24 @@ const CarSelectDropdown: React.FC<CarSelectDropdownProps> = ({
                     <div className="car-select-dropdown__options">
                         {loading && <div className="car-select-dropdown__loading">{t('home.loading', 'Loading cars...')}</div>}
 
+                        {/* ===== ДОБАВИТЬ ЭТОТ БЛОК "ALL" ===== */}
+                        {!loading && (
+                            <div
+                                className={`car-select-dropdown__option ${!selectedCarId ? 'car-select-dropdown__option--selected' : ''}`}
+                                onClick={() => {
+                                    setSelectedCarName(''); // Очищаем имя, чтобы вернулся плейсхолдер
+                                    onCarChange('', null as any); // Передаем пустую строку, AdminPage превратит ее в null
+                                    setIsOpen(false);
+                                    setSearchQuery('');
+                                }}
+                            >
+                                <span className="car-select-dropdown__option-name" style={{ fontWeight: 'bold' }}>
+                                    All
+                                </span>
+                            </div>
+                        )}
+                        {/* ==================================== */}
+
                         {!loading && cars.length === 0 && (
                             <div className="car-select-dropdown__empty">{t('home.noCars', 'No cars found')}</div>
                         )}
