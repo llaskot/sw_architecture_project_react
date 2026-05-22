@@ -57,3 +57,16 @@ export const getAllUsers = async (params: GetUsersParams = {}): Promise<AllUsers
     const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
     return await apiClient(`/users/${queryString}`);
 };
+
+
+// Добавь эти методы в объект userApi или экспортируй отдельно
+export const getUserById = async (id: string): Promise<UserResponseAdm> => {
+    return await apiClient(`/users/${id}`);
+};
+
+export const updateUser = async (id: string, userData: Partial<UserResponseAdm>): Promise<UserResponseAdm> => {
+    return await apiClient(`/users/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(userData),
+    });
+};

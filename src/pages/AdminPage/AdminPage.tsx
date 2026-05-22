@@ -76,7 +76,7 @@ const AdminPage: React.FC = () => {
     const columns = [
         {
             key: 'id',
-            header: 'ID',
+            header: t('admin.table.id', 'ID'),
             render: (item: any) => (
                 <div
                     className="admin-id-cell"
@@ -94,7 +94,7 @@ const AdminPage: React.FC = () => {
         },
         {
             key: 'stage',
-            header: 'Stage',
+            header: t('admin.table.stage', 'Stage'),
             render: (item: any) => (
                 <span>
                     {item.stage || '-'}
@@ -103,22 +103,31 @@ const AdminPage: React.FC = () => {
         },
         {
             key: 'client',
-            header: 'Client',
-            render: (item: any) => (
-                <span className="admin-clickable-stub" onClick={() => alert(`Client ${item.client?.id}`)}>
-                    {item.client?.first_name} {item.client?.last_name}
-                </span>
-            )
+            header: t('admin.table.client', 'Client'),
+            render: (item: any) => {
+                const clientId = item.client?._id || item.client?.id;
+                return clientId ? (
+                    <Link
+                        to={`/admin/users/${clientId}`}
+                        className="admin-clickable-stub"
+                        style={{ color: '#0ea5e9', textDecoration: 'none', fontWeight: '500' }}
+                    >
+                        {item.client?.first_name} {item.client?.last_name}
+                    </Link>
+                ) : (
+                    <span>-</span>
+                );
+            }
         },
-        {key: 'user_dock', header: 'User Dock'},
+        {key: 'user_dock', header: t('admin.table.userDock', 'User Dock')},
         {
             key: 'car_model',
-            header: 'Model',
+            header: t('admin.table.model', 'Model'),
             render: (item: any) => item.car?.model?.name
         },
         {
             key: 'plate_number',
-            header: 'Plate Number',
+            header: t('admin.table.plateNumber', 'Plate Number'),
             render: (item: any) => (
                 <span className="admin-clickable-stub" onClick={() => alert(`Car ${item.car?.id}`)}>
                     {item.car?.plate_number}
@@ -127,19 +136,19 @@ const AdminPage: React.FC = () => {
         },
         {
             key: 'price_per_day',
-            header: 'Price / Day',
+            header: t('admin.table.pricePerDay', 'Price / Day'),
             render: (item: any) => `$${item.car?.price_per_day}`
         },
         {
             key: 'total_price',
-            header: 'Total',
+            header: t('admin.table.totalPrice', 'Total'),
             render: (item: any) => `$${item.total_price}`
         },
-        {key: 'start_date', header: 'Start Date'},
-        {key: 'end_date', header: 'End Date'},
+        {key: 'start_date', header: t('admin.table.startDate', 'Start Date')},
+        {key: 'end_date', header: t('admin.table.endDate', 'End Date')},
         {
             key: 'comment',
-            header: 'Comment',
+            header: t('admin.table.comment', 'Comment'),
             render: (item: any) => (
                 <div className="admin-truncate-text" title={item.comment || ''}>
                     {item.comment || '-'}
@@ -148,7 +157,7 @@ const AdminPage: React.FC = () => {
         },
         {
             key: 'actions',
-            header: 'Actions',
+            header: t('admin.table.actions', 'Actions'),
             render: (item: any) => (
                 <div className="admin-actions-group">
                     <button className="admin-btn stage" onClick={() => {
@@ -278,3 +287,24 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
+
+// следующее
+//
+// надо сделать для админа  страницу всех юзеров
+//
+// по принципу рент в админ пейдж
+//
+// тоесть таблица
+//
+// выводим все поля
+//
+// запрос гет алл юзерс
+//
+// кнопки рид делит
+//
+// рид ведет на страницу котору только что делали
+//
+// делит пока заглушка
+//
