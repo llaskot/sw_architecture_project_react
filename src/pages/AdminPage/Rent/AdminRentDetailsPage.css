@@ -1,0 +1,95 @@
+.admin-rent-details-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-rent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.admin-rent-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Раскладка: Слева лейбл, справа значение */
+.admin-field-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #f8fafc;
+}
+
+.admin-field-row:last-of-type {
+    border-bottom: none;
+}
+
+/* Выравнивание по верхнему краю для Textarea */
+.admin-field-row.align-top {
+    align-items: flex-start;
+}
+
+.admin-field-label {
+    flex: 0 0 30%; /* Лейбл жестко занимает 30% ширины */
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.95rem;
+    padding-right: 16px;
+}
+
+.admin-field-value {
+    flex: 1; /* Элемент ввода занимает оставшиеся 70% */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Убираем дефолтные отступы снизу у инпутов, так как их задает строка */
+.admin-field-value > div {
+    margin-bottom: 0 !important;
+}
+
+.car-meta-info {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 4px;
+    padding-left: 2px;
+}
+
+.admin-rent-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 2px solid #f1f5f9;
+}
+
+.admin-rent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-rent-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-small {
+    padding: 6px 12px !important;
+    font-size: 0.85rem !important;
+}

@@ -9,6 +9,7 @@ import './AdminPage.css';
 import UserSelectDropdown from "../../elements/UserSelectDropdown/UserSelectDropdown.tsx";
 import ChangeStageModal from "../../elements/rent/ChangeStageModal/ChangeStageModal.tsx";
 import DeleteModal from "../../elements/modal/DeleteModal.tsx";
+import { Link } from "react-router-dom";
 
 const AdminPage: React.FC = () => {
     const {t} = useTranslation();
@@ -79,11 +80,15 @@ const AdminPage: React.FC = () => {
             render: (item: any) => (
                 <div
                     className="admin-id-cell"
-                    title={String(item._id)} // Native tooltip showing the full ID content on hover
+                    title={String(item._id)}
                 >
-                    <span className="admin-clickable-stub" onClick={() => alert(`Rent ID: ${item._id}`)}>
+                    <Link
+                        to={`/admin/rents/${item._id || item.id}`}
+                        className="admin-clickable-stub"
+                        style={{ color: '#0ea5e9', textDecoration: 'none', fontWeight: '500' }}
+                    >
                         #{item._id}
-                    </span>
+                    </Link>
                 </div>
             )
         },

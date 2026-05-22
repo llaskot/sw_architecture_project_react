@@ -8,6 +8,7 @@ interface RentDatePickerProps {
     value: string; // Ожидает формат "YYYY-MM-DDTHH:00"
     onChange: (value: string) => void;
     error?: string;
+    disabled?: boolean;
 }
 
 const RentDatePicker: React.FC<RentDatePickerProps> = ({
@@ -15,6 +16,7 @@ const RentDatePicker: React.FC<RentDatePickerProps> = ({
                                                            value,
                                                            onChange,
                                                            error,
+                                                           disabled = false,
                                                        }) => {
     const { t } = useTranslation();
 
@@ -50,8 +52,7 @@ const RentDatePicker: React.FC<RentDatePickerProps> = ({
         <div className="rent-datetime-container">
             <span className="rent-datetime-label">{label}</span>
 
-            <div className="rent-datetime-fields">
-                {/* Выбор даты */}
+            <div className={`rent-datetime-fields ${disabled ? 'rent-datetime-fields--disabled' : ''}`}>
                 <div className="rent-datetime-fields__date">
                     <Input
                         type="date"
@@ -59,15 +60,16 @@ const RentDatePicker: React.FC<RentDatePickerProps> = ({
                         min={getMinDate()} // Блокируем прошлые дни
                         onChange={handleDateChange}
                         error={error}
+                        disabled={disabled} // <-- Добавили
                     />
                 </div>
 
-                {/* Выбор часа (минут нет вообще) */}
                 <div className="rent-datetime-fields__hour">
                     <select
                         value={selectedHour}
                         onChange={handleHourChange}
                         className="rent-datetime-select"
+                        disabled={disabled} // <-- Добавили
                     >
                         <option value="" disabled>
                             {t('rent.chooseHour', 'Година')}

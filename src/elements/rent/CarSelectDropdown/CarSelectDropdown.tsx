@@ -7,12 +7,14 @@ interface CarSelectDropdownProps {
     selectedCarId: string | null;
     onCarChange: (carId: string, car: Car) => void;
     label?: string;
+    disabled?: boolean;
 }
 
 const CarSelectDropdown: React.FC<CarSelectDropdownProps> = ({
                                                                  selectedCarId,
                                                                  onCarChange,
-                                                                 label
+                                                                 label,
+                                                                 disabled = false
                                                              }) => {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -77,12 +79,12 @@ const CarSelectDropdown: React.FC<CarSelectDropdownProps> = ({
     };
 
     return (
-        <div className="car-select-dropdown" ref={containerRef}>
+        <div className={`car-select-dropdown ${disabled ? 'car-select-dropdown--disabled' : ''}`} ref={containerRef}>
             {label && <label className="car-select-dropdown__label">{label}</label>}
 
             <div
-                className={`car-select-dropdown__trigger ${isOpen ? 'car-select-dropdown__trigger--open' : ''}`}
-                onClick={() => setIsOpen(!isOpen)}
+                className={`car-select-dropdown__trigger ${isOpen ? 'car-select-dropdown__trigger--open' : ''} ${disabled ? 'car-select-dropdown__trigger--disabled' : ''}`}
+                onClick={() => !disabled && setIsOpen(!isOpen)}
             >
                 <span className="car-select-dropdown__display">
                     {selectedCarName || t('rent.edit.selectCarPlaceholder', 'Select a vehicle...')}

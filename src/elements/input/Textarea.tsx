@@ -11,6 +11,7 @@ const Textarea: React.FC<TextareaProps> = ({
                                                error,
                                                style,
                                                className,
+                                               disabled, // Вытаскиваем disabled
                                                ...rest
                                            }) => {
     return (
@@ -21,7 +22,8 @@ const Textarea: React.FC<TextareaProps> = ({
                 </label>
             )}
             <textarea
-                className={`custom-textarea ${error ? 'custom-textarea--error' : ''} ${className || ''}`}
+                className={`custom-textarea ${error ? 'custom-textarea--error' : ''} ${disabled ? 'custom-textarea--disabled' : ''} ${className || ''}`}
+                disabled={disabled}
                 {...rest}
             />
             {error && (
