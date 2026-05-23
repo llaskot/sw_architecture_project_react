@@ -177,6 +177,8 @@ const resources = {
             },
             admin: {
                 pageTitle: "Admin Dashboard - All Rents",
+                carsTitle: "Admin Dashboard - All Cars",
+
                 filters: {
                     vehicle: "Vehicle",
                     client: "Client",
@@ -364,6 +366,7 @@ const resources = {
             },
             admin: {
                 pageTitle: "Панель адміністратора - Всі оренди",
+                carsTitle: "Панель адміністратора - Всі автівки",
                 filters: {
                     vehicle: "Автомобіль",
                     client: "Клієнт",

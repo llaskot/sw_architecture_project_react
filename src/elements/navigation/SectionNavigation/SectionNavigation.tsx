@@ -13,15 +13,27 @@ export const SectionNavigation: React.FC<SectionNavigationProps> = ({ role }) =>
     const location = useLocation();
 
     // Определяем текущий раздел по URL
-    let currentSection = 'rents';
-    if (location.pathname.includes('/users')) currentSection = 'users';
-    if (location.pathname.includes('/cars')) currentSection = 'cars';
+    const getActiveSection = () => {
+        if (location.pathname.includes('/users')) return 'users';
+        if (location.pathname.includes('/cars')) return 'cars';
+        return 'rents';
+    };
+
+    const currentSection = getActiveSection();
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const section = e.target.value;
-        // Переходим на /admin/users, /manager/rents и т.д.
-        navigate(`/${role}/${section}`);
+
+        // Если выбран 'rents', шлем просто в /{role}
+        // Если выбрано что-то другое, шлем в /{role}/{section}
+        if (section === 'rents') {
+            navigate(`/${role}`);
+        } else {
+            navigate(`/${role}/${section}`);
+        }
     };
+
+
 
     return (
         <select

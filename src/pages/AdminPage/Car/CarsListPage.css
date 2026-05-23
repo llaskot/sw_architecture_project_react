@@ -1,0 +1,35 @@
+.cars-list-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+
+.cars-list-filters-wrapper {
+    flex: 0 1 auto;
+    min-width: 300px;
+}
+
+.cars-list-admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    height: fit-content;
+    margin-left: auto;
+}
+
+.cars-list-header{
+    display: flex;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: var(--shadow);
+    gap: 24px;
+}

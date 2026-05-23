@@ -139,7 +139,7 @@ const AdminRentDetailsPage: React.FC = () => {
         <div className="admin-rent-details-container">
             <div className="admin-rent-header">
                 <h2>{t('rent.pageTitle', 'Order Details')} #{rent._id}</h2>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div>
                     <Button
                         onClick={() => navigate(-1)}
                         type="button"

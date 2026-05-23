@@ -1,0 +1,60 @@
+/* Оборачиваем, чтобы не влиять на глобальные стили, но не красим внутри */
+.cars-table-container {
+    width: 100%;
+}
+
+/* Стили для ID (моноширинный шрифт) */
+.cars-table-id {
+    font-family: monospace;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* Стилизация чек-марков статуса (✓ / ✗) */
+.cars-bool-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.cars-bool-cell.bool-true {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.cars-bool-cell.bool-false {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Действия */
+.cars-table-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Маленькие кнопки - используем стандартные классы или подправляем отступы */
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.cars-btn-show {
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+.cars-btn-delete {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
