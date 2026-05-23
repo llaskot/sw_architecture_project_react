@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Input from '../../input/Input';
 import './UserFields.css';
+import PasswordInput from "../../input/PasswordInput.tsx";
 
 interface UserFieldsData {
     email: string;
@@ -61,7 +62,7 @@ export const UserFields: React.FC<UserFieldsProps> = ({
             />
 
             {showPassword && (
-                <Input
+                <PasswordInput
                     label={t('auth.passwordLabel', 'Password')}
                     type="password"
                     value={data.password || ''}

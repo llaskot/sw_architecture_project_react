@@ -184,6 +184,9 @@ const resources = {
                 }
             },
             guest: "Guest",
+            buttons:{
+                create: "Create"
+            }
 
         }
     },
@@ -368,7 +371,10 @@ const resources = {
                 }
             },
 
-            guest: "Гість"
+            guest: "Гість",
+            buttons:{
+                create: "Створити"
+            }
         }
     }
 };

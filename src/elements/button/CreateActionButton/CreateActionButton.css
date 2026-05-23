@@ -1,0 +1,25 @@
+/* Переопределяем базовые стили кнопки для конкретно этой */
+button.create-action-button {
+    background-color: #10b981; /* Приятный изумрудно-зеленый */
+    color: #ffffff;
+    width: auto; /* Отменяем 100% ширину от базовой кнопки */
+    margin-bottom: 0; /* Отменяем нижний отступ */
+    padding: 0 16px;
+    height: 38px; /* Высота под стандартные инпуты */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 6px;
+}
+
+button.create-action-button:hover:not(:disabled) {
+    background-color: #059669; /* Более темный зеленый при наведении */
+}
+
+.create-action-button-icon {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: -2px; /* Легкая оптическая компенсация для плюсика */
+}

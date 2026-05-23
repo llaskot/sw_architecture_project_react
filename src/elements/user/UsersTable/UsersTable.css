@@ -1,0 +1,75 @@
+.users-table-id {
+    font-family: monospace;
+    color: #64748b;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.users-bool-cell {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    width: 40px;
+    margin: 0 auto;
+}
+
+.bool-true {
+    color: #10b981;
+}
+
+.bool-false {
+    color: #ef4444;
+}
+
+.users-table-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* ЗАГАЛЬНІ СТИЛІ ДЛЯ ОБОХ КНОПОК (щоб вони були 1 в 1 за розміром) */
+.users-btn-show,
+.users-btn-delete {
+    padding: 0 12px;
+    height: 32px; /* Фіксована висота для ідеального вирівнювання */
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Прибирає підкреслення у <Link> */
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+/* Стиль кнопки "Деталі" */
+.users-btn-show {
+    background-color: #0ea5e9;
+    color: #ffffff;
+    transition: background-color 0.2s ease;
+}
+
+.users-btn-show:hover,
+.users-btn-show:focus {
+    background-color: #0284c7;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Стиль кнопки "Видалити" */
+.users-btn-delete {
+    background-color: #e11d48 !important;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.users-btn-delete:hover,
+.users-btn-delete:focus {
+    background-color: #be123c !important;
+    color: #ffffff !important;
+}
