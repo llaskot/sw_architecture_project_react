@@ -6,6 +6,7 @@ import { createRent } from '../../api/rentApi';
 import RentForm, { type RentFormValues } from '../../elements/rent/RentForm/RentForm';
 import Button from '../../elements/button/Button';
 import './RentPage.css';
+import {parseApiError} from "../../utils/errorHandler.ts";
 
 const RentPage: React.FC = () => {
     const { car_id } = useParams<{ car_id: string }>();
@@ -41,53 +42,29 @@ const RentPage: React.FC = () => {
             });
     }, [car_id, t]);
 
-    // Обработчик отправки данных на бэкенд
+// Обработчик отправки данных на бэкенд
     const handleRentSubmit = async (values: RentFormValues) => {
         if (!car_id) return;
 
         setIsSubmitting(true);
         setServerError(null);
 
-        //функция для точного извлечения сообщения об ошибке
-        const getErrorMessage = (obj: any): string => {
-            if (!obj) return 'Unknown error';
-
-            if (obj.detail) {
-                // Вариант 1: { detail: { message: "..." } }
-                if (typeof obj.detail === 'object' && obj.detail.message) {
-                    return obj.detail.message;
-                }
-                // Вариант 2: { detail: "..." }
-                if (typeof obj.detail === 'string') {
-                    return obj.detail;
-                }
-            }
-
-            return obj.message || JSON.stringify(obj);
-        };
-
         try {
-            const responseData = await createRent({
+            await createRent({
                 car_id,
                 ...values
             });
 
-            // Если apiClient вернул ошибку внутри успешного промиса
-            if (responseData && ('detail' in responseData || 'error' in responseData)) {
-                setServerError(getErrorMessage(responseData));
-                return;
-            }
-
+            // Если дошли сюда — всё 100% успешно
             setIsSuccess(true);
         } catch (err: any) {
             console.error(err);
-            // Если apiClient выбросил ошибку в catch
-            setServerError(getErrorMessage(err));
+            // Сразу парсим ошибку через нашу новую утилиту
+            setServerError(parseApiError(err, t('rent.error', 'Failed to submit rental request')));
         } finally {
             setIsSubmitting(false);
         }
     };
-
 
     if (loading) {
         return <div className="rent-page-status">{t('home.loading', 'Завантаження...')}</div>;

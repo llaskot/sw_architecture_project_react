@@ -5,6 +5,7 @@ import Button from '../../button/Button';
 import SubmitButton from '../../button/SubmitButton';
 import RentErrorBlock from '../../rent/RentErrorBlock/RentErrorBlock';
 import './UserContainer.css';
+import {parseApiError} from "../../../utils/errorHandler.ts";
 
 interface UserData {
     email: string;
@@ -57,28 +58,21 @@ export const UserContainer: React.FC<UserContainerProps> = ({
         setError(null);
         setLoading(true);
 
+
         try {
             await onSave(formData);
             if (mode === 'view') {
                 setIsEditing(false);
             }
         } catch (err: any) {
-            const backendError = err.response?.data?.detail || err.response?.data?.message || err.message;
-            let errorMessage = backendError;
+            console.error("Save User Error:", err);
 
-            if (Array.isArray(backendError)) {
-                errorMessage = backendError.map((e: any) => e.msg || JSON.stringify(e)).join(', ');
-            } else if (typeof backendError === 'object') {
-                errorMessage = JSON.stringify(backendError);
-            }
+            setError(parseApiError(err, t('carDetail.errorLoad', 'Error loading data')));
 
-            // Используем carDetail.errorLoad из твоего словаря как фоллбек для ошибки
-            setError(errorMessage || t('carDetail.errorLoad', 'Error loading data'));
         } finally {
             setLoading(false);
         }
     };
-
     const canEdit = role === 'admin' && mode === 'view';
 
     return (

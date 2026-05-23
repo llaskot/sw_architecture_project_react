@@ -12,6 +12,7 @@ import SubmitButton from '../../../elements/button/SubmitButton';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
 
 import './AdminRentDetailsPage.css';
+import {parseApiError} from "../../../utils/errorHandler.ts";
 
 interface FormData {
     car_id: string;
@@ -68,8 +69,8 @@ const AdminRentDetailsPage: React.FC = () => {
             });
             setCurrentPricePerDay(data.car?.price_per_day || 0); // <-- И ЗДЕСЬ data
         } catch (err: any) {
-            console.error("ОШИБКА:", err); // Выводим в консоль, чтобы больше не гадать
-            setError(err.response?.data?.message || t('rent.edit.errorLoad', 'Failed to load rental details'));
+            console.error("ОШИБКА:", err);
+            setError(parseApiError(err, t('rent.edit.errorLoad', 'Failed to load rental details')));
         } finally {
             setLoading(false);
         }
@@ -123,7 +124,7 @@ const AdminRentDetailsPage: React.FC = () => {
             setRent(updatedData);
             setIsEditing(false);
         } catch (err: any) {
-            setError(err.response?.data?.message || t('rent.edit.errorUpdate', 'Failed to update rent'));
+            setError(parseApiError(err, t('rent.edit.errorUpdate', 'Failed to update rent')));
         } finally {
             setSaving(false);
         }

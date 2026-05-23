@@ -7,6 +7,7 @@ import CarSelectDropdown from '../../elements/rent/CarSelectDropdown/CarSelectDr
 import RentForm, { type RentFormValues } from '../../elements/rent/RentForm/RentForm';
 import Button from '../../elements/button/Button';
 import './EditRentPage.css';
+import {parseApiError} from "../../utils/errorHandler.ts";
 
 const EditRentPage: React.FC = () => {
     const { rent_id } = useParams<{ rent_id: string }>();
@@ -53,7 +54,7 @@ const EditRentPage: React.FC = () => {
             })
             .catch((err) => {
                 console.error(err);
-                setPageError(t('rent.edit.errorLoad', 'Помилка завантаження даних оренди'));
+                setPageError(parseApiError(err, t('rent.edit.errorLoad', 'Помилка завантаження даних оренди')));
                 setLoading(false);
             });
     }, [rent_id, t]);
@@ -77,24 +78,12 @@ const EditRentPage: React.FC = () => {
     };
 
     // Обработчик отправки обновленных данных
+// Обработчик отправки обновленных данных
     const handleRentSubmit = async (values: RentFormValues) => {
         if (!rent_id || !selectedCarId) return;
 
         setIsSubmitting(true);
         setServerError(null);
-
-        const getErrorMessage = (obj: any): string => {
-            if (!obj) return 'Unknown error';
-            if (obj.detail) {
-                if (typeof obj.detail === 'object' && obj.detail.message) {
-                    return obj.detail.message;
-                }
-                if (typeof obj.detail === 'string') {
-                    return obj.detail;
-                }
-            }
-            return obj.message || JSON.stringify(obj);
-        };
 
         try {
             const payload = {
@@ -102,23 +91,18 @@ const EditRentPage: React.FC = () => {
                 ...values
             };
 
-            const responseData = await updateRent(rent_id, payload);
+            await updateRent(rent_id, payload);
 
-            if (responseData && ('detail' in responseData || 'error' in responseData)) {
-                setServerError(getErrorMessage(responseData));
-                return;
-            }
-
-            // <-- Здесь мы убрали alert и navigate, теперь просто включаем экран успеха
+            // Просто включаем экран успеха
             setIsSuccess(true);
         } catch (err: any) {
             console.error(err);
-            setServerError(getErrorMessage(err));
+            // Используем глобальную функцию для вывода ошибки
+            setServerError(parseApiError(err, t('rent.edit.errorSubmit', 'Помилка оновлення оренди')));
         } finally {
             setIsSubmitting(false);
         }
     };
-
     // Отображение состояний загрузки и ошибок
     if (loading) {
         return <div className="edit-rent-page__loading">{t('home.loading', 'Завантаження...')}</div>;
