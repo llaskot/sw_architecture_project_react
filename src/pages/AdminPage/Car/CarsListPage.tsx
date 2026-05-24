@@ -47,7 +47,7 @@ export const CarsListPage: React.FC<CarsListPageProps> = ({ role = 'admin' }) =>
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [carToDelete, setCarToDelete] = useState<string | null>(null);
 
-    // Fetch Brands & Categories (from HomePage)
+    // Fetch Brands & Categories
     useEffect(() => {
         if (!categoriesLoaded && !loadingCategories) {
             dispatch(fetchCategoriesThunk());
@@ -117,58 +117,59 @@ export const CarsListPage: React.FC<CarsListPageProps> = ({ role = 'admin' }) =>
         setDeleteModalOpen(true);
     };
 
-
-
     const totalPages = Math.ceil(total / limit) || 1;
 
     return (
-        <div className="cars-list-page">
-            <div className="cars-list-header">
-                <h2>{t('admin.carsTitle')}</h2>
-                <SectionNavigation role={role} />
-            </div>
+        <div className="admin-page-container">
+            <div className="admin-page-content">
 
-            <div className="cars-list-controls">
-                <div className="cars-list-filters-wrapper">
-                    <CarFilters
-                        categories={categories}
-                        selectedCategories={selectedCategories}
-                        onCategoryToggle={handleCategoryToggle}
-                        brands={brands}
-                        selectedBrands={selectedBrandIds}
-                        onBrandToggle={handleBrandToggle}
-                        searchQuery={searchQuery}
-                        onSearchChange={(q) => { setSearchQuery(q); setPage(1); }}
-                        onClearAll={handleClearAll}
-                    />
+                <div className="cars-list-header">
+                    <h2>{t('admin.carsTitle', 'Cars Management')}</h2>
+                    <SectionNavigation role={role} />
                 </div>
 
-                {role === 'admin' && (
-                    <div className="cars-list-admin-actions">
-                        <label className="cars-list-checkbox-label">
-                            <input
-                                type="checkbox"
-                                checked={hideInactive}
-                                onChange={(e) => {
-                                    setHideInactive(e.target.checked);
-                                    setPage(1);
-                                }}
-                            />
-                            {t('admin.filters.hideInactive', 'Hide Inactive')}
-                        </label>
-
-                        <CreateActionButton navigateTo={`/${role}/cars/create`} />
+                <div className="admin-filters-panel cars-list-custom-panel">
+                    <div className="cars-list-filters-wrapper">
+                        <CarFilters
+                            categories={categories}
+                            selectedCategories={selectedCategories}
+                            onCategoryToggle={handleCategoryToggle}
+                            brands={brands}
+                            selectedBrands={selectedBrandIds}
+                            onBrandToggle={handleBrandToggle}
+                            searchQuery={searchQuery}
+                            onSearchChange={(q) => { setSearchQuery(q); setPage(1); }}
+                            onClearAll={handleClearAll}
+                        />
                     </div>
-                )}
-            </div>
 
-            <div className="cars-list-content">
-                <CarsTable
-                    cars={cars}
-                    loading={loadingCars}
-                    role={role}
-                    onDeleteClick={handleDeleteClick}
-                />
+                    {role === 'admin' && (
+                        <div className="cars-list-admin-actions">
+                            <label className="admin-checkbox-filter">
+                                <input
+                                    type="checkbox"
+                                    checked={hideInactive}
+                                    onChange={(e) => {
+                                        setHideInactive(e.target.checked);
+                                        setPage(1);
+                                    }}
+                                />
+                                {t('admin.filters.hideInactive', 'Hide Inactive')}
+                            </label>
+
+                            <CreateActionButton navigateTo={`/${role}/cars/create`} />
+                        </div>
+                    )}
+                </div>
+
+                <div className="data-table-container">
+                    <CarsTable
+                        cars={cars}
+                        loading={loadingCars}
+                        role={role}
+                        onDeleteClick={handleDeleteClick}
+                    />
+                </div>
 
                 <div className="cars-list-pagination">
                     <Pagination
