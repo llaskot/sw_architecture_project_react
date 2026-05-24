@@ -20,6 +20,8 @@ import {CarsListPage} from "./pages/AdminPage/Car/CarsListPage.tsx";
 import {CarDetailsPage} from "./pages/AdminPage/Car/CarDetailsPage.tsx";
 import {CreateCarPage} from "./pages/AdminPage/Car/CreateCarPage.tsx";
 import ModelsListPage from "./pages/AdminPage/Model/ModelsListPage.tsx";
+import CreateModelPage from "./pages/AdminPage/Model/CreateModelPage.tsx";
+import ModelDetailsPage from "./pages/AdminPage/Model/ModelDetailsPage.tsx";
 
 const App: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -57,6 +59,8 @@ const App: React.FC = () => {
                     <Route path="/admin/cars/create" element={<CreateCarPage role="admin" />} />
                     <Route path="/admin/cars/:id" element={<CarDetailsPage role="admin" />} />
                     <Route path="/admin/models" element={<ModelsListPage role="admin" />} />
+                    <Route path="/admin/models/create" element={<CreateModelPage />} />
+                    <Route path="/admin/models/:id" element={<ModelDetailsPage role="admin" />} />
 
 
 

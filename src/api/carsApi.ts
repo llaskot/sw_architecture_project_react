@@ -149,3 +149,9 @@ export const deleteModel = async (modelId: string): Promise<void> => {
         method: 'DELETE'
     });
 };
+
+
+
+export const getModelByIdAdm = async (id: string): Promise<AutoModelRead> => {
+    return await apiClient(`/models/admin/${id}`);
+};
