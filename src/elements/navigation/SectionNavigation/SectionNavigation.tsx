@@ -24,8 +24,7 @@ export const SectionNavigation: React.FC<SectionNavigationProps> = ({ role }) =>
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const section = e.target.value;
 
-        // Если выбран 'rents', шлем просто в /{role}
-        // Если выбрано что-то другое, шлем в /{role}/{section}
+
         if (section === 'rents') {
             navigate(`/${role}`);
         } else {

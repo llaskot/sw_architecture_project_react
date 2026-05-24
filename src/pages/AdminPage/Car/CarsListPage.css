@@ -11,10 +11,11 @@
 .cars-list-filters-wrapper {
     flex: 0 1 auto;
     min-width: 300px;
+    max-width: 800px
 }
 
 .cars-list-admin-actions {
-    display: flex;
+    display: grid;
     align-items: center;
     gap: 24px;
     background-color: transparent;

@@ -70,3 +70,31 @@ export const getCars = async (params: URLSearchParams): Promise<AllCarsResponse>
 export const getCarById = async (carId: string): Promise<Car> => {
     return await apiClient(`/cars/${carId}`);
 };
+
+export const getModels = async (): Promise<AutoModelRead[]> => {
+    return await apiClient('/models/');
+};
+
+export const createCar = async (carData: Partial<Car>): Promise<Car> => {
+    return await apiClient('/cars/', {
+        method: 'POST',
+        body: JSON.stringify(carData)
+    });
+};
+
+export const updateCar = async (carId: string, carData: Partial<Car>): Promise<Car> => {
+    return await apiClient(`/cars/${carId}`, {
+        method: 'PATCH', // Используем PATCH (или PUT, если бэкенд требует его)
+        body: JSON.stringify(carData)
+    });
+};
+
+export const getCar = async (carId: string): Promise<Car> => {
+    return await apiClient(`/cars/adm/${carId}`);
+};
+
+export const deleteCar = async (carId: string): Promise<void> => {
+    return await apiClient(`/cars/${carId}`, {
+        method: 'DELETE'
+    });
+};

@@ -13,12 +13,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ children, loading, ...props
         <Button
             {...props}
             type="submit" // Always submit for form submission
-            className="submit-button"
-            style={{
-                backgroundColor: (props.disabled || loading) ? '#aaa' : '#28a745',
-                cursor: (props.disabled || loading) ? 'not-allowed' : 'pointer',
-                ...props.style
-            }}
+            className={props.className || "submit-button"}
         >
             {loading ? '...' : children}
         </Button>

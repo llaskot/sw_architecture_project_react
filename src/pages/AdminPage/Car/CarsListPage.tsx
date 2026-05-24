@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { type RootState, type AppDispatch } from '../../../app/store';
 import { fetchCategoriesThunk, fetchBrandsThunk } from '../../../slices/carsSlice';
-import { getCars, type Car } from '../../../api/carsApi';
+import { getCars, deleteCar, type Car } from '../../../api/carsApi';
 import { SectionNavigation } from '../../../elements/navigation/SectionNavigation/SectionNavigation';
 import CarFilters from '../../../elements/filters/CarFilters';
 import { CarsTable } from '../../../elements/car/CarsTable/CarsTable';
@@ -117,10 +117,7 @@ export const CarsListPage: React.FC<CarsListPageProps> = ({ role = 'admin' }) =>
         setDeleteModalOpen(true);
     };
 
-    const mockDeleteApi = async (id: string): Promise<any> => {
-        console.log('Mock deleting car:', id);
-        return Promise.resolve();
-    };
+
 
     const totalPages = Math.ceil(total / limit) || 1;
 
@@ -182,7 +179,6 @@ export const CarsListPage: React.FC<CarsListPageProps> = ({ role = 'admin' }) =>
                 </div>
             </div>
 
-            {/* Модалка монтируется всегда, скрывается через isOpen, как прописано в ее логике */}
             <DeleteModal
                 id={carToDelete || ''}
                 isOpen={deleteModalOpen}
@@ -190,7 +186,7 @@ export const CarsListPage: React.FC<CarsListPageProps> = ({ role = 'admin' }) =>
                 message={t('admin.cars.deleteConfirm', 'Are you sure you want to delete this car?')}
                 confirmBtnText={t('rent.actions.delete', 'Delete')}
                 errorText={t('admin.cars.deleteError', 'Failed to delete car')}
-                onDeleteApi={mockDeleteApi}
+                onDeleteApi={deleteCar}
                 onClose={() => {
                     setDeleteModalOpen(false);
                     setCarToDelete(null);
