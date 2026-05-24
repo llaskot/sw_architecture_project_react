@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { getModels, deleteModel, type AutoModelRead } from '../../../api/carsApi';
+import { getModelsAdm, deleteModel, type AutoModelRead } from '../../../api/carsApi';
 import ModelsTable from '../../../elements/model/ModelsTable/ModelsTable';
 import DeleteModal from '../../../elements/modal/DeleteModal';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
 import { CreateActionButton } from '../../../elements/button/CreateActionButton/CreateActionButton';
 import Input from '../../../elements/input/Input';
 import './ModelsListPage.css';
+import {SectionNavigation} from "../../../elements/navigation/SectionNavigation/SectionNavigation.tsx";
 
 interface ModelsListPageProps {
     role: 'admin' | 'manager';
@@ -21,16 +22,18 @@ export const ModelsListPage: React.FC<ModelsListPageProps> = ({ role }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [hideInactive, setHideInactive] = useState<boolean>(true);
 
     // Delete Modal State
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
     const [modelToDelete, setModelToDelete] = useState<AutoModelRead | null>(null);
 
-    const fetchModels = async () => {
+    const fetchModels = async (hide: boolean) => {
         setLoading(true);
         setError(null);
         try {
-            const data = await getModels();
+            // Передаем статус чекбокса в API
+            const data = await getModelsAdm(hide);
             setModels(data);
         } catch (err: any) {
             console.error("Failed to fetch models:", err);
@@ -41,8 +44,8 @@ export const ModelsListPage: React.FC<ModelsListPageProps> = ({ role }) => {
     };
 
     useEffect(() => {
-        fetchModels();
-    }, []);
+        fetchModels(hideInactive);
+    }, [hideInactive]);
 
     const handleDetailsClick = (model: AutoModelRead) => {
         navigate(`/${role}/models/${model._id}`);
@@ -69,13 +72,28 @@ export const ModelsListPage: React.FC<ModelsListPageProps> = ({ role }) => {
     return (
         <div className="models-list-page">
             <div className="models-list-header">
+
                 <h2 className="models-list-title">{t('admin.models.title', 'Models Management')}</h2>
-                {role === 'admin' && (
-                    <CreateActionButton
-                        navigateTo={`/${role}/models/create`}
-                    />
-                )}
+                <SectionNavigation role={role} />
+
             </div>
+
+
+
+            {role === 'admin' && (
+                <div className="models-list-admin-actions">
+                    <label className="models-list-checkbox-label">
+                        <input
+                            type="checkbox"
+                            checked={hideInactive}
+                            onChange={(e) => setHideInactive(e.target.checked)}
+                        />
+                        {t('admin.filters.hideInactive', 'Hide Inactive')}
+                    </label>
+
+                    <CreateActionButton navigateTo={`/${role}/models/create`} />
+                </div>
+            )}
 
             <div className="models-list-controls">
                 <Input

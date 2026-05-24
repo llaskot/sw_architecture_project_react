@@ -82,9 +82,9 @@ export const getCarById = async (carId: string): Promise<Car> => {
     return await apiClient(`/cars/${carId}`);
 };
 
-// export const getModels = async (): Promise<AutoModelRead[]> => {
-//     return await apiClient('/models/');
-// };
+export const getModels = async (): Promise<AutoModelRead[]> => {
+    return await apiClient('/models/');
+};
 
 export const createCar = async (carData: Partial<Car>): Promise<Car> => {
     return await apiClient('/cars/', {
@@ -123,8 +123,11 @@ export const uploadCarImage = async (carId: string, file: File): Promise<any> =>
 
 // --- Models API ---
 
-export const getModels = async (): Promise<AutoModelRead[]> => {
-    return await apiClient('/models/');
+export const getModelsAdm = async (hideInactive: boolean = true): Promise<AutoModelRead[]> => {
+    const params = new URLSearchParams({
+        hide_inactive: hideInactive.toString()
+    });
+    return await apiClient(`/models/admin?${params.toString()}`);
 };
 
 export const createModel = async (modelData: AutoModelCreate): Promise<AutoModelRead> => {
