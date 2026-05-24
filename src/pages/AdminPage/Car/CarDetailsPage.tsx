@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getCar, getModels, updateCar, type Car, type AutoModelRead } from '../../../api/carsApi';
+import { getCar, getModels, updateCar, uploadCarImage, type Car, type AutoModelRead } from '../../../api/carsApi';
 import { CarContainer } from '../../../elements/car/CarContainer/CarContainer';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
 import Button from '../../../elements/button/Button';
 import './CarDetailsPage.css';
-import ImageUploadModal from "../../../elements/modal/ImageUploadModal.tsx";
 
 interface CarDetailsPageProps {
     role: 'admin' | 'manager';
@@ -21,7 +20,6 @@ export const CarDetailsPage: React.FC<CarDetailsPageProps> = ({ role }) => {
     const [models, setModels] = useState<AutoModelRead[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchCarAndModels = async () => {
@@ -49,19 +47,21 @@ export const CarDetailsPage: React.FC<CarDetailsPageProps> = ({ role }) => {
         fetchCarAndModels();
     }, [id, t]);
 
-    const handleImageUploadSuccess = async () => {
+    const handleSave = async (updatedData: any) => {
         if (!id) return;
-        try {
-            const carData = await getCar(id);
-            setCar(carData);
-        } catch (err) {
-            console.error("Failed to refresh car details:", err);
-        }
-    };
 
-    const handleSave = async (updatedData: Partial<Car>) => {
-        if (!id) return;
-        const savedCar = await updateCar(id, updatedData);
+        // Отделяем файл от остальных данных
+        const { newImageFile, ...carPayload } = updatedData;
+
+        // 1. Сохраняем текстовые данные
+        let savedCar = await updateCar(id, carPayload);
+
+        // 2. Если добавили картинку — грузим её и обновляем стейт
+        if (newImageFile) {
+            await uploadCarImage(id, newImageFile);
+            savedCar = await getCar(id);
+        }
+
         setCar(savedCar);
     };
 
@@ -107,15 +107,8 @@ export const CarDetailsPage: React.FC<CarDetailsPageProps> = ({ role }) => {
                     mode="view"
                     models={models}
                     onSave={handleSave}
-                    onImageUploadClick={() => setIsImageModalOpen(true)}
                 />
             </div>
-            <ImageUploadModal
-                isOpen={isImageModalOpen}
-                carId={car._id}
-                onClose={() => setIsImageModalOpen(false)}
-                onSuccess={handleImageUploadSuccess}
-            />
         </div>
     );
 };

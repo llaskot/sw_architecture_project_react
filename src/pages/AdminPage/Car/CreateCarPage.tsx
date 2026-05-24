@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { createCar, getModels, type Car, type AutoModelRead } from '../../../api/carsApi';
+import { createCar, getModels, uploadCarImage, type AutoModelRead } from '../../../api/carsApi';
 import { CarContainer } from '../../../elements/car/CarContainer/CarContainer';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
 import Button from '../../../elements/button/Button';
@@ -38,8 +38,18 @@ export const CreateCarPage: React.FC<CreateCarPageProps> = ({ role }) => {
         fetchModels();
     }, [t]);
 
-    const handleSave = async (newData: Partial<Car>) => {
-        await createCar(newData);
+    const handleSave = async (newData: any) => {
+        // Отделяем файл от данных
+        const { newImageFile, ...carPayload } = newData;
+
+        // 1. Создаем машину (нам нужен её _id)
+        const createdCar = await createCar(carPayload);
+
+        // 2. Если есть картинка и машина создалась успешно — загружаем картинку
+        if (newImageFile && createdCar._id) {
+            await uploadCarImage(createdCar._id, newImageFile);
+        }
+
         navigate(`/${role}/cars`);
     };
 

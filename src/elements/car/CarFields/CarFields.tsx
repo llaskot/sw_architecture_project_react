@@ -1,8 +1,8 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
+import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Input from '../../input/Input';
-import {ModelSelectDropdown} from '../ModelSelectDropdown/ModelSelectDropdown';
-import {type AutoModelRead} from '../../../api/carsApi';
+import { ModelSelectDropdown } from '../ModelSelectDropdown/ModelSelectDropdown';
+import { type AutoModelRead } from '../../../api/carsApi';
 import './CarFields.css';
 import Button from "../../button/Button.tsx";
 
@@ -13,38 +13,47 @@ interface CarFieldsProps {
     onChange: (field: string, value: any) => void;
     disabled?: boolean;
     models: AutoModelRead[];
-    onImageUploadClick?: () => void;
-    mode?: 'view' | 'edit' | 'create';
 }
 
 export const CarFields: React.FC<CarFieldsProps> = ({
                                                         formData,
                                                         onChange,
                                                         disabled = false,
-                                                        models,
-                                                        onImageUploadClick,
-                                                        mode
+                                                        models
                                                     }) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value, type, checked} = e.target;
+        const { name, value, type, checked } = e.target;
         const finalValue = type === 'checkbox' ? checked : value;
         onChange(name, finalValue);
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            onChange('newImageFile', e.target.files[0]);
+        }
+    };
 
     return (
         <div className="car-fields-container">
             <div className="car-fields-top-section">
                 <div className="car-fields-image-section">
                     <div className="car-fields-image-wrapper">
-                        {formData.img?.small ? (
+                        {formData.newImageFile ? (
+                            <img
+                                src={URL.createObjectURL(formData.newImageFile)}
+                                alt="Preview"
+                                className="car-fields-image"
+                            />
+                        ) : formData.img?.small ? (
                             <img
                                 src={`${BASE_URL}/${formData.img.small}`}
                                 alt="Car"
                                 className="car-fields-image"
-                            />) : (
+                            />
+                        ) : (
                             <div className="car-fields-image-placeholder">
                                 {t('admin.car.noImage', 'No Image')}
                             </div>
@@ -54,11 +63,18 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                         <>
                             <Button
                                 className="btn-small car-fields-image-btn"
-                                disabled={mode === 'create'}
-                                onClick={onImageUploadClick}
+                                type="button"
+                                onClick={() => fileInputRef.current?.click()}
                             >
                                 {t('admin.car.changeImage', 'Change Image')}
                             </Button>
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                accept="image/jpeg, image/png, image/webp"
+                                onChange={handleFileChange}
+                            />
                         </>
                     )}
                 </div>

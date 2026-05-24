@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CarFields } from '../CarFields/CarFields';
 import Button from '../../button/Button';
@@ -15,7 +15,6 @@ interface CarContainerProps {
     models: AutoModelRead[];
     onSave: (data: Partial<Car>) => Promise<void>;
     onCancelBack?: () => void;
-    onImageUploadClick?: () => void;
 }
 
 export const CarContainer: React.FC<CarContainerProps> = ({
@@ -24,8 +23,7 @@ export const CarContainer: React.FC<CarContainerProps> = ({
                                                               mode,
                                                               models,
                                                               onSave,
-                                                              onCancelBack,
-                                                              onImageUploadClick
+                                                              onCancelBack
                                                           }) => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<Partial<Car>>(initialData);
@@ -33,8 +31,12 @@ export const CarContainer: React.FC<CarContainerProps> = ({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Update form data when initialData changes (e.g. after a successful save)
+    useEffect(() => {
+        setFormData(initialData);
+    }, [initialData]);
+
     const handleChange = (field: string, value: any) => {
-        console.log("Change field:", field, "value:", value);
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
@@ -54,7 +56,6 @@ export const CarContainer: React.FC<CarContainerProps> = ({
         setLoading(true);
 
         try {
-
             await onSave(formData);
             if (mode === 'view') {
                 setIsEditing(false);
@@ -78,7 +79,6 @@ export const CarContainer: React.FC<CarContainerProps> = ({
                 onChange={handleChange}
                 disabled={!isEditing}
                 models={models}
-                onImageUploadClick={onImageUploadClick}
             />
 
             <div className="car-container-actions">
