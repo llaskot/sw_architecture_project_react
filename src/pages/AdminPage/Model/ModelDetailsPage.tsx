@@ -22,13 +22,13 @@ interface ModelDetailsPageProps {
 export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>(); // ID модели из URL
 
     const [loading, setLoading] = useState<boolean>(false);
     const [pageLoading, setPageLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    // Исправлено: явное указание типов
     const [brands, setBrands] = useState<Brand[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [formData, setFormData] = useState<AutoModelCreate | null>(null);
@@ -67,7 +67,7 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
         setError(null);
         try {
             await updateModel(id, formData);
-            navigate('/admin/models');
+            setIsEditing(false);
         } catch (err: any) {
             setError(parseApiError(err, t('admin.models.updateError', 'Failed to update model.')));
         } finally {
@@ -80,9 +80,22 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
     return (
         <div className="model-details-page">
             <div className="model-details-header">
-                <h2 className="model-details-title">{t('admin.models.editTitle', 'Edit Model')}</h2>
+                {/* Кнопка назад */}
+                <button className="back-btn" onClick={() => navigate('/admin/models')}>
+                    {t('admin.actions.back', 'Back')}
+                </button>
+                <h2 className="model-details-title">
+                    {t('admin.models.editTitle', 'Model:')} {id}
+                </h2>
+                {role === 'admin' && !isEditing && (
+                    <button className="edit-btn" onClick={() => setIsEditing(true)}>
+                        {t('admin.actions.edit', 'Edit')}
+                    </button>
+                )}
             </div>
+
             <RentErrorBlock message={error} />
+
             {formData && (
                 <form onSubmit={handleSubmit}>
                     <ModelFields
@@ -90,10 +103,14 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
                         onChange={setFormData}
                         brands={brands}
                         categories={categories}
-                        disabled={role !== 'admin'}
+                        disabled={!isEditing}
                     />
-                    {role === 'admin' && (
+
+                    {isEditing && (
                         <div className="form-actions">
+                            <button type="button" className="cancel-btn" onClick={() => setIsEditing(false)}>
+                                {t('admin.actions.cancel', 'Cancel')}
+                            </button>
                             <SubmitButton loading={loading}>
                                 {t('admin.actions.save', 'Save')}
                             </SubmitButton>
