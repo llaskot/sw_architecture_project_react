@@ -4,31 +4,83 @@
     margin-top: 15px;
 }
 
+.brands-table-id {
+    font-family: monospace;
+    color: #64748b;
+    font-size: 0.85rem;
+    white-space: nowrap;
+
+    /* Ограничиваем ширину */
+    display: inline-block;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.brands-bool-cell {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    width: 40px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.brands-bool-cell.bool-true {
+    color: #10b981;
+}
+
+.brands-bool-cell.bool-false {
+    color: #ef4444;
+}
+
 .brands-table-actions {
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: flex-start;
 }
 
-.brands-status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    text-align: center;
+.details-btn,
+.delete-btn {
+    padding: 0 12px !important;
+    height: 32px !important; /* Фіксована висота */
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+    margin: 0 !important;
 }
 
-.brands-status-badge.active {
-    background-color: #e6f4ea;
-    color: #137333;
+.details-btn {
+    background-color: #0ea5e9 !important;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease !important;
 }
 
-.brands-status-badge.inactive {
-    background-color: #fce8e6;
-    color: #c5221f;
+.details-btn:hover,
+.details-btn:focus {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
 }
 
-.action-btn {
-    min-width: 70px;
+.delete-btn {
+    background-color: #e11d48 !important;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+    background-color: #be123c !important;
+    color: #ffffff !important;
 }

@@ -22,6 +22,15 @@ export const BrandsTable: React.FC<BrandsTableProps> = ({
 
     const columns: Column<Brand>[] = [
         {
+            key: 'id',
+            header: 'ID',
+            render: (item) => (
+                <span className="brands-table-id" title={item._id || ''}>
+                    {item._id || '-'}
+                </span>
+            )
+        },
+        {
             key: 'name',
             header: t('admin.brands.name', 'Name'),
             render: (item) => item.name || '-'
@@ -36,16 +45,21 @@ export const BrandsTable: React.FC<BrandsTableProps> = ({
             header: t('admin.brands.description', 'Description'),
             render: (item) => {
                 const text = item.description || '-';
-                return text.length > 50 ? `${text.substring(0, 50)}...` : text;
+                const displayText = text.length > 50 ? `${text.substring(0, 50)}...` : text;
+                return (
+                    <span title={item.description || ''}>
+                        {displayText}
+                    </span>
+                );
             }
         },
         {
             key: 'active',
             header: t('admin.brands.active', 'Active'),
             render: (item) => (
-                <span className={`brands-status-badge ${item.active ? 'active' : 'inactive'}`}>
-                    {item.active ? t('admin.brands.yes', 'Yes') : t('admin.brands.no', 'No')}
-                </span>
+                <div className={`brands-bool-cell ${item.active ? 'bool-true' : 'bool-false'}`}>
+                    {item.active ? '✓' : '✗'}
+                </div>
             )
         },
         {
