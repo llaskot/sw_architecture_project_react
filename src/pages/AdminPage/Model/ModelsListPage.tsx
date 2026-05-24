@@ -70,59 +70,68 @@ export const ModelsListPage: React.FC<ModelsListPageProps> = ({ role }) => {
     }, [models, searchTerm]);
 
     return (
-        <div className="models-list-page">
-            <div className="models-list-header">
+        <div className="admin-page-container">
+            {/* Mandatory inner content wrapper */}
+            <div className="admin-page-content">
 
-                <h2 className="models-list-title">{t('admin.models.title', 'Models Management')}</h2>
-                <SectionNavigation role={role} />
+                <div className="cars-list-header">
+                    <h2>{t('admin.models.title', 'Models Management')}</h2>
+                    <SectionNavigation role={role}/>
+                </div>
 
-            </div>
-
-
-
-            {role === 'admin' && (
-                <div className="models-list-admin-actions">
-                    <label className="models-list-checkbox-label">
-                        <input
-                            type="checkbox"
-                            checked={hideInactive}
-                            onChange={(e) => setHideInactive(e.target.checked)}
+                {/* Using the global filter panel from AdminPage.css */}
+                <div className="admin-filters-panel">
+                    <div className="admin-filter-item admin-filter-item--fluid">
+                        <label className="admin-filter-label">{t('admin.filters.search', 'Search')}</label>
+                        <Input
+                            type="text"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder={t('admin.models.searchPlaceholder', 'Type name or brand...')}
                         />
-                        {t('admin.filters.hideInactive', 'Hide Inactive')}
-                    </label>
+                    </div>
 
-                    <CreateActionButton navigateTo={`/${role}/models/create`} />
+                    {role === 'admin' && (
+                        <div className="cars-list-admin-actions">
+                            <div className="cars-list-admin-actions">
+                                <label className="admin-checkbox-filter">
+                                    <input
+                                        type="checkbox"
+                                        checked={hideInactive}
+                                        onChange={(e) => setHideInactive(e.target.checked)}
+                                    />
+                                    {t('admin.filters.hideInactive', 'Hide Inactive')}
+                                </label>
+                            </div>
+
+                            <div className="admin-filter-item">
+                                <CreateActionButton navigateTo={`/${role}/models/create`} />
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
 
-            <div className="models-list-controls">
-                <Input
-                    label={t('admin.models.search', 'Search Models')}
-                    name="search"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder={t('admin.models.searchPlaceholder', 'Type name or brand...')}
-                />
+                <div className="data-table-container">
+                    <RentErrorBlock message={error} />
+
+                    {loading ? (
+                        <div className="models-list-loading">{t('rent.loading', 'Loading...')}</div>
+                    ) : !error && (
+                        <ModelsTable
+                            models={filteredModels}
+                            role={role}
+                            onDetailsClick={handleDetailsClick}
+                            onDeleteClick={role === 'admin' ? handleDeleteClick : undefined}
+                        />
+                    )}
+
+                    {filteredModels.length === 0 && !loading && !error && (
+                        <div className="models-list-empty">
+                            {t('admin.models.noModels', 'No models found matching your search.')}
+                        </div>
+                    )}
+                </div>
             </div>
-
-            <RentErrorBlock message={error} />
-
-            {loading ? (
-                <div className="models-list-loading">{t('rent.loading', 'Loading...')}</div>
-            ) : !error && (
-                <ModelsTable
-                    models={filteredModels}
-                    role={role}
-                    onDetailsClick={handleDetailsClick}
-                    onDeleteClick={role === 'admin' ? handleDeleteClick : undefined}
-                />
-            )}
-
-            {filteredModels.length === 0 && !loading && !error && (
-                <div className="models-list-empty">
-                    {t('admin.models.noModels', 'No models found matching your search.')}
-                </div>
-            )}
 
             <DeleteModal
                 id={modelToDelete?._id || ''}

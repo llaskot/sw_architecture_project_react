@@ -1,60 +1,85 @@
-/* Оборачиваем, чтобы не влиять на глобальные стили, но не красим внутри */
 .cars-table-container {
     width: 100%;
 }
 
-/* Стили для ID (моноширинный шрифт) */
+/* Стили для ID (моноширинный шрифт) как у юзеров */
 .cars-table-id {
     font-family: monospace;
     color: #64748b;
     font-size: 0.85rem;
+    white-space: nowrap;
 }
 
-/* Стилизация чек-марков статуса (✓ / ✗) */
+/* Стилизация чек-марков статуса (✓ / ✗) без фоновых квадратов, как в UsersTable */
 .cars-bool-cell {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    font-weight: bold;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    width: 40px;
+    margin: 0 auto;
+    display: inline-block;
 }
 
 .cars-bool-cell.bool-true {
-    background-color: #d1fae5;
-    color: #059669;
+    color: #10b981;
+    background-color: transparent;
 }
 
 .cars-bool-cell.bool-false {
-    background-color: #fee2e2;
-    color: #dc2626;
+    color: #ef4444;
+    background-color: transparent;
 }
 
-/* Действия */
+/* Выравнивание кнопок действий */
 .cars-table-actions {
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: flex-start;
 }
 
-/* Маленькие кнопки - используем стандартные классы или подправляем отступы */
-.btn-small {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    border-radius: 4px;
-    text-decoration: none;
+/* ЗАГАЛЬНІ СТИЛІ ДЛЯ ОБОХ КНОПОК (скопировано из UsersTable) */
+.cars-btn-show,
+.cars-btn-delete {
+    padding: 0 12px;
+    height: 32px; /* Фіксована висота для ідеального вирівнювання */
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Прибирає підкреслення у <Link> */
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
+/* Стиль кнопки "Деталі" (Синяя) */
 .cars-btn-show {
-    background-color: #f1f5f9;
-    color: #334155;
+    background-color: #0ea5e9;
+    color: #ffffff;
+    transition: background-color 0.2s ease;
 }
 
+.cars-btn-show:hover,
+.cars-btn-show:focus {
+    background-color: #0284c7;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Стиль кнопки "Видалити" (Красная) */
 .cars-btn-delete {
-    background-color: #fee2e2;
-    color: #dc2626;
+    background-color: #e11d48 !important;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.cars-btn-delete:hover,
+.cars-btn-delete:focus {
+    background-color: #be123c !important;
+    color: #ffffff !important;
 }

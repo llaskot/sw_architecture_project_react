@@ -21,6 +21,16 @@ export const ModelsTable: React.FC<ModelsTableProps> = ({
     const { t } = useTranslation();
 
     const columns: Column<AutoModelRead>[] = [
+        // Добавлена новая колонка ID
+        {
+            key: 'id',
+            header: 'ID',
+            render: (item) => (
+                <span className="models-table-id" title={item._id || ''}>
+                    {item._id || '-'}
+                </span>
+            )
+        },
         {
             key: 'brand',
             header: t('admin.models.brand', 'Brand'),
@@ -41,16 +51,25 @@ export const ModelsTable: React.FC<ModelsTableProps> = ({
             header: t('admin.models.description', 'Description'),
             render: (item) => {
                 const text = item.description || '-';
-                return text.length > 50 ? `${text.substring(0, 50)}...` : text;
+                const displayText = text.length > 50 ? `${text.substring(0, 50)}...` : text;
+
+                return (
+                    <span title={item.description || ''}>
+                        {displayText}
+                    </span>
+                );
             }
         },
+
+
         {
             key: 'active',
             header: t('admin.models.active', 'Active'),
             render: (item) => (
-                <span className={`models-status-badge ${item.active ? 'active' : 'inactive'}`}>
-                    {item.active ? t('admin.models.yes', 'Yes') : t('admin.models.no', 'No')}
-                </span>
+                // Используем классы для галочек/крестиков, как в таблице юзеров
+                <div className={`models-bool-cell ${item.active ? 'bool-true' : 'bool-false'}`}>
+                    {item.active ? '✓' : '✗'}
+                </div>
             )
         },
         {
