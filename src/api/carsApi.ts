@@ -15,11 +15,24 @@ export interface AutoModelCreate {
  * Basic brand information from the server
  */
 export interface Brand {
-    _id: string;
+    _id?: string | null;
     name: string;
     country: string;
     description: string;
     active: boolean;
+}
+
+export interface BrandCreate {
+    name: string;
+    country: string;
+    description: string;
+}
+
+export interface BrandUpdate {
+    name?: string | null;
+    country?: string | null;
+    description?: string | null;
+    active?: boolean;
 }
 
 /**
@@ -154,4 +167,35 @@ export const deleteModel = async (modelId: string): Promise<void> => {
 
 export const getModelByIdAdm = async (id: string): Promise<AutoModelRead> => {
     return await apiClient(`/models/admin/${id}`);
+};
+
+export const getBrandsAdm = async (hideInactive: boolean = true): Promise<Brand[]> => {
+    const params = new URLSearchParams({
+        hide_inactive: hideInactive.toString()
+    });
+    return await apiClient(`/brand/admin/?${params.toString()}`);
+};
+
+export const getBrandByIdAdm = async (id: string): Promise<Brand> => {
+    return await apiClient(`/brand/admin/${id}`);
+};
+
+export const createBrand = async (brandData: BrandCreate): Promise<Brand> => {
+    return await apiClient('/brand/', {
+        method: 'POST',
+        body: JSON.stringify(brandData)
+    });
+};
+
+export const updateBrand = async (brandId: string, brandData: Partial<BrandCreate>): Promise<Brand> => {
+    return await apiClient(`/brand/${brandId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(brandData)
+    });
+};
+
+export const deleteBrand = async (brandId: string): Promise<void> => {
+    return await apiClient(`/brand/${brandId}`, {
+        method: 'DELETE'
+    });
 };

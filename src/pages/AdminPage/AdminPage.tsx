@@ -10,6 +10,7 @@ import UserSelectDropdown from "../../elements/UserSelectDropdown/UserSelectDrop
 import ChangeStageModal from "../../elements/rent/ChangeStageModal/ChangeStageModal.tsx";
 import DeleteModal from "../../elements/modal/DeleteModal.tsx";
 import { Link } from "react-router-dom";
+import {SectionNavigation} from "../../elements/navigation/SectionNavigation/SectionNavigation.tsx";
 
 const AdminPage: React.FC = () => {
     const {t} = useTranslation();
@@ -180,7 +181,8 @@ const AdminPage: React.FC = () => {
     return (
         <div className="admin-page-container">
             <div className="admin-page-content">
-                <h2>{t('admin.pageTitle')}</h2>
+                <div className='page-name'><h2>{t('admin.pageTitle')}</h2>
+                    <SectionNavigation role={'admin'}/></div>
                 <div className="admin-filters-panel">
                     {/* Render inputs directly, they already contain internal labels */}
                     <RentFilters
@@ -290,21 +292,3 @@ export default AdminPage;
 
 
 
-// следующее
-//
-// надо сделать для админа  страницу всех юзеров
-//
-// по принципу рент в админ пейдж
-//
-// тоесть таблица
-//
-// выводим все поля
-//
-// запрос гет алл юзерс
-//
-// кнопки рид делит
-//
-// рид ведет на страницу котору только что делали
-//
-// делит пока заглушка
-//

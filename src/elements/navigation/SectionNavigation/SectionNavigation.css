@@ -2,17 +2,19 @@
     padding: 6px 12px;
     font-size: 1rem;
     font-weight: 500;
-    border: 1px solid #cccccc;
+    border: 1px solid #21a7b8;
     border-radius: 4px;
     background-color: #ffffff;
     color: #333333;
     cursor: pointer;
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 8rem;
+    height: 2rem;
 }
 
 .section-navigation-select:hover {
-    border-color: #999999;
+    border-color: #26282e;
 }
 
 .section-navigation-select:focus {

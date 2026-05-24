@@ -6,7 +6,7 @@ import { SectionNavigation } from '../../../elements/navigation/SectionNavigatio
 import Pagination from '../../../elements/Pagination/Pagination';
 import Input from '../../../elements/input/Input';
 import './UsersListPage.css';
-import {CreateActionButton} from "../../../elements/button/CreateActionButton/CreateActionButton.tsx";
+import { CreateActionButton } from "../../../elements/button/CreateActionButton/CreateActionButton.tsx";
 
 interface UsersListPageProps {
     role?: 'admin' | 'manager';
@@ -42,12 +42,10 @@ export const UsersListPage: React.FC<UsersListPageProps> = ({ role = 'admin' }) 
         }
     }, [page, limit, search, hideInactive, role]);
 
-    // Загрузка данных при изменении страницы или фильтра неактивных
     useEffect(() => {
         fetchUsers();
     }, [page, hideInactive, role, fetchUsers]);
 
-    // Дебаунс для инпута поиска
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             if (page === 1) {
@@ -65,49 +63,63 @@ export const UsersListPage: React.FC<UsersListPageProps> = ({ role = 'admin' }) 
     };
 
     return (
-        <div className="users-list-page-container">
-            <div className="users-list-page-header">
-                <h2>{t('usersList.title', 'Users Management')}</h2>
-                <SectionNavigation role={role} />
-            </div>
+        <div className="admin-page-container">
+            {/* Mandatory inner content wrapper */}
+            <div className="admin-page-content">
 
-            <div className="users-list-page-filters">
-                <div className="users-list-search-wrapper">
-                    <Input
-                        type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder={t('home.searchPlaceholder', 'Search...')}
+                <div className="cars-list-header">
+                    <h2>{t('usersList.title', 'Users Management')}</h2>
+                    <SectionNavigation role={role}/>
+                </div>
+
+                {/* Using the global filter panel from AdminPage.css */}
+                <div className="admin-filters-panel">
+                    <div className="admin-filter-item admin-filter-item--fluid">
+                        <label className="admin-filter-label">{t('admin.filters.search', 'Search')}</label>
+                        <Input
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder={t('home.searchPlaceholder', 'Search...')}
+                        />
+                    </div>
+
+                    {role === 'admin' && (
+                        <div className="cars-list-admin-actions">
+                            <div className="cars-list-admin-actions">
+                                <label className="admin-checkbox-filter">
+                                    <input
+                                        type="checkbox"
+                                        checked={hideInactive}
+                                        onChange={(e) => setHideInactive(e.target.checked)}
+                                    />
+                                    {t('admin.filters.hideInactive', 'Hide Inactive')}
+                                </label>
+                            </div>
+
+                            <div className="admin-filter-item">
+                                <CreateActionButton navigateTo="/admin/users/create"/>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Wrapper for table horizontal scrolling */}
+                <div className="data-table-container">
+                    <UsersTable
+                        users={users}
+                        loading={loading}
+                        role={role}
+                        onDeleteClick={handleDeleteStub}
                     />
                 </div>
 
-                {role === 'admin' && (
-                    <div className="users-list-checkbox-wrapper">
-                        <label className="users-list-checkbox-label">
-                            <input
-                                type="checkbox"
-                                checked={hideInactive}
-                                onChange={(e) => setHideInactive(e.target.checked)}
-                            />
-                            {t('admin.filters.hideInactive', 'Hide Inactive')}
-                        </label>
-                        <CreateActionButton navigateTo="/admin/users/create" />
-                    </div>
-                )}
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={setPage}
+                />
             </div>
-
-            <UsersTable
-                users={users}
-                loading={loading}
-                role={role}
-                onDeleteClick={handleDeleteStub}
-            />
-
-            <Pagination
-                currentPage={page}
-                totalPages={totalPages}
-                onPageChange={setPage}
-            />
         </div>
     );
 };

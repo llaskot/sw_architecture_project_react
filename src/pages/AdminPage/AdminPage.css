@@ -12,6 +12,7 @@
 
 .admin-page-content {
     width: 95vw;
+    max-width: 100%; /* Added to prevent horizontal overflow */
     padding: 20px;
     background-color: var(--bg);
     border: 1px solid var(--border);
@@ -30,12 +31,15 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    gap: 16px;
     margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
+    margin-top: 10px;
     width: 100%;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     box-sizing: border-box;
+    box-shadow: var(--shadow);
+    gap: 24px;
 }
 
 /* Individual filter wrappers for Vehicle and Client */
@@ -59,6 +63,7 @@
 .admin-filter-item--fluid {
     flex: 1 1 280px;
     min-width: 280px;
+    max-width: 500px;
 }
 
 .admin-filter-item--fluid .car-select-dropdown__trigger,
@@ -166,9 +171,18 @@
     color: var(--text);
 }
 
+/* Data table wrapper for horizontal scroll */
+.data-table-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* Data table customization overrides */
 .admin-page-content .data-table {
-    min-width: 1400px;
+    width: 100%;
+    min-width: 100%;
 }
 
 .admin-page-content .data-table__th,
@@ -189,7 +203,6 @@
     display: inline-block;
     vertical-align: middle;
 }
-
 
 /* Container for clear button to align perfectly with 38px inputs */
 .admin-filter-item--clear {
@@ -228,4 +241,9 @@
 
 .admin-clear-filters:active {
     transform: scale(0.95);
+}
+
+.page-name{
+    display: flex;
+    gap: 3rem;
 }
