@@ -1,6 +1,17 @@
 import { apiClient } from './apiClient';
 
 /**
+ * Interface for creating and updating models
+ */
+export interface AutoModelCreate {
+    brand_id: string;
+    name: string;
+    description: string;
+    category: string;
+    active?: boolean;
+}
+
+/**
  * Basic brand information from the server
  */
 export interface Brand {
@@ -71,9 +82,9 @@ export const getCarById = async (carId: string): Promise<Car> => {
     return await apiClient(`/cars/${carId}`);
 };
 
-export const getModels = async (): Promise<AutoModelRead[]> => {
-    return await apiClient('/models/');
-};
+// export const getModels = async (): Promise<AutoModelRead[]> => {
+//     return await apiClient('/models/');
+// };
 
 export const createCar = async (carData: Partial<Car>): Promise<Car> => {
     return await apiClient('/cars/', {
@@ -106,5 +117,32 @@ export const uploadCarImage = async (carId: string, file: File): Promise<any> =>
     return await apiClient(`/files/${carId}`, {
         method: 'POST',
         body: formData
+    });
+};
+
+
+// --- Models API ---
+
+export const getModels = async (): Promise<AutoModelRead[]> => {
+    return await apiClient('/models/');
+};
+
+export const createModel = async (modelData: AutoModelCreate): Promise<AutoModelRead> => {
+    return await apiClient('/models/', {
+        method: 'POST',
+        body: JSON.stringify(modelData)
+    });
+};
+
+export const updateModel = async (modelId: string, modelData: Partial<AutoModelCreate>): Promise<AutoModelRead> => {
+    return await apiClient(`/models/${modelId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(modelData)
+    });
+};
+
+export const deleteModel = async (modelId: string): Promise<void> => {
+    return await apiClient(`/models/${modelId}`, {
+        method: 'DELETE'
     });
 };

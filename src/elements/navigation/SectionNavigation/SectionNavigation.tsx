@@ -16,6 +16,7 @@ export const SectionNavigation: React.FC<SectionNavigationProps> = ({ role }) =>
     const getActiveSection = () => {
         if (location.pathname.includes('/users')) return 'users';
         if (location.pathname.includes('/cars')) return 'cars';
+        if (location.pathname.includes('/models')) return 'models';
         return 'rents';
     };
 
@@ -42,8 +43,12 @@ export const SectionNavigation: React.FC<SectionNavigationProps> = ({ role }) =>
         >
             <option value="rents">{t('admin.nav.rents', 'Rents')}</option>
             <option value="users">{t('admin.nav.users', 'Users')}</option>
+            <option value="models">{t('admin.nav.models', 'Models')}</option>
             {role === 'admin' && (
                 <option value="cars">{t('admin.nav.cars', 'Cars')}</option>
+            )}
+            {role === 'admin' && (
+                <option value="models">{t('admin.nav.models', 'Models')}</option>
             )}
         </select>
     );

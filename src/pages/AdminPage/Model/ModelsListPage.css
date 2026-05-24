@@ -1,0 +1,42 @@
+.models-list-page {
+    padding: 24px;
+    background-color: #f9fafb;
+    min-height: calc(100vh - 64px);
+}
+
+.models-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.models-list-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+.models-list-controls {
+    margin-bottom: 24px;
+    max-width: 400px;
+}
+
+.models-list-loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #666666;
+}
+
+.models-list-empty {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #666666;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #eeeeee;
+    margin-top: 24px;
+}
