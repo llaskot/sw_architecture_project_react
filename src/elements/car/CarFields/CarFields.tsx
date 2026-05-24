@@ -1,57 +1,65 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import Input from '../../input/Input';
-import { ModelSelectDropdown } from '../ModelSelectDropdown/ModelSelectDropdown';
-import { type AutoModelRead } from '../../../api/carsApi';
+import {ModelSelectDropdown} from '../ModelSelectDropdown/ModelSelectDropdown';
+import {type AutoModelRead} from '../../../api/carsApi';
 import './CarFields.css';
+import Button from "../../button/Button.tsx";
+
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 interface CarFieldsProps {
     formData: any;
     onChange: (field: string, value: any) => void;
     disabled?: boolean;
     models: AutoModelRead[];
+    onImageUploadClick?: () => void;
+    mode?: 'view' | 'edit' | 'create';
 }
 
 export const CarFields: React.FC<CarFieldsProps> = ({
                                                         formData,
                                                         onChange,
                                                         disabled = false,
-                                                        models
+                                                        models,
+                                                        onImageUploadClick,
+                                                        mode
                                                     }) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
+        const {name, value, type, checked} = e.target;
         const finalValue = type === 'checkbox' ? checked : value;
         onChange(name, finalValue);
     };
 
-    const handleImageClick = () => {
-        console.log('Change image placeholder clicked');
-        alert(t('admin.car.changeImageMock', 'Image upload is not implemented yet.'));
-    };
 
     return (
         <div className="car-fields-container">
             <div className="car-fields-top-section">
                 <div className="car-fields-image-section">
                     <div className="car-fields-image-wrapper">
-                        {formData.image_url ? (
-                            <img src={formData.image_url} alt="Car" className="car-fields-image" />
-                        ) : (
+                        {formData.img?.small ? (
+                            <img
+                                src={`${BASE_URL}/${formData.img.small}`}
+                                alt="Car"
+                                className="car-fields-image"
+                            />) : (
                             <div className="car-fields-image-placeholder">
                                 {t('admin.car.noImage', 'No Image')}
                             </div>
                         )}
                     </div>
                     {!disabled && (
-                        <button
-                            type="button"
-                            className="btn-small car-fields-image-btn"
-                            onClick={handleImageClick}
-                        >
-                            {t('admin.car.changeImage', 'Change Image')}
-                        </button>
+                        <>
+                            <Button
+                                className="btn-small car-fields-image-btn"
+                                disabled={mode === 'create'}
+                                onClick={onImageUploadClick}
+                            >
+                                {t('admin.car.changeImage', 'Change Image')}
+                            </Button>
+                        </>
                     )}
                 </div>
 

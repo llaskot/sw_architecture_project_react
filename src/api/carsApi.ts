@@ -98,3 +98,13 @@ export const deleteCar = async (carId: string): Promise<void> => {
         method: 'DELETE'
     });
 };
+
+export const uploadCarImage = async (carId: string, file: File): Promise<any> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return await apiClient(`/files/${carId}`, {
+        method: 'POST',
+        body: formData
+    });
+};
