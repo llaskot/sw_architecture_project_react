@@ -22,7 +22,7 @@
     padding: 0.5rem;
     border: 1px solid #d1d5db;
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: #26282e;
     cursor: pointer;
     user-select: none;
     box-sizing: border-box;
@@ -42,7 +42,7 @@
 
 /* Disabled state for the trigger */
 .stage-dropdown-trigger--disabled {
-    background-color: #f3f4f6;
+    background-color: #26282e;
     cursor: not-allowed;
     color: #9ca3af;
 }
@@ -80,11 +80,12 @@
     padding: 0.5rem;
     cursor: pointer;
     transition: background-color 0.15s ease;
+    background-color: #1e1e1e;
 }
 
 /* Hover effect on options */
 .stage-dropdown-option:hover {
-    background-color: #f3f4f6;
+    background-color: #26282e;
 }
 
 /* Currently selected option styling */

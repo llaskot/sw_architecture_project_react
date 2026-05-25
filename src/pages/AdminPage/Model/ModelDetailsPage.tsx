@@ -87,7 +87,7 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({role}) => {
                     {t('admin.models.editTitle', 'Model:')} {id}
                 </h2>
                 <>
-                    <Button className="btn-nav" onClick={() => navigate('/admin/models')}>
+                    <Button className="btn-nav" onClick={() => navigate(-1)}>
                         {t('admin.actions.back', 'Back')}
                     </Button>
                 </>

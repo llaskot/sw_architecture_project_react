@@ -126,11 +126,13 @@ const ChangeStageModal: React.FC<ChangeStageModalProps> = ({
                         type="button"
                         onClick={onClose}
                         disabled={loading}
+                        className="btn-nav"
                     >
                         {t('profile.cancel', 'Cancel')}
                     </Button>
                     <SubmitButton
                         loading={loading}
+                        className="btn-action"
                     >
                         {t('profile.save', 'Save')}
                     </SubmitButton>

@@ -96,7 +96,7 @@ export const BrandDetailsPage: React.FC<BrandDetailsPageProps> = ({ role = 'admi
     };
 
     const handleBack = () => {
-        navigate(`/${role}/brands`);
+        navigate(-1);
     };
 
     if (loading) {

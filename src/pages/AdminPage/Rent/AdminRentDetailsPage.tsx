@@ -13,6 +13,7 @@ import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock
 
 import './AdminRentDetailsPage.css';
 import {parseApiError} from "../../../utils/errorHandler.ts";
+import type {AdminProps} from "../AdminPage.tsx";
 
 interface FormData {
     car_id: string;
@@ -22,7 +23,7 @@ interface FormData {
     user_dock: string;
 }
 
-const AdminRentDetailsPage: React.FC = () => {
+const AdminRentDetailsPage: React.FC<AdminProps> = ({role}) => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -129,7 +130,6 @@ const AdminRentDetailsPage: React.FC = () => {
     if (!rent) return <div style={{ textAlign: 'center', padding: '50px' }}>{t('rent.edit.notFound', 'Order not found')}</div>;
 
     const computedTotalPrice = currentPricePerDay * formData.days_qty;
-
     return (
         <div className="admin-rent-details-container">
             <div className="admin-rent-header">
@@ -143,7 +143,7 @@ const AdminRentDetailsPage: React.FC = () => {
                         {t('common.back', 'Back')}
                     </Button>
 
-                    {!isEditing && (
+                    {!isEditing && (role === 'admin' || ["booked", "ordered"].includes(rent.stage ?? "" ) ) && (
                         <Button
                             onClick={() => setIsEditing(true)}
                             type="button"

@@ -12,11 +12,11 @@
 }
 
 .modal-content {
-    background-color: white;
+    background-color:  black;
     padding: 2rem;
     border-radius: 8px;
     min-width: 320px;
-    color: black;
+    color: white;
     position: relative;
 }
 

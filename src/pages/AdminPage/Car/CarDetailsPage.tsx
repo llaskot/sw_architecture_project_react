@@ -66,7 +66,7 @@ export const CarDetailsPage: React.FC<CarDetailsPageProps> = ({ role }) => {
     };
 
     const handleGoBack = () => {
-        navigate(`/${role}/cars`);
+        navigate(-1);
     };
 
     if (loading) {

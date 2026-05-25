@@ -9,10 +9,15 @@ import './AdminPage.css';
 import UserSelectDropdown from "../../elements/UserSelectDropdown/UserSelectDropdown.tsx";
 import ChangeStageModal from "../../elements/rent/ChangeStageModal/ChangeStageModal.tsx";
 import DeleteModal from "../../elements/modal/DeleteModal.tsx";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {SectionNavigation} from "../../elements/navigation/SectionNavigation/SectionNavigation.tsx";
 
-const AdminPage: React.FC = () => {
+
+export interface AdminProps {
+    role: 'admin' | 'manager';
+}
+
+const AdminPage: React.FC<AdminProps> = ({role}) => {
     const {t} = useTranslation();
     const [rents, setRents] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -33,6 +38,7 @@ const AdminPage: React.FC = () => {
     const [isStageModalOpen, setIsStageModalOpen] = useState<boolean>(false);
     const [selectedRentIdForStage, setSelectedRentIdForStage] = useState<string | number | null>(null);
     const [rentToDelete, setRentToDelete] = useState<string | number | null>(null);
+
 
     useEffect(() => {
         const fetchStages = async () => {
@@ -86,7 +92,7 @@ const AdminPage: React.FC = () => {
                     <Link
                         to={`/admin/rents/${item._id || item.id}`}
                         className="admin-clickable-stub"
-                        style={{ color: '#0ea5e9', textDecoration: 'none', fontWeight: '500' }}
+                        style={{color: '#0ea5e9', textDecoration: 'none', fontWeight: '500'}}
                     >
                         #{item._id}
                     </Link>
@@ -109,9 +115,9 @@ const AdminPage: React.FC = () => {
                 const clientId = item.client?._id || item.client?.id;
                 return clientId ? (
                     <Link
-                        to={`/admin/users/${clientId}`}
+                        to={`/${role}/users/${clientId}`}
                         className="admin-clickable-stub"
-                        style={{ color: '#0ea5e9', textDecoration: 'none', fontWeight: '500' }}
+                        style={{color: '#0ea5e9', textDecoration: 'none', fontWeight: '500'}}
                     >
                         {item.client?.first_name} {item.client?.last_name}
                     </Link>
@@ -129,11 +135,21 @@ const AdminPage: React.FC = () => {
         {
             key: 'plate_number',
             header: t('admin.table.plateNumber', 'Plate Number'),
-            render: (item: any) => (
-                <span className="admin-clickable-stub" onClick={() => alert(`Car ${item.car?.id}`)}>
-                    {item.car?.plate_number}
-                </span>
-            )
+            render: (item: any) => {
+                const carId = item.car?._id || item.car?.id;
+                return carId ? (
+                    <Link
+                        to={`/${role}/cars/${carId}`}
+                        className="admin-clickable-stub"
+                        style={{color: '#0ea5e9', textDecoration: 'none', fontWeight: '500'}}
+                    >
+                        {item.car?.plate_number}
+                    </Link>
+                ) : (
+                    <span>-</span>
+                );
+            }
+
         },
         {
             key: 'price_per_day',
@@ -167,12 +183,12 @@ const AdminPage: React.FC = () => {
                     }}>
                         {t('admin.table.stageBtn', 'Stage')}
                     </button>
-                    <button
+                    {role === 'admin' || ["booked", "ordered"].includes(item.stage ?? "") && <button
                         className="admin-btn delete"
                         onClick={() => setRentToDelete(item._id || item.id)}
                     >
                         {t('rent.actions.delete', 'Delete')}
-                    </button>
+                    </button>}
                 </div>
             )
         }
@@ -182,7 +198,7 @@ const AdminPage: React.FC = () => {
         <div className="admin-page-container">
             <div className="admin-page-content">
                 <div className='page-name'><h2>{t('admin.pageTitle')}</h2>
-                    <SectionNavigation role={'admin'}/></div>
+                    <SectionNavigation role={role}/></div>
                 <div className="admin-filters-panel">
                     {/* Render inputs directly, they already contain internal labels */}
                     <RentFilters
@@ -234,7 +250,7 @@ const AdminPage: React.FC = () => {
                         </button>
                     </div>
 
-                    <div className="admin-filter-item admin-filter-item--checkbox">
+                    {role == "admin" && <div className="admin-filter-item admin-filter-item--checkbox">
                         <label className="admin-checkbox-filter">
                             <input
                                 type="checkbox"
@@ -246,7 +262,7 @@ const AdminPage: React.FC = () => {
                             />
                             {t('admin.filters.hideInactive')}
                         </label>
-                    </div>
+                    </div>}
                 </div>
 
                 {loading ? (
