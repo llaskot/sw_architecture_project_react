@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useNavigate, useParams} from 'react-router-dom';
 import {
     getBrands,
     getCategories,
@@ -9,20 +9,21 @@ import {
     type AutoModelCreate,
     type Brand
 } from '../../../api/carsApi';
-import { ModelFields } from '../../../elements/model/ModelFields/ModelFields';
+import {ModelFields} from '../../../elements/model/ModelFields/ModelFields';
 import SubmitButton from '../../../elements/button/SubmitButton';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
-import { parseApiError } from '../../../utils/errorHandler';
+import {parseApiError} from '../../../utils/errorHandler';
 import './ModelDetailsPage.css';
+import Button from "../../../elements/button/Button.tsx";
 
 interface ModelDetailsPageProps {
     role: 'admin' | 'manager';
 }
 
-export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
-    const { t } = useTranslation();
+export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({role}) => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
-    const { id } = useParams<{ id: string }>(); // ID модели из URL
+    const {id} = useParams<{ id: string }>(); // ID модели из URL
 
     const [loading, setLoading] = useState<boolean>(false);
     const [pageLoading, setPageLoading] = useState<boolean>(true);
@@ -78,23 +79,22 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
     if (pageLoading) return <div className="model-details-loading">{t('rent.loading', 'Loading...')}</div>;
 
     return (
-        <div className="model-details-page">
+        <div className="admin-rent-details-container">
             <div className="model-details-header">
                 {/* Кнопка назад */}
-                <button className="back-btn" onClick={() => navigate('/admin/models')}>
-                    {t('admin.actions.back', 'Back')}
-                </button>
-                <h2 className="model-details-title">
+
+                <h2 className="car-details-title">
                     {t('admin.models.editTitle', 'Model:')} {id}
                 </h2>
-                {role === 'admin' && !isEditing && (
-                    <button className="edit-btn" onClick={() => setIsEditing(true)}>
-                        {t('admin.actions.edit', 'Edit')}
-                    </button>
-                )}
+                <>
+                    <Button className="btn-nav" onClick={() => navigate('/admin/models')}>
+                        {t('admin.actions.back', 'Back')}
+                    </Button>
+                </>
+
             </div>
 
-            <RentErrorBlock message={error} />
+            <RentErrorBlock message={error}/>
 
             {formData && (
                 <form onSubmit={handleSubmit}>
@@ -105,13 +105,19 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({ role }) => {
                         categories={categories}
                         disabled={!isEditing}
                     />
-
+                    {role === 'admin' && !isEditing && (
+                        <div className="model-details-actions">
+                            <Button className="btn-action" onClick={() => setIsEditing(true)}>
+                                {t('admin.actions.edit', 'Edit')}
+                            </Button>
+                        </div>
+                    )}
                     {isEditing && (
                         <div className="form-actions">
-                            <button type="button" className="cancel-btn" onClick={() => setIsEditing(false)}>
+                            <Button type="button" className="btn-nav" onClick={() => setIsEditing(false)}>
                                 {t('admin.actions.cancel', 'Cancel')}
-                            </button>
-                            <SubmitButton loading={loading}>
+                            </Button>
+                            <SubmitButton loading={loading} className="btn-action">
                                 {t('admin.actions.save', 'Save')}
                             </SubmitButton>
                         </div>

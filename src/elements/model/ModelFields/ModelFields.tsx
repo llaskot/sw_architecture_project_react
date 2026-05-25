@@ -30,46 +30,67 @@ export const ModelFields: React.FC<ModelFieldsProps> = ({
 
     return (
         <div className="model-fields">
-            <BrandSelect
-                brands={brands}
-                value={data.brand_id}
-                onChange={(val) => updateField('brand_id', val)}
-                disabled={disabled}
-            />
-
-            <Input
-                label={t('admin.models.name', 'Name')}
-                name="name"
-                value={data.name}
-                onChange={(e) => updateField('name', e.target.value)}
-                disabled={disabled}
-            />
-
-            <CategorySelect
-                categories={categories}
-                value={data.category}
-                onChange={(val) => updateField('category', val)}
-                disabled={disabled}
-            />
-
-            <Textarea
-                label={t('admin.models.description', 'Description')}
-                name="description"
-                value={data.description}
-                onChange={(e) => updateField('description', e.target.value)}
-                disabled={disabled}
-            />
-
-            <div className="model-checkbox-field">
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={data.active}
-                        onChange={(e) => updateField('active', e.target.checked)}
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.models.brand', 'Brand')}</label>
+                <div className="admin-field-value">
+                    <BrandSelect
+                        brands={brands}
+                        value={data.brand_id}
+                        onChange={(val) => updateField('brand_id', val)}
                         disabled={disabled}
                     />
-                    {t('admin.models.active', 'Active')}
-                </label>
+                </div>
+            </div>
+
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.models.name', 'Name')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="name"
+                        value={data.name}
+                        onChange={(e) => updateField('name', e.target.value)}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
+
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.models.category', 'Category')}</label>
+                <div className="admin-field-value">
+                    <CategorySelect
+                        categories={categories}
+                        value={data.category}
+                        onChange={(val) => updateField('category', val)}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
+
+            <div className="admin-field-row align-top">
+                <label className="admin-field-label">{t('admin.models.description', 'Description')}</label>
+                <div className="admin-field-value">
+                    <Textarea
+                        name="description"
+                        value={data.description}
+                        onChange={(e) => updateField('description', e.target.value)}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
+
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.models.status', 'Status')}</label>
+                <div className="admin-field-value model-checkbox-field">
+                    <label className="car-fields-checkbox-label">
+                        <input
+                            type="checkbox"
+                            checked={!!data.active}
+                            onChange={(e) => updateField('active', e.target.checked)}
+                            disabled={disabled}
+                        />
+                        {t('admin.models.active', 'Active')}
+                    </label>
+                </div>
             </div>
         </div>
     );

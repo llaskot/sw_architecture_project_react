@@ -1,112 +1,99 @@
-.model-search-input {
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.model-select-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.model-select-label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #333;
-}
-
-.model-select-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    font-size: 1rem;
-}
-
-.model-select-input:disabled {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-}
-
+/* Основной контейнер */
 .model-select-dropdown {
     position: relative;
     width: 100%;
-    margin-bottom: 16px;
-}
-
-.model-select-dropdown.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.model-select-input-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
 }
 
 .model-select-label {
+    display: block;
+    margin-bottom: 6px;
     font-size: 0.85rem;
-    font-weight: 500;
-    color: #666;
+    color: #a0a0a0; /* Мягкий серый для лейбла */
 }
 
+/* Инпут */
 .model-select-input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    padding: 12px;
+    background-color: #1e1e1e; /* Темный фон инпута */
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 1rem;
     cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.model-select-input:focus {
+    outline: none;
+    border-color: #4a90e2; /* Акцентный синий при фокусе */
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.model-select-input:disabled {
+    background-color: #161616;
+    color: #666;
+    border-color: #222;
+}
+
+/* Стрелочка */
+.model-select-input-wrapper {
+    position: relative; /* Обязательно: это "база" для стрелки */
+    display: flex;
+    flex-direction: column;
 }
 
 .model-select-arrow {
     position: absolute;
     right: 12px;
-    top: 35px;
+    top: calc(50% ); /* 50% — центр wrapper, +10px — поправка на высоту label */
+    transform: translateY(-50%); /* Идеальное центрирование */
     pointer-events: none;
     transition: transform 0.2s;
-    font-size: 0.8rem;
+    color: #666;
 }
 
 .model-select-arrow.open {
-    transform: rotate(180deg);
+    transform: translateY(-50%) rotate(180deg); /* Сохраняем центрирование при повороте */
+    color: #4a90e2;
 }
 
+/* Список */
 .model-select-list {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 4px);
     left: 0;
     width: 100%;
     max-height: 200px;
     overflow-y: auto;
-    border: 1px solid #ccc;
-    border-top: none;
-    background: #fff;
+    background: #252525; /* Чуть светлее фона */
+    border: 1px solid #333;
+    border-radius: 6px;
     list-style: none;
-    padding: 0;
+    padding: 4px 0;
     margin: 0;
     z-index: 100;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
 .model-select-item {
-    padding: 10px;
+    padding: 10px 15px;
+    color: #e0e0e0;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
 .model-select-item:hover, .model-select-item.selected {
-    background-color: #f0f0f0;
+    background-color: #333; /* Темно-серый при наведении */
+    color: #fff;
+}
+
+.model-select-item.selected {
+    border-left: 3px solid #4a90e2; /* Акцентная полоска для выбранного */
 }
 
 .model-select-item-empty {
     padding: 10px;
-    color: #999;
+    color: #666;
     text-align: center;
 }

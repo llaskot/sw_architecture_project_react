@@ -14,7 +14,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ categories, valu
 
     return (
         <div className="model-select-wrapper">
-            <label className="model-select-label">{t('admin.models.categorySelect', 'Select Category')}</label>
+            {/*<label className="model-select-label">{t('admin.models.categorySelect', 'Select Category')}</label>*/}
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}

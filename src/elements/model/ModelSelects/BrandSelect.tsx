@@ -51,7 +51,7 @@ export const BrandSelect: React.FC<BrandSelectProps> = ({
     return (
         <div className={`model-select-dropdown ${disabled ? 'disabled' : ''}`} ref={dropdownRef}>
             <div className="model-select-input-wrapper">
-                <label className="model-select-label">{t('admin.models.brandSelect', 'Brand')}</label>
+                {/*<label className="model-select-label">{t('admin.models.brandSelect', 'Brand')}</label>*/}
                 <input
                     type="text"
                     className="model-select-input"
@@ -82,7 +82,7 @@ export const BrandSelect: React.FC<BrandSelectProps> = ({
                             <li
                                 key={brand._id}
                                 className={`model-select-item ${brand._id === value ? 'selected' : ''}`}
-                                onClick={() => handleSelect(brand._id)}
+                                onClick={() => brand._id && handleSelect(brand._id)}
                             >
                                 {brand.name}
                             </li>
