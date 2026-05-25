@@ -6,6 +6,7 @@ import BrandFields from '../../../elements/brand/BrandFields/BrandFields';
 import SubmitButton from '../../../elements/button/SubmitButton';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
 import './BrandDetailsPage.css';
+import Button from "../../../elements/button/Button.tsx";
 
 interface BrandDetailsPageProps {
     role?: 'admin' | 'manager';
@@ -114,25 +115,17 @@ export const BrandDetailsPage: React.FC<BrandDetailsPageProps> = ({ role = 'admi
     }
 
     return (
-        <div className="brand-details-page">
-            <div className="brand-details-header">
-                <div className="brand-details-title-group">
-                    <button className="btn-back" onClick={handleBack}>
-                        &larr; {t('admin.actions.back', 'Back')}
-                    </button>
-                    <h2 className="brand-details-title">
-                        {isEditing
-                            ? t('admin.brands.editTitle', 'Edit Brand')
-                            : t('admin.brands.detailsTitle', 'Brand Details')}
+        <div className="admin-rent-details-container">
+                <div className="model-details-header">
+
+                    <h2 className="car-details-title">
+                        {t('admin.brands.editTitle', 'Brand:')} {id}
                     </h2>
+                    <Button className="btn-nav" onClick={handleBack}>
+                         {t('admin.actions.back', 'Back')}
+                    </Button>
                 </div>
 
-                {role === 'admin' && !isEditing && (
-                    <button className="btn-edit" onClick={() => setIsEditing(true)}>
-                        {t('admin.actions.edit', 'Edit')}
-                    </button>
-                )}
-            </div>
 
             <form onSubmit={handleSubmit} className="brand-details-form">
                 <BrandFields
@@ -143,18 +136,25 @@ export const BrandDetailsPage: React.FC<BrandDetailsPageProps> = ({ role = 'admi
                 />
 
                 <RentErrorBlock message={error} />
+                {role === 'admin' && !isEditing && (
+                    <div className="model-details-actions">
+                        <Button className="btn-action" onClick={() => setIsEditing(true)}>
+                            {t('admin.actions.edit', 'Edit')}
+                        </Button>
+                    </div>
+                )}
 
                 {isEditing && (
                     <div className="brand-details-actions">
-                        <button
+                        <Button
                             type="button"
-                            className="btn-cancel"
+                            className="btn-nav"
                             onClick={handleCancel}
                             disabled={saveLoading}
                         >
                             {t('admin.actions.cancel', 'Cancel')}
-                        </button>
-                        <SubmitButton loading={saveLoading}>
+                        </Button>
+                        <SubmitButton loading={saveLoading} className="btn-action">
                             {t('admin.actions.save', 'Save')}
                         </SubmitButton>
                     </div>
