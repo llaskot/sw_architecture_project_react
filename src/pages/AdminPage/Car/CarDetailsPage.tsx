@@ -89,18 +89,26 @@ export const CarDetailsPage: React.FC<CarDetailsPageProps> = ({ role }) => {
     }
 
     return (
-        <div className="car-details-page">
-            <div className="car-details-header">
-                <Button onClick={handleGoBack} className="btn-small car-details-back-btn">
-                    &larr; {t('admin.nav.back', 'Go Back')}
-                </Button>
+        <div className="admin-rent-details-container">
+            <div className="admin-rent-header">
                 <h2 className="car-details-title">
                     {car.model?.brand?.name} {car.model?.name}
-                    <span className="car-details-id">#{car._id.substring(0, 8)}</span>
+                    <span className="car-details-id">#{car._id}</span>
                 </h2>
+                <div>
+                    <Button
+                        onClick={handleGoBack}
+                        type="button"
+                        className="btn-nav"
+                    >
+                        {t('admin.nav.back', 'Go Back')}
+                    </Button>
+                </div>
             </div>
 
-            <div className="car-details-content">
+            <RentErrorBlock message={error} />
+
+            <div className="admin-rent-content">
                 <CarContainer
                     initialData={car}
                     role={role}

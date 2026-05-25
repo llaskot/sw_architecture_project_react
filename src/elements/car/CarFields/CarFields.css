@@ -1,120 +1,54 @@
 .car-fields-container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
     width: 100%;
-}
-
-.car-fields-top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 32px;
-    background-color: #f8fafc;
-    padding: 24px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-}
-
-.car-fields-image-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    align-items: center;
 }
 
+/* Сетка полей (как в деталях аренды) */
+.admin-field-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #1e293b;
+}
+
+.admin-field-row.align-top { align-items: flex-start; }
+
+.admin-field-label {
+    flex: 0 0 30%;
+    font-weight: 600;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    padding-right: 16px;
+}
+
+.admin-field-value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Стили картинки */
 .car-fields-image-wrapper {
-    width: 200px;
-    height: 120px;
+    width: 120px;
+    height: 80px;
     border-radius: 6px;
     overflow: hidden;
-    background-color: #e2e8f0;
+    background-color: #1e293b;
+    border: 1px solid #334155;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #cbd5e1;
 }
 
-.car-fields-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+.car-fields-image { width: 100%; height: 100%; object-fit: cover; }
 
-.car-fields-image-placeholder {
-    font-size: 0.9rem;
-    color: #64748b;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
+.car-fields-image-placeholder { color: #64748b; font-size: 0.7rem; }
 
-.car-fields-image-btn {
-    width: 100%;
-    text-align: center;
-}
-
-.car-fields-checkboxes {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-width: 150px;
-}
-
-.car-fields-checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    color: #334155;
-    cursor: pointer;
-    font-weight: 500;
-    user-select: none;
-}
-
-.car-fields-checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: #10b981;
-}
-
-.car-fields-checkbox-label input[type="checkbox"]:disabled {
-    cursor: not-allowed;
-}
-
-.car-fields-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.car-fields-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.car-fields-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #475569;
-}
-
-@media (max-width: 640px) {
-    .car-fields-top-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .car-fields-checkboxes {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .car-fields-grid {
-        grid-template-columns: 1fr;
-    }
+/* Кнопка смены картинки */
+.car-fields-top-section .btn-nav {
+    padding: 4px 12px !important;
+    height: 30px !important;
+    font-size: 0.8rem !important;
 }

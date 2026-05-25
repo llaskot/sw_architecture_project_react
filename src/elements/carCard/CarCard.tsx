@@ -53,8 +53,9 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
     const modelName = car.model?.name || t('carCard.unknown', 'Невідомо');
     const title = `${brandName} ${modelName}`.trim();
 
-    const imageUrl = car.img?.small ? `${BASE_URL}/${car.img.small}` : null;
-
+    const imageUrl = car.img?.small
+        ? `${BASE_URL}/${car.img.small}?t=${Date.now()}`
+        : null;
     const handleNavigate = () => {
         navigate(`/cars/${car._id}`);
     };

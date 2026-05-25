@@ -38,8 +38,9 @@ export const CarFields: React.FC<CarFieldsProps> = ({
 
     return (
         <div className="car-fields-container">
-            <div className="car-fields-top-section">
-                <div className="car-fields-image-section">
+            <div className="admin-field-row align-top">
+                <label className="admin-field-label">{t('admin.car.image', 'Image')}</label>
+                <div className="admin-field-value car-fields-image-section">
                     <div className="car-fields-image-wrapper">
                         {formData.newImageFile ? (
                             <img
@@ -49,7 +50,7 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                             />
                         ) : formData.img?.small ? (
                             <img
-                                src={`${BASE_URL}/${formData.img.small}`}
+                                src={`${BASE_URL}/${formData.img.small}?t=${Date.now()}`}
                                 alt="Car"
                                 className="car-fields-image"
                             />
@@ -62,7 +63,7 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                     {!disabled && (
                         <>
                             <Button
-                                className="btn-small car-fields-image-btn"
+                                className="btn-nav car-fields-image-btn"
                                 type="button"
                                 onClick={() => fileInputRef.current?.click()}
                             >
@@ -78,8 +79,11 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                         </>
                     )}
                 </div>
+            </div>
 
-                <div className="car-fields-checkboxes">
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.status', 'Status')}</label>
+                <div className="admin-field-value car-fields-checkboxes">
                     <label className="car-fields-checkbox-label">
                         <input
                             type="checkbox"
@@ -115,9 +119,9 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                 </div>
             </div>
 
-            <div className="car-fields-grid">
-                <div className="car-fields-group">
-                    <label className="car-fields-label">{t('admin.car.model', 'Model')}</label>
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.model', 'Model')}</label>
+                <div className="admin-field-value">
                     <ModelSelectDropdown
                         models={models}
                         value={formData.model_id || formData.model?._id || ''}
@@ -125,57 +129,81 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                         disabled={disabled}
                     />
                 </div>
+            </div>
 
-                <Input
-                    label={t('admin.car.vin', 'VIN')}
-                    name="vin"
-                    value={formData.vin || ''}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                />
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.vin', 'VIN')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="vin"
+                        value={formData.vin || ''}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
 
-                <Input
-                    label={t('admin.car.plateNumber', 'Plate Number')}
-                    name="plate_number"
-                    value={formData.plate_number || ''}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                />
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.plateNumber', 'Plate Number')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="plate_number"
+                        value={formData.plate_number || ''}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
 
-                <Input
-                    label={t('admin.car.year', 'Year')}
-                    name="year"
-                    type="number"
-                    value={formData.year || ''}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                />
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.year', 'Year')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="year"
+                        type="number"
+                        value={formData.year || ''}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
 
-                <Input
-                    label={t('admin.car.color', 'Color')}
-                    name="color"
-                    value={formData.color || ''}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                />
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.color', 'Color')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="color"
+                        value={formData.color || ''}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
 
-                <Input
-                    label={t('admin.car.mileage', 'Mileage')}
-                    name="mileage"
-                    type="number"
-                    value={formData.mileage || ''}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                />
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.mileage', 'Mileage')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="mileage"
+                        type="number"
+                        value={formData.mileage || ''}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
 
-                <Input
-                    label={t('admin.car.pricePerDay', 'Price Per Day')}
-                    name="price_per_day"
-                    type="number"
-                    value={formData.price_per_day || ''}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                />
+            <div className="admin-field-row">
+                <label className="admin-field-label">{t('admin.car.pricePerDay', 'Price Per Day')}</label>
+                <div className="admin-field-value">
+                    <Input
+                        name="price_per_day"
+                        type="number"
+                        value={formData.price_per_day || ''}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                    />
+                </div>
             </div>
         </div>
     );

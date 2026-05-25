@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { getUserById, updateUser } from '../../../api/userApi';
 import { UserContainer } from '../../../elements/user/UserContainer/UserContainer';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
+import Button from '../../../elements/button/Button'; // Импортируем Button для единообразия
 import './UserDetailsPage.css';
 
 interface UserDetailsPageProps {
@@ -44,40 +45,38 @@ export const UserDetailsPage: React.FC<UserDetailsPageProps> = ({ role = 'admin'
     };
 
     if (loading) {
-        return <div className="user-details-loading">{t('rent.submittingBtn', 'Processing...')}</div>;
-    }
-
-    if (error && !userData) {
-        return (
-            <div className="user-details-page">
-                <RentErrorBlock message={error} />
-            </div>
-        );
-    }
-
-    if (!userData) {
-        return (
-            <div className="user-details-page">
-                <RentErrorBlock message={t('carDetail.notFound', 'Not found')} />
-            </div>
-        );
+        return <div className="user-details-loading" style={{ textAlign: 'center', padding: '50px' }}>{t('rent.submittingBtn', 'Processing...')}</div>;
     }
 
     return (
-        <div className="user-details-page">
-            <div className="user-details-header">
-                <h2 className="user-details-title">{t('profile.title', 'User Profile')}</h2>
-                <button className="btn-back" onClick={() => navigate(-1)}>
-                    {t('auth.backToCode', 'Go back')}
-                </button>
+        <div className="admin-rent-details-container">
+            <div className="admin-rent-header">
+                <h2>{t('profile.title', 'User Profile')} {userData && userData._id ? `#${userData._id}` : ''}</h2>
+                <div>
+                    <Button
+                        onClick={() => navigate(-1)}
+                        type="button"
+                        className="btn-nav"
+                    >
+                        {t('common.back', 'Back')}
+                    </Button>
+                </div>
             </div>
 
-            <UserContainer
-                initialData={userData}
-                role={role}
-                mode="view"
-                onSave={handleSave}
-            />
+            <RentErrorBlock message={error} />
+
+            {userData ? (
+                <UserContainer
+                    initialData={userData}
+                    role={role}
+                    mode="view"
+                    onSave={handleSave}
+                />
+            ) : (
+                <div className="user-details-page">
+                    <RentErrorBlock message={t('carDetail.notFound', 'Not found')} />
+                </div>
+            )}
         </div>
     );
 };

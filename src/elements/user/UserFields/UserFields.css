@@ -1,42 +1,85 @@
-.user-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
+/* Локально для этого контейнера: темно-серый/черный фон */
+.admin-rent-details-container,
+.user-container-wrapper {
+    /* Меняем схему размеров, чтобы padding не ломал ширину */
+    box-sizing: border-box !important;
+
+    width: 95% !important; /* Даем чуть больше воздуха по бокам */
+    max-width: 900px !important;
+
+    margin: 30px auto !important;
+    padding: 24px !important;
+
+    background-color: #0f172a !important;
+    border-radius: 12px !important;
+    border: 1px solid #1e293b !important;
+    color: #f8fafc !important;
+
+    /* Добавляем это, чтобы контейнер не выходил за границы, если внутри что-то широкое */
+    overflow: hidden !important;
 }
 
-.user-checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 8px;
-    padding: 16px;
-    background-color: #f9f9f9;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
+.admin-rent-header h2 {
+    color: #f8fafc !important;
 }
 
-.user-checkbox-label {
+.admin-field-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    cursor: pointer;
+    padding: 14px 0;
+    border-bottom: 1px solid #1e293b !important;
+}
+
+.admin-field-label {
+    flex: 0 0 30%;
+    font-weight: 600;
+    color: #cbd5e1 !important;
     font-size: 0.95rem;
-    user-select: none;
-    color: #333;
 }
 
-.user-checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
+/* Принудительные стили для инпутов внутри этого контейнера */
+.custom-input-field {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
 }
 
-.user-checkbox-label input[type="checkbox"]:disabled {
-    cursor: not-allowed;
+.custom-input-field:disabled {
+    background-color: #0f172a !important;
+    border-color: #ef4444 !important;
+    color: #64748b !important;
 }
 
-.user-checkbox-label:has(input:disabled) {
-    cursor: not-allowed;
-    opacity: 0.6;
+.btn-nav, .btn-action {
+    padding: 8px 16px !important;
+    height: 36px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.15s ease !important;
+    border: 1px solid transparent !important;
+}
+
+.btn-nav {
+    background-color: transparent !important;
+    border: 1px solid #475569 !important;
+    color: #e2e8f0 !important;
+}
+
+.btn-nav:hover {
+    background-color: #1e293b !important;
+}
+
+.btn-action {
+    background-color: #0ea5e9 !important;
+    color: #ffffff !important;
+    border: 1px solid #0284c7 !important;
+}
+
+.btn-action:hover {
+    background-color: #0284c7 !important;
 }

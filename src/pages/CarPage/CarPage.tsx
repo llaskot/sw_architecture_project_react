@@ -57,7 +57,7 @@ const CarPage: React.FC = () => {
     const title = `${brandName} ${modelName}`.trim();
 
     // Берём большую версию картинки
-    const imageUrl = car.img?.large ? `${BASE_URL}/${car.img.large}` : null;
+    const imageUrl = car.img?.large ? `${BASE_URL}/${car.img.large}?t=${Date.now()}` : null;
 
     return (
         <div className="car-page">

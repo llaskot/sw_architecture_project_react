@@ -85,7 +85,7 @@ export const CarContainer: React.FC<CarContainerProps> = ({
                 {canEdit && !isEditing && (
                     <Button
                         type="button"
-                        className="btn-small"
+                        className="btn-action"
                         onClick={() => setIsEditing(true)}
                     >
                         {t('profile.edit', 'Edit')}
@@ -96,7 +96,7 @@ export const CarContainer: React.FC<CarContainerProps> = ({
                     <>
                         <Button
                             type="button"
-                            className="btn-small"
+                            className="btn-nav"
                             onClick={handleCancel}
                             disabled={loading}
                         >
@@ -105,7 +105,7 @@ export const CarContainer: React.FC<CarContainerProps> = ({
 
                         <SubmitButton
                             loading={loading}
-                            className="btn-small"
+                            className="btn-action"
                         >
                             {t('profile.save', 'Save')}
                         </SubmitButton>

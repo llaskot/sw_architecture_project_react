@@ -34,7 +34,6 @@ const AdminRentDetailsPage: React.FC = () => {
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    // Стейт редактируемых полей
     const [formData, setFormData] = useState<FormData>({
         car_id: '',
         start_date: '',
@@ -43,7 +42,6 @@ const AdminRentDetailsPage: React.FC = () => {
         user_dock: ''
     });
 
-    // Стейт для локального пересчета цены
     const [currentPricePerDay, setCurrentPricePerDay] = useState<number>(0);
 
     useEffect(() => {
@@ -59,15 +57,14 @@ const AdminRentDetailsPage: React.FC = () => {
             const data = await getRentById(id!);
             setRent(data);
 
-            // Инициализируем форму, используя пришедший объект DATA, а не стейт RENT!
             setFormData({
-                car_id: data.car?._id || data.car_id || '', // <-- ЗДЕСЬ data
-                start_date: data.start_date ? data.start_date.split('T')[0] : '', // защита, если даты вдруг нет
+                car_id: data.car?._id || data.car_id || '',
+                start_date: data.start_date ? data.start_date.split('T')[0] : '',
                 days_qty: data.days_qty || 1,
                 driver: data.driver || false,
                 user_dock: data.user_dock || ''
             });
-            setCurrentPricePerDay(data.car?.price_per_day || 0); // <-- И ЗДЕСЬ data
+            setCurrentPricePerDay(data.car?.price_per_day || 0);
         } catch (err: any) {
             console.error("ОШИБКА:", err);
             setError(parseApiError(err, t('rent.edit.errorLoad', 'Failed to load rental details')));
@@ -75,7 +72,7 @@ const AdminRentDetailsPage: React.FC = () => {
             setLoading(false);
         }
     };
-    // Обработчик простых инпутов
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -84,7 +81,6 @@ const AdminRentDetailsPage: React.FC = () => {
         }));
     };
 
-    // Выбор машины
     const handleCarChange = (carId: string, car: any) => {
         setFormData((prev) => ({ ...prev, car_id: carId }));
         if (car && car.price_per_day) {
@@ -119,7 +115,6 @@ const AdminRentDetailsPage: React.FC = () => {
             setSaving(true);
             setError(null);
 
-            // payload БЕЗ поля comment
             const updatedData = await updateRent(id, formData);
             setRent(updatedData);
             setIsEditing(false);
@@ -143,7 +138,7 @@ const AdminRentDetailsPage: React.FC = () => {
                     <Button
                         onClick={() => navigate(-1)}
                         type="button"
-                        className="btn-small"
+                        className="btn-nav"
                     >
                         {t('common.back', 'Back')}
                     </Button>
@@ -152,17 +147,18 @@ const AdminRentDetailsPage: React.FC = () => {
                         <Button
                             onClick={() => setIsEditing(true)}
                             type="button"
-                            className="btn-small"
+                            className="btn-action"
                         >
                             {t('profile.edit', 'Edit')}
                         </Button>
                     )}
                 </div>
-            </div>            <RentErrorBlock message={error} />
+            </div>
+
+            <RentErrorBlock message={error} />
 
             <form onSubmit={handleSubmit}>
 
-                {/* 1. Блок системной информации (Всегда Readonly) */}
                 <div className="admin-field-row">
                     <div className="admin-field-label">{t('rent.table.stage', 'Stage')}</div>
                     <div className="admin-field-value">
@@ -191,11 +187,9 @@ const AdminRentDetailsPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* 2. Блок редактируемой информации (Режим Edit/Read) */}
                 <div className="admin-field-row">
                     <div className="admin-field-label">{t('admin.filters.vehicle', 'Vehicle')}</div>
                     <div className="admin-field-value">
-                        {/* Обрати внимание, label не передаем, он уже есть слева */}
                         <CarSelectDropdown
                             selectedCarId={formData.car_id}
                             onCarChange={handleCarChange}
@@ -212,7 +206,6 @@ const AdminRentDetailsPage: React.FC = () => {
                 <div className="admin-field-row">
                     <div className="admin-field-label">{t('rent.startDateLabel', 'Start Date')}</div>
                     <div className="admin-field-value">
-                        {/* label="" чтобы внутренний компонент не дублировал текст */}
                         <RentDatePicker
                             label=""
                             value={formData.start_date}
@@ -273,7 +266,6 @@ const AdminRentDetailsPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* 3. Итоговая цена (Только чтение, пересчитывается реактивно) */}
                 <div className="admin-field-row">
                     <div className="admin-field-label" style={{ fontWeight: 'bold' }}>
                         {t('rent.totalPriceLabel', 'Total Price')}
@@ -293,13 +285,13 @@ const AdminRentDetailsPage: React.FC = () => {
                             type="button"
                             onClick={handleCancel}
                             disabled={saving}
-                            className="btn-small"
+                            className="btn-nav"
                         >
                             {t('profile.cancel', 'Cancel')}
                         </Button>
                         <SubmitButton
                             loading={saving}
-                            className="btn-small"
+                            className="btn-action"
                         >
                             {t('profile.save', 'Save')}
                         </SubmitButton>

@@ -16,7 +16,87 @@
     justify-content: flex-end;
     gap: 12px;
     margin-top: 16px;
-    padding-top: 16px;
+    padding-top: 16px;.user-container-wrapper {
+    width: 100%;
+    max-width: 900px; /* Увеличили для единообразия с деталями аренды */
+    margin: 0 auto;
+    padding: 24px;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+    /* Сетка полей: используем те же классы, что в деталях аренды */
+    .user-fields-container .admin-field-row {
+        display: flex;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .user-fields-container .admin-field-row:last-of-type {
+        border-bottom: none;
+    }
+
+    .user-fields-container .admin-field-label {
+        flex: 0 0 30%;
+        font-weight: 600;
+        color: var(--text-h);
+        font-size: 0.95rem;
+        padding-right: 16px;
+    }
+
+    .user-fields-container .admin-field-value {
+        flex: 1;
+    }
+
+    /* Кнопки - используем классы как в деталях аренды */
+    .admin-rent-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 2px solid var(--border);
+    }
+
+    .btn-nav, .btn-action {
+        padding: 8px 16px !important;
+        height: 36px !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.15s ease !important;
+        border: 1px solid transparent !important;
+    }
+
+    .btn-nav {
+        background-color: transparent !important;
+        border-color: #475569 !important;
+        color: #cbd5e1 !important;
+    }
+
+    .btn-nav:hover {
+        background-color: #1e293b !important;
+        border-color: #64748b !important;
+        color: #ffffff !important;
+    }
+
+    .btn-action {
+        background-color: #0ea5e9 !important;
+        color: #ffffff !important;
+        border-color: #0284c7 !important;
+    }
+
+    .btn-action:hover {
+        background-color: #0284c7 !important;
+        border-color: #0369a1 !important;
+    }
     border-top: 1px solid #e0e0e0;
 }
 

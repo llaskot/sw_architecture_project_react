@@ -79,18 +79,21 @@ export const UserContainer: React.FC<UserContainerProps> = ({
         <form className="user-container-wrapper" onSubmit={handleSave}>
             <RentErrorBlock message={error} />
 
-            <UserFields
-                data={formData}
-                onChange={handleChange}
-                disabled={!isEditing}
-                showPassword={mode === 'create'}
-            />
 
-            <div className="user-container-actions">
+            <div className="user-fields-container">
+                <UserFields
+                    data={formData}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    showPassword={mode === 'create'}
+                />
+            </div>
+
+            <div className="admin-rent-actions">
                 {canEdit && !isEditing && (
                     <Button
                         type="button"
-                        className="btn-small"
+                        className="btn-action"
                         onClick={() => setIsEditing(true)}
                     >
                         {t('profile.edit', 'Edit')}
@@ -101,7 +104,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
                     <>
                         <Button
                             type="button"
-                            className="btn-small"
+                            className="btn-nav"
                             onClick={handleCancel}
                             disabled={loading}
                         >
@@ -110,7 +113,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
 
                         <SubmitButton
                             loading={loading}
-                            className="btn-small"
+                            className="btn-action"
                         >
                             {t('profile.save', 'Save')}
                         </SubmitButton>

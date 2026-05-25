@@ -80,7 +80,7 @@ export const UsersListPage: React.FC<UsersListPageProps> = ({ role = 'admin' }) 
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder={t('home.searchPlaceholder', 'Search...')}
+                            placeholder={t('home.userPlaceholder', 'Search...')}
                         />
                     </div>
 
