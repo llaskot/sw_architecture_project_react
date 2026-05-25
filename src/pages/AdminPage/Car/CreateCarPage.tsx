@@ -67,13 +67,14 @@ export const CreateCarPage: React.FC<CreateCarPageProps> = ({ role }) => {
 
     return (
         <div className="create-car-page">
-            <div className="create-car-header">
-                <Button onClick={handleGoBack} className="btn-small create-car-back-btn">
-                    &larr; {t('admin.nav.back', 'Go Back')}
-                </Button>
+            <div className="admin-rent-header">
                 <h2 className="create-car-title">
                     {t('admin.car.createNew', 'Create New Car')}
                 </h2>
+                <Button onClick={handleGoBack} className="btn-nav create-car-back-btn">
+                   {t('admin.nav.back', 'Go Back')}
+                </Button>
+
             </div>
 
             {error && <RentErrorBlock message={error} />}

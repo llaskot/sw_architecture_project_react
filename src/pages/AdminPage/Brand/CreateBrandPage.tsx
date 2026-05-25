@@ -6,6 +6,7 @@ import BrandFields from '../../../elements/brand/BrandFields/BrandFields';
 import SubmitButton from '../../../elements/button/SubmitButton';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
 import './CreateBrandPage.css';
+import Button from "../../../elements/button/Button.tsx";
 
 interface CreateBrandPageProps {
     role?: 'admin' | 'manager';
@@ -45,9 +46,17 @@ export const CreateBrandPage: React.FC<CreateBrandPageProps> = ({ role = 'admin'
     };
 
     return (
-        <div className="create-brand-page">
-            <div className="create-brand-header">
+        <div className="create-car-page">
+            <div className="admin-rent-header">
                 <h2 className="create-brand-title">{t('admin.brands.createTitle', 'Create New Brand')}</h2>
+                <Button
+                    type="button"
+                    className="btn-nav"
+                    onClick={handleCancel}
+                    disabled={loading}
+                >
+                    {t('admin.actions.cancel', 'Cancel')}
+                </Button>
             </div>
 
             <form onSubmit={handleSubmit} className="create-brand-form">
@@ -65,15 +74,8 @@ export const CreateBrandPage: React.FC<CreateBrandPageProps> = ({ role = 'admin'
                 <RentErrorBlock message={error} />
 
                 <div className="create-brand-actions">
-                    <button
-                        type="button"
-                        className="btn-cancel"
-                        onClick={handleCancel}
-                        disabled={loading}
-                    >
-                        {t('admin.actions.cancel', 'Cancel')}
-                    </button>
-                    <SubmitButton loading={loading}>
+
+                    <SubmitButton loading={loading} className="btn-action">
                         {t('admin.actions.create', 'Create')}
                     </SubmitButton>
                 </div>

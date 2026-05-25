@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
 import {
     getBrands,
     getCategories,
@@ -8,14 +8,19 @@ import {
     type AutoModelCreate,
     type Brand
 } from '../../../api/carsApi';
-import { ModelFields } from '../../../elements/model/ModelFields/ModelFields';
+import {ModelFields} from '../../../elements/model/ModelFields/ModelFields';
 import SubmitButton from '../../../elements/button/SubmitButton';
 import RentErrorBlock from '../../../elements/rent/RentErrorBlock/RentErrorBlock';
-import { parseApiError } from '../../../utils/errorHandler';
-import './CreateModelPage.css'; // Исправлен импорт
+import {parseApiError} from '../../../utils/errorHandler';
+import './CreateModelPage.css';
+import Button from "../../../elements/button/Button.tsx"; // Исправлен импорт
 
-export const CreateModelPage: React.FC = () => {
-    const { t } = useTranslation();
+interface CreateModelPageProps {
+    role: 'admin' | 'manager';
+}
+
+export const CreateModelPage: React.FC<CreateModelPageProps> = ({role = "admin"}) => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -65,13 +70,21 @@ export const CreateModelPage: React.FC = () => {
             setLoading(false);
         }
     };
+    const handleGoBack = () => {
+        navigate(`/${role}/models`);
+    };
 
     if (pageLoading) return <div>{t('rent.loading', 'Loading...')}</div>;
 
     return (
-        <div className="create-model-page"> {/* Исправлен класс */}
-            <h2>{t('admin.models.createNew', 'Create Model')}</h2>
-            <RentErrorBlock message={error} />
+        <div className="create-car-page"> {/* Исправлен класс */}
+            <div className="admin-rent-header">
+                <h2>{t('admin.models.createNew', 'Create Model')}</h2>
+                <Button onClick={handleGoBack} className="btn-nav create-car-back-btn">
+                    {t('admin.nav.back', 'Go Back')}
+                </Button>
+            </div>
+            <RentErrorBlock message={error}/>
             <form onSubmit={handleSubmit}>
                 <ModelFields
                     data={formData}
@@ -80,7 +93,7 @@ export const CreateModelPage: React.FC = () => {
                     categories={categories}
                 />
                 <div className="form-actions">
-                    <SubmitButton loading={loading}>
+                    <SubmitButton loading={loading} className="btn-action">
                         {t('admin.actions.save', 'Save')}
                     </SubmitButton>
                 </div>

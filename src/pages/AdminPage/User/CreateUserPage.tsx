@@ -35,9 +35,9 @@ export const CreateUserPage: React.FC = () => {
 
     return (
         <div className="create-user-page">
-            <div className="create-user-header">
+            <div className="admin-rent-header">
                 <h2>{t('user.createTitle', 'Create New User')}</h2>
-                <Button type="button" className="btn-small" onClick={() => navigate(-1)}>
+                <Button type="button" className="btn-nav" onClick={() => navigate(-1)}>
                     {t('common.back', 'Back')}
                 </Button>
             </div>

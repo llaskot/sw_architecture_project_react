@@ -42,11 +42,10 @@
 }
 
 .create-car-content {
-    background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 32px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #090b0e;
 }
 
 @media (max-width: 640px) {
@@ -54,9 +53,7 @@
         padding: 16px;
     }
 
-    .create-car-content {
-        padding: 20px;
-    }
+
 
     .create-car-title {
         font-size: 1.25rem;

@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 24px;
     width: 100%;
+    background-color: #0f172a;
 }
 
 .car-container-actions {
