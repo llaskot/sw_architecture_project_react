@@ -4,6 +4,13 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
     en: {
         translation: {
+            sort: {
+                label: "Sort by:",
+                modelAsc: "Model: A-Z",
+                modelDesc: "Model: Z-A",
+                priceAsc: "Price: Low to High",
+                priceDesc: "Price: High to Low"
+            },
             header: {
                 projectName: "Highway to Hell",
                 signIn: "Sign In",
@@ -194,6 +201,13 @@ const resources = {
     },
     uk: {
         translation: {
+            sort: {
+                label: "Сортировка:",
+                modelAsc: "Модель: А-Я",
+                modelDesc: "Модель: Я-А",
+                priceAsc: "Цена: по возрастанию",
+                priceDesc: "Цена: по убыванию"
+            },
             header: {
                 projectName: "Highway to Hell",
                 signIn: "Увійти",

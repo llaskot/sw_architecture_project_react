@@ -7,6 +7,7 @@ import { getCars, type Car } from '../api/carsApi';
 import CarFilters from '../elements/filters/CarFilters';
 import CarCard from "../elements/carCard/CarCard.tsx";
 import './HomePage.css';
+import CarSort from "../elements/CarSort/CarSort.tsx";
 
 const HomePage: React.FC = () => {
     const { t } = useTranslation();
@@ -30,7 +31,10 @@ const HomePage: React.FC = () => {
     const [selectedBrandIds, setSelectedBrandIds] = useState<string[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [page, setPage] = useState(1);
+    const [sortOption, setSortOption] = useState('model_asc');
     const limit = 10;
+
+
 
     // Initial reference data fetch
     useEffect(() => {
@@ -45,16 +49,29 @@ const HomePage: React.FC = () => {
 
     const fetchCars = useCallback(async () => {
         setLoadingCars(true);
+        // try {
+        //     const params = new URLSearchParams({
+        //         sort_price: priceSort,
+        //         sort_model: modelSort,
+        //         hide_inactive: 'true',
+        //         page: page.toString(),
+        //         limit: limit.toString()
+        //     });
+        //
+        //     selectedCategories.forEach(cat => params.append('categories', cat));
+
         try {
             const params = new URLSearchParams({
-                sort_price: 'desc',
-                sort_model: 'asc',
                 hide_inactive: 'true',
                 page: page.toString(),
                 limit: limit.toString()
             });
 
+            const [sortKey, sortDir] = sortOption.split('_');
+            params.append(`sort_${sortKey}`, sortDir);
+
             selectedCategories.forEach(cat => params.append('categories', cat));
+
             selectedBrandIds.forEach(id => params.append('brand_ids', id));
 
             // Re-fetch triggered on every keystroke
@@ -70,7 +87,7 @@ const HomePage: React.FC = () => {
         } finally {
             setLoadingCars(false);
         }
-    }, [page, selectedCategories, selectedBrandIds, searchQuery]);
+    }, [page, selectedCategories, selectedBrandIds, searchQuery, sortOption]);
 
     useEffect(() => {
         fetchCars();
@@ -113,13 +130,19 @@ const HomePage: React.FC = () => {
                 onSearchChange={setSearchQuery}
                 onClearAll={handleClearAll}
             />
-
+            <CarSort
+                value={sortOption}
+                onChange={(val) => {
+                    setSortOption(val);
+                    setPage(1);
+                }}
+            />
             {loadingCars ? (
                 <div className="home-page-loading">{t('home.loading')}</div>
             ) : (
                 <div className="home-page-grid">
                     {cars.map((car) => (
-                        <CarCard key={car._id} car={car} />
+                        <CarCard key={car._id} car={car as any} />
                     ))}
                 </div>
             )}
