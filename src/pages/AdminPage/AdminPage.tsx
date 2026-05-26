@@ -51,7 +51,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
         };
         fetchStages();
     }, []);
-
+    console.log(role);
     useEffect(() => {
         const fetchRents = async () => {
             setLoading(true);
@@ -183,7 +183,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
                     }}>
                         {t('admin.table.stageBtn', 'Stage')}
                     </button>
-                    {role === 'admin' || ["booked", "ordered"].includes(item.stage ?? "") && <button
+                    {(role === 'admin' || ["booked", "ordered"].includes(item.stage ?? "")) && <button
                         className="admin-btn delete"
                         onClick={() => setRentToDelete(item._id || item.id)}
                     >

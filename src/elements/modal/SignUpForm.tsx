@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser, openModal } from '../../slices/authSlice';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+import {registerUser, openModal} from '../../slices/authSlice';
 import type {AppDispatch, RootState} from '../../app/store';
 import Input from '../input/Input';
 import SubmitButton from '../button/SubmitButton';
 import './SignUpForm.css';
 
 const SignUpForm: React.FC = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
-    const { loading, error } = useSelector((state: RootState) => state.auth);
+    const {loading, error} = useSelector((state: RootState) => state.auth);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -63,7 +63,7 @@ const SignUpForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (validate()) {
-            const { confirmPassword, ...submitData } = formData;
+            const {confirmPassword, ...submitData} = formData;
             dispatch(registerUser(submitData));
         }
     };
@@ -72,7 +72,7 @@ const SignUpForm: React.FC = () => {
         <form
             onSubmit={handleSubmit}
             className="signup-form"
-        >            <h2 className="signup-form-title">{t('signUp.title')}</h2>
+        ><h2 className="signup-form-title">{t('signUp.title')}</h2>
 
             {error && <p className="signup-form-error">{error}</p>}
 
@@ -80,7 +80,7 @@ const SignUpForm: React.FC = () => {
                 label={t('signUp.emailLabel')}
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
                 error={validationErrors.email}
                 required
             />
@@ -89,7 +89,7 @@ const SignUpForm: React.FC = () => {
                 label={t('signUp.loginLabel')}
                 type="text"
                 value={formData.login}
-                onChange={(e) => setFormData({ ...formData, login: e.target.value })}
+                onChange={(e) => setFormData({...formData, login: e.target.value})}
                 error={validationErrors.login}
                 required
             />
@@ -98,7 +98,7 @@ const SignUpForm: React.FC = () => {
                 label={t('signUp.firstNameLabel')}
                 type="text"
                 value={formData.first_name}
-                onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                onChange={(e) => setFormData({...formData, first_name: e.target.value})}
                 error={validationErrors.first_name}
                 required
             />
@@ -107,7 +107,7 @@ const SignUpForm: React.FC = () => {
                 label={t('signUp.lastNameLabel')}
                 type="text"
                 value={formData.last_name}
-                onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                onChange={(e) => setFormData({...formData, last_name: e.target.value})}
                 error={validationErrors.last_name}
                 required
             />
@@ -117,7 +117,7 @@ const SignUpForm: React.FC = () => {
                     label={t('signUp.passwordLabel')}
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
                     error={validationErrors.password}
                     required
                 />
@@ -134,14 +134,16 @@ const SignUpForm: React.FC = () => {
                 label={t('signUp.confirmPasswordLabel')}
                 type="password"
                 value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                 error={validationErrors.confirmPassword}
                 required
             />
 
-            <SubmitButton loading={loading}>
-                {t('signUp.submitButton')}
-            </SubmitButton>
+            <div>
+                <SubmitButton loading={loading}>
+                    {t('signUp.submitButton')}
+                </SubmitButton>
+            </div>
 
             <p className="signup-form-footer">
                 {t('signUp.alreadyHaveAccount')}{' '}

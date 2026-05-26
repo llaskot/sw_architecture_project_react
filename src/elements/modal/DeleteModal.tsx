@@ -80,11 +80,13 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
                         type="button"
                         onClick={onClose}
                         disabled={isDeleting}
+                        className="btn-nav"
                     >
                         {t('profile.cancel', 'Cancel')}
                     </Button>
                     <SubmitButton
                         loading={isDeleting}
+                        className="btn-action"
                     >
                         {confirmBtnText}
                     </SubmitButton>
