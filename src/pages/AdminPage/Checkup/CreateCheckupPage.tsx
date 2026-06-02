@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import './CreateCarPage.css';
 import {CheckupFields} from "../../../elements/checkup/CheckupFields/CheckupFields.tsx";
 import Button from "../../../elements/button/Button.tsx";
 import SubmitButton from "../../../elements/button/SubmitButton.tsx";

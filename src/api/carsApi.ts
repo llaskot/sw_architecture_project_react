@@ -84,6 +84,15 @@ export interface Checkup {
     price: number;
 }
 
+export interface CheckupRead {
+    _id: string;
+    rent_id: string;
+    summary: string;
+    notis: string;
+    price: number;
+    rent: Car
+}
+
 // Fetching reference data
 export const getCategories = async (): Promise<string[]> => {
     return await apiClient('/models/categories');
@@ -207,9 +216,21 @@ export const deleteBrand = async (brandId: string): Promise<void> => {
     });
 };
 
-export const createCheckup = async (checkupData: Checkup): Promise<Brand> => {
+export const createCheckup = async (checkupData: Checkup): Promise<Checkup> => {
     return await apiClient('/checkup/', {
         method: 'POST',
         body: JSON.stringify(checkupData)
     });
+};
+
+export const updateCheckup = async (checkupId: string, checkupData: Partial<Checkup>): Promise<Checkup> => {
+    const { rent_id, ...dataToSend } = checkupData;
+    return await apiClient(`/checkup/${checkupId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(dataToSend)
+    });
+};
+
+export const getCheckupByIdAdm = async (id: string): Promise<CheckupRead> => {
+    return await apiClient(`/checkup/${id}`);
 };

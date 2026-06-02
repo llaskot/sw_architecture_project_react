@@ -81,7 +81,6 @@ export const ModelDetailsPage: React.FC<ModelDetailsPageProps> = ({role}) => {
     return (
         <div className="admin-rent-details-container">
             <div className="model-details-header">
-                {/* Кнопка назад */}
 
                 <h2 className="car-details-title">
                     {t('admin.models.editTitle', 'Model:')} {id}
