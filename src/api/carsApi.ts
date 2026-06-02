@@ -77,6 +77,13 @@ export interface AllCarsResponse {
     items: Car[];
 }
 
+export interface Checkup {
+    rent_id: string;
+    summary: string;
+    notis: string;
+    price: number;
+}
+
 // Fetching reference data
 export const getCategories = async (): Promise<string[]> => {
     return await apiClient('/models/categories');
@@ -197,5 +204,12 @@ export const updateBrand = async (brandId: string, brandData: Partial<BrandCreat
 export const deleteBrand = async (brandId: string): Promise<void> => {
     return await apiClient(`/brand/${brandId}`, {
         method: 'DELETE'
+    });
+};
+
+export const createCheckup = async (checkupData: Checkup): Promise<Brand> => {
+    return await apiClient('/checkup/', {
+        method: 'POST',
+        body: JSON.stringify(checkupData)
     });
 };

@@ -9,8 +9,9 @@ import './AdminPage.css';
 import UserSelectDropdown from "../../elements/UserSelectDropdown/UserSelectDropdown.tsx";
 import ChangeStageModal from "../../elements/rent/ChangeStageModal/ChangeStageModal.tsx";
 import DeleteModal from "../../elements/modal/DeleteModal.tsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {SectionNavigation} from "../../elements/navigation/SectionNavigation/SectionNavigation.tsx";
+import Button from "../../elements/button/Button.tsx";
 
 
 export interface AdminProps {
@@ -19,6 +20,7 @@ export interface AdminProps {
 
 const AdminPage: React.FC<AdminProps> = ({role}) => {
     const {t} = useTranslation();
+    const navigate = useNavigate();
     const [rents, setRents] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -177,18 +179,23 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
             header: t('admin.table.actions', 'Actions'),
             render: (item: any) => (
                 <div className="admin-actions-group">
-                    <button className="admin-btn stage" onClick={() => {
+                    <Button className="admin-btn stage" onClick={() => {
                         setSelectedRentIdForStage(item._id || item.id);
                         setIsStageModalOpen(true);
                     }}>
                         {t('admin.table.stageBtn', 'Stage')}
-                    </button>
-                    {(role === 'admin' || ["booked", "ordered"].includes(item.stage ?? "")) && <button
+                    </Button>
+                    {(role === 'admin' || ["booked", "ordered"].includes(item.stage ?? "")) && <Button
                         className="admin-btn delete"
                         onClick={() => setRentToDelete(item._id || item.id)}
                     >
                         {t('rent.actions.delete', 'Delete')}
-                    </button>}
+                    </Button>}
+                    {item.stage == "closed" && <Button
+                        className="admin-btn checkup"
+                        onClick={() => navigate('/admin/checkup/create', { state: { rent_id: item._id || item.id } })}>
+                        {t('rent.actions.checkup', 'Checkup')}
+                    </Button>}
                 </div>
             )
         }
@@ -300,6 +307,17 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
                 onClose={() => setRentToDelete(null)}
                 onSuccess={() => setRefreshTrigger(prev => prev + 1)}
             />
+            {/*<DeleteModal*/}
+            {/*    id={rentToDelete || ''}*/}
+            {/*    isOpen={checkup !== null}*/}
+            {/*    title={t('rent.checkup.title')}*/}
+            {/*    message={t('rent.checkup.text')}*/}
+            {/*    confirmBtnText={t('rent.checkup.confirmBtn')}*/}
+            {/*    errorText={t('rent.checkup.error')}*/}
+            {/*    onDeleteApi={deleteRent}*/}
+            {/*    onClose={() => setRentToDelete(null)}*/}
+            {/*    onSuccess={() => setRefreshTrigger(prev => prev + 1)}*/}
+            {/*/>*/}
         </div>
     );
 };

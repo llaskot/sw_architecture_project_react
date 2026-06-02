@@ -1,0 +1,55 @@
+.car-fields-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #16171d;
+}
+
+/* Сетка полей (как в деталях аренды) */
+.admin-field-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #1e293b;
+}
+
+.admin-field-row.align-top { align-items: flex-start; }
+
+.admin-field-label {
+    flex: 0 0 30%;
+    font-weight: 600;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    padding-right: 16px;
+}
+
+.admin-field-value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Стили картинки */
+.car-fields-image-wrapper {
+    width: 120px;
+    height: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-fields-image { width: 100%; height: 100%; object-fit: cover; }
+
+.car-fields-image-placeholder { color: #64748b; font-size: 0.7rem; }
+
+/* Кнопка смены картинки */
+.car-fields-top-section .btn-nav {
+    padding: 4px 12px !important;
+    height: 30px !important;
+    font-size: 0.8rem !important;
+}
