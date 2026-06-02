@@ -182,8 +182,17 @@ export const apiClient = async (endpoint: string, options: RequestInit = {}): Pr
             }
         }
 
+        // if (!response.ok) {
+        //     const errorData = await response.json().catch(() => ({}));
+        //     return Promise.reject(errorData);
+        // }
+
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
+            let errorData = await response.json().catch(() => ({}));
+            if (typeof errorData !== 'object' || errorData === null) {
+                errorData = { message: errorData };
+            }
+            errorData.code = response.status;
             return Promise.reject(errorData);
         }
 

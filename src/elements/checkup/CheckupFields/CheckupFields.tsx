@@ -23,7 +23,6 @@ export const CheckupFields: React.FC<CarFieldsProps> = ({
     const handleInputChange = (field: keyof Checkup, value: any) => {
         onChange({...formData, [field]: value});
     };
-    console.log(formData)
 
 
     return (

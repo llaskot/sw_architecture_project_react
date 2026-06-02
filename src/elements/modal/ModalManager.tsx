@@ -28,7 +28,6 @@ const ModalManager: React.FC = () => {
                 <SignInForm
                     onRegisterClick={() => dispatch(openModal('signUp'))}
                     onForgotPassClick={() => dispatch(openModal('forgotPassword'))}
-                    // onSuccess={(data) => console.log('Logged in:', data)}
                 />
             )}
             {activeModal === 'confirmRegistration' && <ConfirmRegistrationForm/>}

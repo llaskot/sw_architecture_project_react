@@ -34,11 +34,9 @@ export const CheckupDetailsPage: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(id)
             if (!id) return;
             try {
                 const checkup = await getCheckupByIdAdm(id)
-                console.log(checkup)
                 setFormData({
                     rent_id: checkup.rent_id,
                     summary: checkup.summary,

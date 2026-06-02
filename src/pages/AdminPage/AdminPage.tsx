@@ -12,6 +12,7 @@ import DeleteModal from "../../elements/modal/DeleteModal.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import {SectionNavigation} from "../../elements/navigation/SectionNavigation/SectionNavigation.tsx";
 import Button from "../../elements/button/Button.tsx";
+import {getCheckupByRent} from "../../api/carsApi.ts";
 
 
 export interface AdminProps {
@@ -53,7 +54,6 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
         };
         fetchStages();
     }, []);
-    console.log(role);
     useEffect(() => {
         const fetchRents = async () => {
             setLoading(true);
@@ -80,6 +80,19 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
 
         fetchRents();
     }, [page, limit, selectedStages, sortDate, hideInactive, selectedCarId, selectedUserId, refreshTrigger]);
+    const  handleCheckup = async (rentId: string ) => {
+        try {
+            const checkup = await getCheckupByRent(rentId);
+            navigate(`/checkup/${checkup._id}`);
+        } catch (error: any) {
+            if (error.code === 404) {
+                navigate('/admin/checkup/create', { state: { rent_id: rentId || rentId } })
+            }
+            else {
+                throw error;
+            }
+        }
+    }
 
 
     const columns = [
@@ -193,7 +206,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
                     </Button>}
                     {item.stage == "closed" && <Button
                         className="admin-btn checkup"
-                        onClick={() => navigate('/admin/checkup/create', { state: { rent_id: item._id || item.id } })}>
+                        onClick={() => handleCheckup(item._id || item.id)}>
                         {t('rent.actions.checkup', 'Checkup')}
                     </Button>}
                 </div>
@@ -307,17 +320,6 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
                 onClose={() => setRentToDelete(null)}
                 onSuccess={() => setRefreshTrigger(prev => prev + 1)}
             />
-            {/*<DeleteModal*/}
-            {/*    id={rentToDelete || ''}*/}
-            {/*    isOpen={checkup !== null}*/}
-            {/*    title={t('rent.checkup.title')}*/}
-            {/*    message={t('rent.checkup.text')}*/}
-            {/*    confirmBtnText={t('rent.checkup.confirmBtn')}*/}
-            {/*    errorText={t('rent.checkup.error')}*/}
-            {/*    onDeleteApi={deleteRent}*/}
-            {/*    onClose={() => setRentToDelete(null)}*/}
-            {/*    onSuccess={() => setRefreshTrigger(prev => prev + 1)}*/}
-            {/*/>*/}
         </div>
     );
 };

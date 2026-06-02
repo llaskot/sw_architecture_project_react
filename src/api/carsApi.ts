@@ -234,3 +234,7 @@ export const updateCheckup = async (checkupId: string, checkupData: Partial<Chec
 export const getCheckupByIdAdm = async (id: string): Promise<CheckupRead> => {
     return await apiClient(`/checkup/${id}`);
 };
+
+export const getCheckupByRent = async (id: string): Promise<CheckupRead> => {
+    return await apiClient(`/checkup/rent/${id}`);
+};
