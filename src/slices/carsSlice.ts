@@ -9,6 +9,7 @@ interface CarsState {
     categoriesLoaded: boolean; // Flag to prevent re-fetching empty data
     brandsLoaded: boolean;     // Flag to prevent re-fetching empty data
     error: string | null;
+    currentCheckup: any | null;
 }
 
 const initialState: CarsState = {
@@ -19,6 +20,7 @@ const initialState: CarsState = {
     categoriesLoaded: false,
     brandsLoaded: false,
     error: null,
+    currentCheckup: null,
 };
 
 export const fetchCategoriesThunk = createAsyncThunk(
@@ -46,7 +48,11 @@ export const fetchBrandsThunk = createAsyncThunk(
 const carsSlice = createSlice({
     name: 'cars',
     initialState,
-    reducers: {},
+    reducers: {
+        setCurrentCheckup: (state, action) => {
+            state.currentCheckup = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder
             // Categories
@@ -80,4 +86,5 @@ const carsSlice = createSlice({
     },
 });
 
+export const { setCurrentCheckup } = carsSlice.actions;
 export default carsSlice.reducer;

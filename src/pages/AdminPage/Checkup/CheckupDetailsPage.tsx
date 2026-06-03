@@ -12,7 +12,10 @@ import {
 import {parseApiError} from "../../../utils/errorHandler.ts";
 import RentErrorBlock from "../../../elements/rent/RentErrorBlock/RentErrorBlock.tsx";
 import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {setCurrentCheckup} from "../../../slices/carsSlice";
 import type {RootState} from "../../../app/store.ts";
+import {openModal} from "../../../slices/authSlice.ts";
 
 
 export const CheckupDetailsPage: React.FC = () => {
@@ -30,6 +33,8 @@ export const CheckupDetailsPage: React.FC = () => {
         price: 0,
     });
     const [error, setError] = useState<string | null>(null);
+    const dispatch = useDispatch();
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
 
     useEffect(() => {
@@ -37,6 +42,7 @@ export const CheckupDetailsPage: React.FC = () => {
             if (!id) return;
             try {
                 const checkup = await getCheckupByIdAdm(id)
+                dispatch(setCurrentCheckup(checkup));
                 setFormData({
                     rent_id: checkup.rent_id,
                     summary: checkup.summary,
@@ -50,7 +56,7 @@ export const CheckupDetailsPage: React.FC = () => {
             }
         };
         fetchData();
-    }, [id]);
+    }, [id, refreshTrigger]);
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -58,8 +64,9 @@ export const CheckupDetailsPage: React.FC = () => {
         setLoading(true);
         setError(null);
         try {
-            await updateCheckup(id!,  formData);
+            await updateCheckup(id!, formData);
             setIsEditing(false);
+            setRefreshTrigger(prev => prev + 1);
         } catch (err: any) {
             setError(parseApiError(err, t('admin.models.createError', 'Failed to create model.')));
         } finally {
@@ -79,14 +86,19 @@ export const CheckupDetailsPage: React.FC = () => {
                     {t('admin.checkup.details', 'Checkup')}
                 </h2>
                 <div className="model-details-actions">
-                {manager_role && (
+
+                    <Button onClick={() => dispatch(openModal('checkupAct'))} className="create-doc">
+                        {t('admin.nav.print', '🖨️')}
+                    </Button>
+
+                    {manager_role && (
                         <Button className="btn-action" onClick={() => setIsEditing(true)}>
                             {t('admin.actions.edit', 'Edit')}
                         </Button>
-                )}
-                <Button onClick={handleGoBack} className="btn-nav create-car-back-btn">
-                    {t('admin.nav.back', 'Go Back')}
-                </Button>
+                    )}
+                    <Button onClick={handleGoBack} className="btn-nav create-car-back-btn">
+                        {t('admin.nav.back', 'Go Back')}
+                    </Button>
                 </div>
             </div>
 
@@ -106,7 +118,7 @@ export const CheckupDetailsPage: React.FC = () => {
                             <SubmitButton loading={loading} className="btn-action">
                                 {t('admin.actions.save', 'Save')}
                             </SubmitButton>
-                    </div>
+                        </div>
                     )}
                 </form>
             </div>

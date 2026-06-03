@@ -113,3 +113,15 @@
     border-color: #0369a1 !important;
 }
 
+.create-doc {
+    background-color: #063950 !important;
+    color: #ffffff !important;
+    border-color: #0284c7 !important;
+    padding: 0 20px !important;
+    border-radius: 6px !important;
+}
+
+.create-doc:hover {
+    background-color: #455157 !important;
+    border-color: #0369a1 !important;
+}

@@ -8,6 +8,7 @@ import SignUpForm from './SignUpForm';
 import ConfirmRegistrationForm from "./ConfirmRegistrationForm.tsx";
 import ForgotPasswordForm from "./ForgotPasswordForm.tsx";
 import ConfirmForgotPasswordForm from "./ConfirmForgotPasswordForm.tsx";
+import CheckupActModal from '../checkup/CheckupActModal/CheckupActModal';
 
 const ModalManager: React.FC = () => {
     const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const ModalManager: React.FC = () => {
                 activeModal !== 'signUp' &&
                 activeModal !== 'confirmRegistration' &&
                 activeModal !== 'forgotPassword' &&
-                activeModal !== 'confirmForgotPassword'}
+                activeModal !== 'confirmForgotPassword' &&
+                activeModal !== 'checkupAct'}
         >
             {activeModal === 'signIn' && (
                 <SignInForm
@@ -34,6 +36,7 @@ const ModalManager: React.FC = () => {
             {activeModal === 'signUp' && <SignUpForm/>}
             {activeModal === 'forgotPassword' && <ForgotPasswordForm/>}
             {activeModal === 'confirmForgotPassword' && <ConfirmForgotPasswordForm/>}
+            {activeModal === 'checkupAct' && <CheckupActModal />}
         </Modal>
     );
 };
