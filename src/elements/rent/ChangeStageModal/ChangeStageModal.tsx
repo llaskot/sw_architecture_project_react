@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import Modal from '../../modal/Modal';
-import StageDropdown, {type StageOption } from '../StageDropdown/StageDropdown';
+import StageDropdown, {type StageOption} from '../StageDropdown/StageDropdown';
 import Textarea from '../../input/Textarea';
 import RentErrorBlock from '../RentErrorBlock/RentErrorBlock';
 import SubmitButton from '../../button/SubmitButton';
 import Button from '../../button/Button';
-import { changeRentStage, getRentStages } from '../../../api/rentApi';
+import {changeRentStage, getRentStages} from '../../../api/rentApi';
 import './ChangeStageModal.css';
 
 export interface ChangeStageModalProps {
+    rentData: any;
     rentId: string | number;
     isOpen: boolean;
     onClose: () => void;
@@ -17,12 +18,13 @@ export interface ChangeStageModalProps {
 }
 
 const ChangeStageModal: React.FC<ChangeStageModalProps> = ({
+                                                               rentData,
                                                                rentId,
                                                                isOpen,
                                                                onClose,
                                                                onSuccess
                                                            }) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const [stages, setStages] = useState<StageOption[]>([]);
     const [selectedStage, setSelectedStage] = useState<string | null>(null);
@@ -48,8 +50,8 @@ const ChangeStageModal: React.FC<ChangeStageModalProps> = ({
             };
             fetchStages();
 
-            setSelectedStage(null);
-            setComment('');
+            setSelectedStage(rentData?.stage || null);
+            setComment(rentData?.comment || '');
             setErrorMessage(null);
             setValidationError('');
         }
@@ -97,7 +99,7 @@ const ChangeStageModal: React.FC<ChangeStageModalProps> = ({
                     {t('rent.stageModal.title', 'Change Rental Stage')}
                 </h3>
 
-                <RentErrorBlock message={errorMessage} />
+                <RentErrorBlock message={errorMessage}/>
 
                 <StageDropdown
                     label={t('rent.table.stage', 'Stage')}

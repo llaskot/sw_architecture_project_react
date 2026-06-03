@@ -128,7 +128,7 @@ export const CarsListPage: React.FC<CarsListPageProps> = ({ role = 'admin' }) =>
                     <SectionNavigation role={role} />
                 </div>
 
-                <div className="admin-filters-panel cars-list-custom-panel">
+                <div className="admin-filters-panel-full cars-list-custom-panel">
                     <div className="cars-list-filters-wrapper">
                         <CarFilters
                             categories={categories}

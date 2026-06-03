@@ -5,6 +5,7 @@ import RentErrorBlock from '../RentErrorBlock/RentErrorBlock';
 import Input from '../../input/Input';
 import Button from '../../button/Button';
 import './RentForm.css';
+// import {useNavigate} from "react-router-dom";
 
 export interface RentFormValues {
     start_date: string;
@@ -31,6 +32,7 @@ const RentForm: React.FC<RentFormProps> = ({
                                                onClearServerError,
                                            }) => {
     const {t} = useTranslation();
+    // const navigate = useNavigate();
 
     // Внутренние состояния полей
     const [startDate, setStartDate] = useState<string>('');
@@ -156,10 +158,14 @@ const RentForm: React.FC<RentFormProps> = ({
             )}
 
             {/* Кнопка отправки */}
-            <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? t('rent.submittingBtn', 'Обробка...') : t('rent.submitBtn', 'Підтвердити замовлення')}
-            </Button>
+            <div>
+                <Button type="submit" disabled={isSubmitting} className="confirm-big">
+                    {isSubmitting ? t('rent.submittingBtn', 'Обробка...') : t('rent.submitBtn', 'Підтвердити замовлення')}
+                </Button>
+
+            </div>
         </form>
+
     );
 };
 

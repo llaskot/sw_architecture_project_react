@@ -2,6 +2,7 @@
     display: flex;
     gap: 16px;
     align-items: flex-end; /* Align both inputs strictly by their bottom edge */
+    padding: 1rem;
 }
 
 .rent-filters__item {

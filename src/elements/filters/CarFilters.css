@@ -49,17 +49,18 @@
 }
 
 .car-filters-categories-box {
-    flex: 1;
-    padding: 15px;
+    padding: 2% ;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: rgb(237 224 230);
+    width: 45%;
 }
 
 .car-filters-categories-title {
     display: block;
     margin-bottom: 10px;
     color: #333;
+
 }
 
 .car-filters-categories-chips {
@@ -96,6 +97,8 @@
 .car-filters-brands-wrapper {
     flex: 1;
     position: relative;
+    width: 50%;
+
 }
 
 .car-filters-brands-trigger {
@@ -106,8 +109,7 @@
     padding: 10px 15px;
     border-radius: 8px;
     border: 1px solid #ddd;
-    background-color: #fff;
-    cursor: pointer;
+    background-color: rgb(237 224 230);    cursor: pointer;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -131,6 +133,7 @@
     border-radius: 6px;
     font-size: 13px;
     border: 1px solid #dcdfe6;
+    color: #0e0101;
 }
 
 .car-filters-brand-chip-remove {
@@ -178,6 +181,7 @@
     border: 1px solid #ccc;
     outline: none;
     box-sizing: border-box; /* Предотвращает вылезание инпута за пределы */
+    color: #f1eded;
 }
 
 .car-filters-brands-search-input:focus {
@@ -188,6 +192,8 @@
     max-height: 300px;
     overflow-y: auto;
     padding: 5px;
+    background-color: #ebdee4;
+    color: #101013;
 }
 
 .car-filters-brand-label {

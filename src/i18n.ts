@@ -129,6 +129,7 @@ const resources = {
                     daysMin: "Minimum rental period is 1 day",
                     serverDefault: "Failed to book the rental. The vehicle might already be reserved for these dates."
                 },
+                cancel: 'Cancel',
                 page: {
                     title: "My Rentals"
                 },
@@ -308,6 +309,7 @@ const resources = {
                 bookBtn: "Забронювати на майбутнє"
             },
             rent: {
+                cancel: 'Відмінити',
                 pageTitle: "Оформлення оренди",
                 closeTab: "Закрити вкладку",
                 successTitle: "Оренду успішно оформлено!",

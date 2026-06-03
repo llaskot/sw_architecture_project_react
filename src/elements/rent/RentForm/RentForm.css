@@ -61,3 +61,18 @@
     padding: 14px;
     font-size: 1rem;
 }
+
+.confirm-big {
+    background-color: #537341;
+    border-radius: 0.5rem;
+}
+
+.cancel-big {
+    background-color: #cd3940;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    padding: 14px;
+    margin-top: 1rem;
+}

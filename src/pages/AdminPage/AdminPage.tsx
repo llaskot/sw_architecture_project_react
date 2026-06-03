@@ -39,7 +39,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
     const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
     const [isStageModalOpen, setIsStageModalOpen] = useState<boolean>(false);
-    const [selectedRentIdForStage, setSelectedRentIdForStage] = useState<string | number | null>(null);
+    const [selectedRentIdForStage, setSelectedRentIdForStage] = useState<[ string | number, any]| null>(null);
     const [rentToDelete, setRentToDelete] = useState<string | number | null>(null);
 
 
@@ -105,7 +105,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
                     title={String(item._id)}
                 >
                     <Link
-                        to={`/admin/rents/${item._id || item.id}`}
+                        to={`/${role}/rents/${item._id || item.id}`}
                         className="admin-clickable-stub"
                         style={{color: '#0ea5e9', textDecoration: 'none', fontWeight: '500'}}
                     >
@@ -193,7 +193,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
             render: (item: any) => (
                 <div className="admin-actions-group">
                     <Button className="admin-btn stage" onClick={() => {
-                        setSelectedRentIdForStage(item._id || item.id);
+                        setSelectedRentIdForStage([item._id || item.id, item]);
                         setIsStageModalOpen(true);
                     }}>
                         {t('admin.table.stageBtn', 'Stage')}
@@ -219,7 +219,7 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
             <div className="admin-page-content">
                 <div className='page-name'><h2>{t('admin.pageTitle')}</h2>
                     <SectionNavigation role={role}/></div>
-                <div className="admin-filters-panel">
+                <div className="admin-filters-panel-full">
                     {/* Render inputs directly, they already contain internal labels */}
                     <RentFilters
                         availableStages={availableStages}
@@ -300,7 +300,8 @@ const AdminPage: React.FC<AdminProps> = ({role}) => {
             </div>
             {isStageModalOpen && selectedRentIdForStage !== null && (
                 <ChangeStageModal
-                    rentId={selectedRentIdForStage}
+                    rentData={selectedRentIdForStage[1]}
+                    rentId={selectedRentIdForStage[0]}
                     isOpen={isStageModalOpen}
                     onClose={() => {
                         setIsStageModalOpen(false);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getCarById, type Car } from '../../api/carsApi';
 import { createRent } from '../../api/rentApi';
@@ -118,6 +118,9 @@ const RentPage: React.FC = () => {
                     serverError={serverError}
                     onClearServerError={() => setServerError(null)}
                 />
+                <Button className="cancel-big" onClick={() => window.close()}>
+                    {t('rent.cancel', 'Cancel')}
+                </Button>
             </div>
         </div>
     );

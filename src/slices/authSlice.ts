@@ -161,6 +161,12 @@ const authSlice = createSlice({
             state.activeModal = 'signUp';
             state.error = null;
         },
+        syncAuth: (state) => {
+            const storedToken = localStorage.getItem('token');
+            const storedUser = localStorage.getItem('user');
+            state.token = storedToken || null;
+            state.user = storedUser ? JSON.parse(storedUser) : null;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -246,5 +252,5 @@ const authSlice = createSlice({
     },
 });
 
-export const {openModal, closeModal, logout, setAccessToken, clearRegistrationPending} = authSlice.actions;
+export const {openModal, closeModal, logout, setAccessToken, clearRegistrationPending, syncAuth} = authSlice.actions;
 export default authSlice.reducer;

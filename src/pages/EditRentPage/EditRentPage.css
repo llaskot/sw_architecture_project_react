@@ -1,8 +1,11 @@
 .edit-rent-page {
-    padding: 40px 20px;
-    background-color: #f8fafc;
-    min-height: calc(100vh - 64px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .edit-rent-page__container {
@@ -18,10 +21,9 @@
 .edit-rent-page__title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #0f172a;
-    margin-top: 0;
-    margin-bottom: 24px;
-    text-align: center;
+    color: #d2d6df;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.02em;
 }
 
 .edit-rent-page__dropdown-wrapper {
@@ -108,7 +110,7 @@
     justify-content: center;
 }
 
-.edit-rent-page__cancel-action button,
+/*.edit-rent-page__cancel-action button,*/
 .edit-rent-page__btn-cancel {
     background-color: #f1f5f9;
     color: #475569;

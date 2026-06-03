@@ -9,11 +9,16 @@ import './MyRentsPage.css';
 import {useNavigate} from "react-router-dom";
 import Modal from "../../elements/modal/Modal.tsx";
 import Button from "../../elements/button/Button.tsx";
+import {getCheckupByRent} from "../../api/carsApi.ts";
+import {setCurrentCheckup, setCurrentRent} from "../../slices/carsSlice.ts";
+import {useDispatch} from "react-redux";
+import {openModal} from "../../slices/authSlice.ts";
 
 
 const MyRentsPage: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // Filter and sorting states
     const [availableStages, setAvailableStages] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
@@ -82,6 +87,25 @@ const MyRentsPage: React.FC = () => {
         }
     };
 
+    const  handleOnCheck = async (rentId: string ) => {
+        try {
+            const checkup = await getCheckupByRent(rentId);
+            dispatch(setCurrentCheckup(checkup));
+            dispatch(openModal('checkupAct'))
+        } catch (error: any) {
+            alert(`Not ready yet`)
+        }
+    }
+
+    const handleOnPay =  (rent: any ) => {
+        try {
+            dispatch(setCurrentRent(rent));
+            dispatch(openModal('rentAgreement'))
+        } catch (error: any) {
+            alert(`Something went wrong: ${error.message}`)
+        }
+    }
+
     // Reset page to 1 when filters or sorting change
     const handleStagesChange = (stages: string[]) => {
         setSelectedStages(stages);
@@ -141,7 +165,8 @@ const MyRentsPage: React.FC = () => {
                     stage={rent.stage}
                     onUpdate={() => navigate(`/edit-rent/${rent._id}`)}
                     onDelete={() => rent._id && setRentToDelete(rent._id)}
-                    onPay={() => alert(`Payment flow placeholder for rent ID: ${rent._id}`)}
+                    onPay={() => handleOnPay(rent)}
+                    onCheck={() => handleOnCheck(rent._id!)}
                 />
             )
         }

@@ -4,13 +4,13 @@
     justify-content: center;
     align-items: flex-start;
     padding: 40px 20px;
-    background-color: #f8fafc;
+    background-color: #8e9195;
 }
 
 .rent-page__container {
     width: 100%;
     max-width: 580px;
-    background-color: #ffffff;
+    background-color: #6baac5;
     border-radius: 12px;
     padding: 32px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
@@ -116,9 +116,7 @@
         padding: 16px;
     }
 
-    .rent-page__container {
-        padding: 20px;
-    }
+
 
     .rent-page__title {
         font-size: 1.5rem;

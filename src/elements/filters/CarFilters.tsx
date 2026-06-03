@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type Brand } from '../../api/carsApi';
-import './CarFilters.css'; // Импортируем вынесенные стили
+import './CarFilters.css';
+import Button from "../button/Button.tsx"; // Импортируем вынесенные стили
 
 interface CarFiltersProps {
     categories: string[];
@@ -82,13 +83,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({
                     <strong className="car-filters-categories-title">{t('home.categories', 'Categories')}</strong>
                     <div className="car-filters-categories-chips">
                         {categories.map(cat => (
-                            <button
+                            <Button
                                 key={cat}
                                 onClick={() => onCategoryToggle(cat)}
                                 className={`car-filters-category-chip ${selectedCategories.includes(cat) ? 'car-filters-category-chip--active' : ''}`}
                             >
                                 {cat}
-                            </button>
+                            </Button>
                         ))}
                     </div>
                 </div>

@@ -10,7 +10,7 @@
 
 .cars-list-filters-wrapper {
     flex: 0 1 auto;
-    min-width: 300px;
+    min-width: 80%;
     max-width: 800px
 }
 

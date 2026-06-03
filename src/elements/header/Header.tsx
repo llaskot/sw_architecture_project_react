@@ -1,11 +1,12 @@
-import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import {openModal, logoutUser} from '../../slices/authSlice';
 import {type RootState} from '../../app/store';
 import {Link} from 'react-router-dom';
 import {type AppDispatch} from '../../app/store';
+import React, { useEffect } from 'react';
+import {openModal, logoutUser, syncAuth} from '../../slices/authSlice';
 import './Header.css';
+import Button from "../button/Button.tsx";
 
 const Header: React.FC = () => {
     const {t, i18n} = useTranslation();
@@ -19,6 +20,16 @@ const Header: React.FC = () => {
         i18n.changeLanguage(lng);
         localStorage.setItem('appLanguage', lng);
     };
+
+    useEffect(() => {
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'token' || e.key === 'user') {
+                dispatch(syncAuth());
+            }
+        };
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, [dispatch]);
 
     return (
         <header className="site-header">
@@ -60,12 +71,12 @@ const Header: React.FC = () => {
                         )}
                         </span></div>
                             <div className="user-menu">
-                                <button
+                                <Button
                                     onClick={() => dispatch(logoutUser())}
                                     className="logout-btn"
                                 >
                                     {t('logout')}
-                                </button>
+                                </Button>
                                 <span>
                             {t('header.username')}:
                                     {/* Wrap username in a Link */}
@@ -81,12 +92,12 @@ const Header: React.FC = () => {
                 ) : (
                     <div className="user-menu">
                         <div className="guest-menu">
-                            <button onClick={() => dispatch(openModal('signIn'))}>
+                            <Button className="btn-action" onClick={() => dispatch(openModal('signIn'))}>
                                 {t('header.signIn')}
-                            </button>
-                            <button onClick={() => dispatch(openModal('signUp'))}>
+                            </Button>
+                            <Button className="btn-action" onClick={() => dispatch(openModal('signUp'))}>
                                 {t('header.signUp')}
-                            </button>
+                            </Button>
                         </div>
                         <span>{t('header.username')}: {t('guest')}</span>
                     </div>

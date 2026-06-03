@@ -147,11 +147,12 @@
     background-color: #f1f5f9;
     border-color: #e2e8f0;
     cursor: not-allowed;
+    color: #0b0707;
 }
 
 .car-select-dropdown__trigger--disabled .car-select-dropdown__display,
 .car-select-dropdown__trigger--disabled .car-select-dropdown__arrow {
-    color: #94a3b8;
+    color: #111519;
 }
 
 .car-select-dropdown__trigger--disabled:hover {

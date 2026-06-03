@@ -133,9 +133,9 @@ const EditRentPage: React.FC = () => {
     }
 
     return (
-        <div className="edit-rent-page">
-            <div className="edit-rent-page__container">
-                <h1 className="edit-rent-page__title">{t('rent.edit.pageTitle', 'Редагування оренди')}</h1>
+        <div className="rent-page">
+            <div className="rent-page__container">
+                <h1 className="rent-page__title">{t('rent.edit.pageTitle', 'Редагування оренди')}</h1>
 
                 <div className="edit-rent-page__dropdown-wrapper">
                     <CarSelectDropdown
@@ -171,11 +171,12 @@ const EditRentPage: React.FC = () => {
                             serverError={serverError}
                             onClearServerError={() => setServerError(null)}
                         />
+
                         <div className="edit-rent-page__cancel-action">
                             <Button
                                 onClick={() => navigate('/my-rents')}
                                 disabled={isSubmitting}
-                                className="edit-rent-page__btn-cancel"
+                                className="cancel-big"
                             >
                                 {t('profile.cancel', 'Скасувати')}
                             </Button>

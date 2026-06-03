@@ -73,7 +73,15 @@
 
 .logout-btn {
     cursor: pointer;
-    color: #d9534f;
+    color: #0e0101;
+    background-color: #0ea5e9;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.logout-btn:hover {
+    background-color: #0284c7;
 }
 
 .logo-link {

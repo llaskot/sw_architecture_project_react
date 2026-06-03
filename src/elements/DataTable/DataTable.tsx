@@ -1,4 +1,5 @@
 import React from 'react';
+import './DataTable.css';
 
 export interface Column<T> {
     key: string;
@@ -26,7 +27,7 @@ function DataTable<T>({
     return (
         <div className="data-table-container">
             <table className="data-table">
-                <thead>
+                <thead className="columns">
                 <tr>
                     {columns.map((column) => (
                         <th key={column.key} className="data-table__th">

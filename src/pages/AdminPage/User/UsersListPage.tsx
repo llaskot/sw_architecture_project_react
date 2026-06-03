@@ -73,7 +73,7 @@ export const UsersListPage: React.FC<UsersListPageProps> = ({ role = 'admin' }) 
                 </div>
 
                 {/* Using the global filter panel from AdminPage.css */}
-                <div className="admin-filters-panel">
+                <div className="admin-filters-panel-full">
                     <div className="admin-filter-item admin-filter-item--fluid">
                         <label className="admin-filter-label">{t('admin.filters.search', 'Search')}</label>
                         <Input
