@@ -209,9 +209,9 @@
     /*padding: 10px 10px;*/
 }
 
-.admin-page-content .data-table__td {
-    white-space: nowrap;
-}
+/*.admin-page-content .data-table__td {*/
+/*    white-space: nowrap;*/
+/*}*/
 
 .admin-page-content .admin-truncate-text {
     max-width: 200px;
