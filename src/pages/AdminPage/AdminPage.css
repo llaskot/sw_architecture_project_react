@@ -123,7 +123,7 @@
 
 /* Truncate cells */
 .admin-truncate-text {
-    max-width: 150px;
+    max-width: 70% !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
