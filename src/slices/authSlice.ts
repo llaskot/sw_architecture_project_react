@@ -26,7 +26,7 @@ interface AuthState {
     loading: boolean;
     error: string | null;
     activeModal: 'signIn' | 'signUp' | 'confirmRegistration' | 'forgotPassword'
-        | 'confirmForgotPassword' | 'checkupAct' | null;
+        | 'confirmForgotPassword' | 'checkupAct' | 'rentAgreement' | null;
 }
 
 // 2. Инициализация (подтягиваем из памяти браузера)
@@ -124,7 +124,7 @@ const authSlice = createSlice({
     reducers: {
         openModal: (state,
                     action: PayloadAction<'signIn' | 'signUp' | 'confirmRegistration'
-                        | 'forgotPassword' | 'confirmForgotPassword' | 'checkupAct'>) => {
+                        | 'forgotPassword' | 'confirmForgotPassword' | 'checkupAct' | 'rentAgreement'>) => {
             if (action.payload === 'signUp') {
                 const pending = localStorage.getItem('registration_pending');
                 if (pending) {

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getRentById, updateRent } from '../../../api/rentApi';
+import { useDispatch } from 'react-redux';
+import { setCurrentRent } from '../../../slices/carsSlice';
+import { openModal } from '../../../slices/authSlice';
 
 import Input from '../../../elements/input/Input';
 import Textarea from '../../../elements/input/Textarea';
@@ -27,6 +30,7 @@ const AdminRentDetailsPage: React.FC<AdminProps> = ({role}) => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const dispatch = useDispatch();
 
     const [rent, setRent] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -57,6 +61,7 @@ const AdminRentDetailsPage: React.FC<AdminProps> = ({role}) => {
             setError(null);
             const data = await getRentById(id!);
             setRent(data);
+            dispatch(setCurrentRent(data));
 
             setFormData({
                 car_id: data.car?._id || data.car_id || '',
@@ -134,6 +139,14 @@ const AdminRentDetailsPage: React.FC<AdminProps> = ({role}) => {
         <div className="admin-rent-details-container">
             <div className="admin-rent-header">
                 <h2>{t('rent.pageTitle', 'Order Details')} #{rent._id}</h2>
+                <Button
+                    onClick={() => dispatch(openModal('rentAgreement'))}
+                    type="button"
+                    className="btn-action"
+                    style={{ marginLeft: '10px' }}
+                >
+                    📄 {t('rent.agreementBtn', '')}
+                </Button>
                 <div>
                     <Button
                         onClick={() => navigate(-1)}

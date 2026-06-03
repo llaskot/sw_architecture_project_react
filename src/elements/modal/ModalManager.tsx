@@ -9,6 +9,7 @@ import ConfirmRegistrationForm from "./ConfirmRegistrationForm.tsx";
 import ForgotPasswordForm from "./ForgotPasswordForm.tsx";
 import ConfirmForgotPasswordForm from "./ConfirmForgotPasswordForm.tsx";
 import CheckupActModal from '../checkup/CheckupActModal/CheckupActModal';
+import RentAgreementModal from '../rent/RentAgreementModal/RentAgreementModal';
 
 const ModalManager: React.FC = () => {
     const dispatch = useDispatch();
@@ -24,7 +25,8 @@ const ModalManager: React.FC = () => {
                 activeModal !== 'confirmRegistration' &&
                 activeModal !== 'forgotPassword' &&
                 activeModal !== 'confirmForgotPassword' &&
-                activeModal !== 'checkupAct'}
+                activeModal !== 'checkupAct' &&
+                activeModal !== 'rentAgreement'}
         >
             {activeModal === 'signIn' && (
                 <SignInForm
@@ -37,6 +39,7 @@ const ModalManager: React.FC = () => {
             {activeModal === 'forgotPassword' && <ForgotPasswordForm/>}
             {activeModal === 'confirmForgotPassword' && <ConfirmForgotPasswordForm/>}
             {activeModal === 'checkupAct' && <CheckupActModal />}
+            {activeModal === 'rentAgreement' && <RentAgreementModal />}
         </Modal>
     );
 };
